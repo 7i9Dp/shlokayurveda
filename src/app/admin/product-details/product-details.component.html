@@ -1,0 +1,150 @@
+<div *ngIf="product" class="container mt-4">
+  <div class="card shadow-sm border-light mb-4">
+    <div class="row">
+      <!-- Product Image Placeholder -->
+      <div class="col-md-5 mb-4">
+        <img src="{{product.imagePath}}" class="product-image" alt="{{product.productName}}">
+      </div>
+      <div class="col-md-7 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">
+            <a href="#" class="text-decoration-none text-dark">{{product.productName}}</a>
+          </h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Price:</strong> <span class="text-success">&nbsp;₹
+                {{product.price}}/-</span>
+            </li>
+            <li *ngIf="product.oldPrice" class="list-group-item"><strong>Offer Price:</strong> <span class="text-danger">&nbsp;<s>₹
+                  {{product.oldPrice}}/-</s> </span></li>
+            <li class="list-group-item" *ngIf="product.Include"><strong>Includes:</strong>
+              <ul>
+                <li *ngFor="let item of product.Include">{{item}}</li>
+              </ul>
+            </li>
+          </ul>
+          <div class="form-group mb-2" *ngIf="product.duration || product.pack">
+            <strong>Course:</strong>
+            <select class="form-control" id="size" name="size">
+              <option value="">{{product.duration || product.pack}}</option>
+            </select>
+          </div>
+          <ul class="list-group list-group-flush mb-2" *ngIf="product.usefor">
+            <li class="list-group-item"><strong>Use For :</strong>
+              <ul>
+                <li>{{product.usefor}}</li>
+              </ul>
+            </li>
+          </ul>
+          <!-- <a class="btn btn-primary mt-3" (click)="Buynow(product)">Buy Now</a> -->
+          <div class="col-2 d-flex gap-2 mt-auto mt-2">
+            <button class="btn btn-primary flex-fill"
+              style="background-color: #FFD700; border: none; font-family: 'Times New Roman', serif; color: black;"
+              (click)=Buynow(product)>Buy Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- If product not found, show an error message -->
+<div *ngIf="!product">
+  <p>Product not found.</p>
+</div>
+
+
+<!-- Modal Structure -->
+<div class="d-flex justify-content-between align-items-center row py-0 gap-3 gap-md-0" *ngIf="selectedProduct">
+  <!-- Add User Drawer start -->
+  <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <h3 class="modal-title" id="productModalLabel">Product Details</h3> -->
+          <h3 class="modal-title mb-2">{{selectedProduct.productName}}</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="padding-top: 0px;">
+          <div class="row">
+            <!-- Image Section -->
+            <div class="col-md-6">
+              <img class="img-fluid" src="{{selectedProduct?.imagePath}}"
+                alt="{{selectedProduct?.productName || 'Product Image'}}" style="max-width: 100%; height: auto;">
+                <li class="list-group-item" *ngIf="product.Include && selectedProduct.price">
+                  <strong>Include:</strong>
+                  <ul *ngIf="product.Include">
+                    <li *ngFor="let item of product.Include">{{item}}</li>
+                  </ul>
+                  <p class="mt-2">
+                    <strong>MRP:</strong> {{selectedProduct.price}} /- &nbsp; &nbsp; 
+                    <span style="text-decoration: line-through;">{{selectedProduct.oldPrice}} /-</span>
+                    </p>
+                </li>
+                <li class="list-group-item" *ngIf="selectedProduct.price && !product.Include">
+                  <!-- <strong>Include:</strong>
+                  <ul *ngIf="product.Include">
+                    <li *ngFor="let item of product.Include">{{item}}</li>
+                  </ul> -->
+                  <p class="mt-2">
+                    <strong>MRP:</strong> {{selectedProduct.price}} /- &nbsp; &nbsp; 
+                    <span style="text-decoration: line-through;">{{selectedProduct.oldPrice}} /-</span>
+                    </p>
+                </li>
+              </div>
+
+            <!-- Form Section -->
+            <div class="col-md-6">
+              <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+                <!-- User Information Fields -->
+                <div class="mb-2">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" id="name" class="form-control" formControlName="name" placeholder="Enter name"
+                    required>
+                </div>
+                <div class="mb-2">
+                  <label for="email" class="form-label">Email Address</label>
+                  <input type="email" id="email" class="form-control" formControlName="email" placeholder="Enter email"
+                    required>
+                </div>
+                <div class="mb-2">
+                  <label for="phone" class="form-label">Phone Number</label>
+                  <input type="tel" id="phone" class="form-control" formControlName="phone" placeholder="Enter phoneno"
+                    required appNumberonly10digits>
+                </div>
+                <div class="mb-2">
+                  <label for="address" class="form-label">Address</label>
+                  <textarea id="address" class="form-control" formControlName="address" rows="3"
+                    placeholder="Enter address" required></textarea>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-2">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="number" id="quantity" class="form-control" placeholder="Enter Quantity" formControlName="quantity" required
+                    [(ngModel)]="quantity"
+                      appNumberonly10digits>
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    <label for="pincode" class="form-label">Pincode</label>
+                    <input type="text" id="pincode" class="form-control" formControlName="pincode"
+                      placeholder="Enter pincode" required appNumberonly10digits>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-start mt-2" style="font-weight: bold;">
+                  Total: {{selectedProduct.price * quantity || selectedProduct.price}}
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary me-2">Submit</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+                
+              </form>
+            </div>
+          </div>
+          <div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

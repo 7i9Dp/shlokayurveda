@@ -1,0 +1,186 @@
+<header style="padding: 1rem 0; background-color: #ffffff; border-bottom: 1px solid #ddd;">
+  <div style="margin: 0 auto; padding: 0 1rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+
+      <!-- Logo Section -->
+      <div style="flex-basis: 30%;">
+        <a href="#">
+          <img src="/assets/img/slok.png" alt="Logo" style="height: auto; width: 183px;">
+        </a>
+      </div>
+
+      <!-- Future Empty Sections (Search, Cart) -->
+      <div style="flex-basis: 50%; text-align: center;">
+        <!-- You can place search or additional buttons here in the future -->
+      </div>
+
+      <!-- Menu Button -->
+      <div style="flex-basis: 10%; text-align: right;">
+        <button style="border: none; background: transparent; font-size: 24px; cursor: pointer;" data-toggle="collapse" data-target="#menuCollapse">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+  <!-- Collapsible Menu -->
+  <div class="collapse" id="menuCollapse"
+    style="background-color: #f8f9fa; padding: 15px; margin-top: 5px; border-radius: 8px;">
+    <ul style="list-style: none; padding: 0; margin: 0;">
+
+      <!-- Home Link -->
+      <li style="margin-bottom: 1rem;">
+        <a href="javascript:void(0)" [routerLink]="['/admin']"
+          style="text-decoration: none; font-weight: bold; font-size: 1.1rem; color: #437113; display: flex; align-items: center;">
+          Home
+        </a>
+      </li>
+      <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+
+      <!-- Kits Dropdown -->
+      <li style="margin-bottom: 1rem;">
+        <b>
+          <a href="javascript:void(0);" (click)="toggleDropdown('kits')" data-toggle="collapse"
+            data-target="#nestedDropdownkit"
+            style="display: flex; align-items: center; font-weight: bold; font-size: 1.1rem; text-decoration: none; color: #437113;">
+            Kits
+            <i class="fas"
+              [ngClass]="{'fa-chevron-up': isDropdownOpen('kits'), 'fa-chevron-down': !isDropdownOpen('kits')}"
+              style="font-size: 1rem; margin-left: auto;"></i>
+          </a>
+        </b>
+        <div class="collapse" id="nestedDropdownkit">
+          <ul style="list-style: none; padding-left: 20px;">
+            <li style="margin-top: 0.5rem;">
+              <b>
+                <a href="javascript:void(0);" (click)="toggleDropdown('digestive')" data-toggle="collapse"
+                  data-target="#nestedDropdownDigestive"
+                  style="font-size: 1rem; color: #437113; display: flex; align-items: center;">
+                  Digestive Care
+                  <i class="fas"
+                    [ngClass]="{'fa-chevron-up': isDropdownOpen('digestive'), 'fa-chevron-down': !isDropdownOpen('digestive')}"
+                    style="font-size: 1rem; margin-left: auto;"></i>
+                </a>
+              </b>
+              <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+              <div class="collapse" id="nestedDropdownDigestive">
+                <ul style="list-style: none; padding-left: 20px;">
+                  <!-- <a [routerLink]="['/product', product.id]" class="btn btn-primary mt-3">View Product</a> -->
+                  <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 1]" style="color: #000000;">Trial Kit</a></li>
+                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+                  <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 2]" style="color: #000000;">Full Kit</a></li>
+                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+                  <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 3]" style="color: #000000;">Strong Kit</a></li>
+                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+                </ul>
+              </div>
+            </li>
+
+            <li style="margin-top: 0.5rem;">
+              <b>
+                <a href="javascript:void(0);" (click)="toggleDropdown('piles')" data-toggle="collapse"
+                  data-target="#nestedDropdownPiles"
+                  style="font-size: 1rem; color: #437113; display: flex; align-items: center;">
+                  Piles Care
+                  <i class="fas"
+                    [ngClass]="{'fa-chevron-up': isDropdownOpen('piles'), 'fa-chevron-down': !isDropdownOpen('piles')}"
+                    style="font-size: 1rem; margin-left: auto;"></i>
+                </a>
+              </b>
+              <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+              <div class="collapse" id="nestedDropdownPiles">
+                <ul style="list-style: none; padding-left: 20px;">
+                  <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 4]" style="color: #000000;">Trial Kit</a></li>
+                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+                  <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 5]" style="color: #000000;">Full Kit</a></li>
+                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+                  <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 6]" style="color: #000000;">Strong Kit</a></li>
+                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+                </ul>
+              </div>
+            </li>
+
+            <li style="margin-top: 0.5rem;">
+              <b>
+                <a href="javascript:void(0);" (click)="toggleDropdown('sexual')" data-toggle="collapse"
+                  data-target="#nestedDropdownSexualCare"
+                  style="font-size: 1rem; color: #437113; display: flex; align-items: center;">
+                  Personal Care
+                  <i class="fas"
+                    [ngClass]="{'fa-chevron-up': isDropdownOpen('sexual'), 'fa-chevron-down': !isDropdownOpen('sexual')}"
+                    style="font-size: 1rem; margin-left: auto;"></i>
+                </a>
+              </b>
+              <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+              <div class="collapse" id="nestedDropdownSexualCare">
+                <ul style="list-style: none; padding-left: 20px;">
+                  <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 7]" style="color: #000000;">Trial Kit</a></li>
+                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+                  <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 8]" style="color: #000000;">Full Kit</a></li>
+                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+                  <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 9]" style="color: #000000;">Strong Kit</a></li>
+                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+      <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+
+      <!-- Products Dropdown -->
+      <li style="margin-bottom: 1rem;">
+        <b>
+          <a href="javascript:void(0);" (click)="toggleDropdown('products')" data-toggle="collapse"
+            data-target="#nestedDropdownProducts"
+            style="display: flex; align-items: center; font-weight: bold; font-size: 1.1rem; text-decoration: none; color: #437113;">
+            Products
+            <i class="fas" [ngClass]="{'fa-chevron-up': isDropdownOpen('products'), 'fa-chevron-down': !isDropdownOpen('products')}"
+              style="font-size: 1rem; margin-left: auto;"></i>
+          </a>
+        </b>
+        <div class="collapse" id="nestedDropdownProducts">
+          <ul style="list-style: none; padding-left: 20px;">
+            <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 10]" style="color: #000000;">Strong Josh Boosters Capsule</a></li>
+            <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+            <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 11]" style="color: #000000;">Wild-X Capsule</a></li>
+            <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+            <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 12]" style="color: #000000;">Hard-X Spray</a></li>
+            <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+            <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 13]" style="color: #000000;">Constibest Powder</a></li>
+            <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+            <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 14]" style="color: #000000;">Gasoleft Capsule</a></li>
+            <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+            <li data-toggle="collapse" data-target="#menuCollapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 15]" style="color: #000000;">Pilolex Capsule</a></li>
+          </ul>
+        </div>
+      </li>
+      <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+
+      <!-- About Us and Contact Us Links -->
+      <li style="margin-bottom: 1rem;">
+        <b><a href="javascript:void(0)"
+            style="text-decoration: none; font-weight: bold; font-size: 1.1rem; color: #437113; display: flex; align-items: center;">
+            About Us
+          </a></b>
+      </li>
+      <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+      <li>
+        <b><a href="javascript:void(0)" (click)="scrollToContact()" class="site-footer__linklist-item"
+            style="text-decoration: none; font-weight: bold; font-size: 1.1rem; color: #437113; display: flex; align-items: center;">
+            Contact Us
+          </a></b>
+          <!-- <a (click)="scrollToContact()" class="site-footer__linklist-item" style="color: black;cursor: pointer;">
+            Contact Us
+          </a> -->
+      </li>
+    </ul>
+  </div>
+</div>
+</header>
+
+<!-- You can customize the component below or remove it -->
+<app-printticket></app-printticket>
+
+<!-- External CSS for Icons (optional if you want a menu icon) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">

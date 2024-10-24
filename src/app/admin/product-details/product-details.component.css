@@ -1,0 +1,30 @@
+.container {
+    max-width: 1325px !important;
+}
+
+.shadow{
+box-shadow: 0 8px 4px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
+.card-text {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.product-image {
+  width: 100%; /* Make image responsive */
+  max-width: 445px;
+  height: auto;
+  object-fit: cover;
+  margin-left: 57px;
+  padding-top: 20px;
+}
+.btn-primary {
+  font-family: 'Montserrat', sans-serif;
+}

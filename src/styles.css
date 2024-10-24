@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+.ngx-pagination .current {
+    background: #696cff !important;
+    box-shadow: 0 .125rem .25rem rgba(105,108,255,.4);
+    padding: 4px 13px !important;
+    border-radius: 5px !important;
+}
+
+.ngx-pagination {
+  margin-top: 1rem !important;
+}
+
+.ngx-pagination a, .ngx-pagination button {
+  cursor: pointer;
+  background: #f0f2f4 ;
+  color: #697a8d !important;
+  border-radius: 5px !important;
+  padding: 4px 13px !important;
+}
+
+
+.fv-plugins-icon-container .multiselect-dropdown .dropdown-btn .selected-item-container .selected-item {
+  border: 1px solid #337ab7;
+  margin-right: 4px;
+  background: #337ab7;
+  padding: 0 5px;
+  color: #fff;
+  border-radius: 2px;
+  float: left;
+  max-width: 115px !important;
+  height: 52px  !important;
+}

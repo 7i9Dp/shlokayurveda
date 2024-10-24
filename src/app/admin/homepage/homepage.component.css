@@ -1,0 +1,258 @@
+.newImg{
+    width: 70px;
+}
+/* Importing Roboto font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.home-banner-btn{
+    color: blue;
+}
+
+.welcome-text{
+    color: #000000 !important;
+}
+
+.h1 {
+    font-size: 4.375rem !important;
+}
+
+
+h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #000000 !important;
+}
+
+
+
+
+.customer-review-box {
+    text-align: center;
+    padding: 40px 20px 40px 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 16px rgb(0 0 0 / 7%);
+    margin-bottom: 15px;
+    height: auto;
+}
+
+.owl-carousel .item {
+    margin: 0 0px!important;
+}
+
+.review-start {
+    width: 100px !important;
+    height: auto !important;
+    margin: auto;
+}
+
+
+
+
+
+
+.slider-container {
+    width: 300px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .slider-item {
+    flex: 0 0 33.33%;
+    box-sizing: border-box;
+  }
+
+  #box {
+background: orange;
+height: 50px;
+width: 60px;
+}
+#box1 {
+background: red;
+height: 50px;
+width: 60px;
+}
+#box2 {
+background: green;
+height: 50px;
+width: 60px;
+}
+ #box3 {
+background: pink;
+height: 50px;
+width: 60px;
+}
+  #box4 {
+background: brown;
+height: 50px;
+width: 60px;
+}
+  #box5 {
+background: purple;
+height: 50px;
+width: 60px;
+}
+
+
+
+
+
+.glow-img {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+
+
+
+
+.slider-container {
+    width: 300px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .slider-item {
+    flex: 0 0 33.33%;
+    box-sizing: border-box;
+  }
+
+
+
+.newImg {
+    /* width: 94px; */
+    width: 119px;
+
+}
+
+
+
+
+body {
+  padding: 2rem 0rem;
+}
+
+.like {
+  font-size: 1.5rem;
+}
+
+.titleof {
+  text-align: center;
+  font-weight: bold;
+  text-shadow: -3px 2px 16px rgba(0, 0, 0, 0.5)
+}
+
+.bottomcorner {
+  position: fixed;
+  bottom: 22px;
+  right: 15px;
+  z-index: 100000000;
+}
+
+.bottomleft{
+  position: fixed;
+  bottom: 22px;
+  left: 17px;
+  z-index: 100000000;
+}
+
+
+
+/* Default styles */
+.owl-carousel {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.owl-carousel .owl-item {
+  flex: 0 0 auto;
+  width: 326.25px; /* Set the width of each item */
+  margin-right: 15px; /* Adjust margin between items */
+}
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 600px) {
+  .owl-carousel .owl-item {
+      width: 250px; /* Adjust width for smaller screens */
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .owl-carousel .owl-item {
+      width: 200px; /* Adjust width for even smaller screens */
+  }
+}
+
+
+
+
+
+.slideshow-container {
+  position: relative;
+  width: 100%;
+  /* height: 100%; */
+  margin: auto;
+  overflow: hidden;
+  background-color: #ffffff;
+  white-space: nowrap; /* Ensure the slides stay in one line */
+}
+
+.mySlides {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures images cover the container */
+}
+
+@keyframes slide {
+  0% { transform: translateX(0%); }
+  33.33% { transform: translateX(0%); }
+  44.44% { transform: translateX(-100%); }
+  77.77% { transform: translateX(-100%); }
+  88.88% { transform: translateX(-200%); }
+  100% { transform: translateX(-200%); }
+}
+
+.slideshow-container .slider {
+  display: flex;
+  animation: slide 15s infinite;
+}
+
+
+
+
+
+
+
+
+.advantages {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.advantages h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+.advantages p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #666;
+}

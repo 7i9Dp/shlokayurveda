@@ -1,0 +1,27 @@
+.btn-primary {
+    color: #fff;
+    background-color: #696cff;
+    border-color: #696cff;
+    box-shadow: 0 0.125rem 0.25rem 0 rgba(105, 108, 255, 0.4);
+}
+
+.bx {
+height: 10px;
+}
+
+/* .bx-trash{
+    color: red;
+} */
+
+/* .has-error{
+    color: red;
+} */
+
+.card-body {
+    flex: 1 1 auto;
+    padding: 0.5rem 0.5rem;
+}
+
+.row {
+    --bs-gutter-x: 0.525rem;
+}

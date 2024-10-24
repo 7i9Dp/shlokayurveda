@@ -1,0 +1,16 @@
+.site-footer__linklist-item {
+    text-decoration: none; /* Remove default underline */
+    position: relative;
+  }
+
+  .site-footer__linklist-item:hover::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #000; /* Change this to the desired underline color */
+    bottom: -2px; /* Adjust this value to control the distance from the text */
+    left: 0;
+  }
+
+  

@@ -1,0 +1,370 @@
+<div class="container-fluid flex-grow-1">
+    <div class="row">
+        <div class="col-xl-12 d-flex align-items-center">
+
+            <!-- Left Side Content -->
+            <div class="left-content col-6">
+                <div class="content-part">
+                    <h2 class="welcome-text">Welcome to Shlok Ayurveda</h2>
+                    <h1>For <span style="color:#437113"> Your <br> Healthy </span> Life</h1>
+                    <h4 class="mb-4">Get your customized solution from our Healthcare experts.</h4>
+                    <h5>For Free Consultation Contact Us On
+                        <a class="" href="https://wa.me/8128180101" target="_blank"
+                            aria-describedby="a11y-new-window-external-message" rel="null noopener">
+                            <u>Whatsapp</u>
+                        </a>
+                    </h5>
+
+                    <h5 class="mt-4">We love talking to you! Call now for personalized service that goes beyond
+                        expectations. Your satisfaction is our priority.
+                        <a href="tel:+91-8128180101"><u>Call Now</u></a>
+                    </h5>
+                </div>
+            </div>
+
+            <svg id="sw-js-blob-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="sw-gradient" x1="0" x2="1" y1="1" y2="0">
+                        <stop id="stop1" stop-color="rgba(248, 117, 55, 1)" offset="0%"></stop>
+                        <stop id="stop2" stop-color="rgba(251, 168, 31, 1)" offset="100%"></stop>
+                    </linearGradient>
+                </defs>
+                <mask id="mask1" mask-type="alpha">
+                    <path fill="url(#sw-gradient)"
+                        d="M25.9,-26.5C32.8,-19.1,36.9,-9.5,37.5,0.6C38.1,10.7,35.2,21.5,28.3,28.1C21.5,34.7,10.7,37.1,-0.3,37.5C-11.4,37.8,-22.8,36,-31,29.4C-39.2,22.8,-44.2,11.4,-42.9,1.3C-41.6,-8.7,-33.9,-17.4,-25.7,-24.8C-17.4,-32.2,-8.7,-38.1,0.4,-38.5C9.5,-39,19.1,-33.8,25.9,-26.5Z"
+                        width="100%" height="100%" transform="translate(50 50)" stroke-width="0"
+                        style="transition: all 0.3s ease 0s;">
+                    </path>
+                </mask>
+                <g mask="url(#mask1)">
+                    <path fill="url(#sw-gradient)"
+                        d="M25.9,-26.5C32.8,-19.1,36.9,-9.5,37.5,0.6C38.1,10.7,35.2,21.5,28.3,28.1C21.5,34.7,10.7,37.1,-0.3,37.5C-11.4,37.8,-22.8,36,-31,29.4C-39.2,22.8,-44.2,11.4,-42.9,1.3C-41.6,-8.7,-33.9,-17.4,-25.7,-24.8C-17.4,-32.2,-8.7,-38.1,0.4,-38.5C9.5,-39,19.1,-33.8,25.9,-26.5Z"
+                        width="100%" height="100%" transform="translate(50 50)" stroke-width="0"
+                        style="transition: all 0.3s ease 0s;">
+                    </path>
+                    <!-- <image class="newImg" x="12" y="29" xlink:href="../../../assets/img/banner-main.png"></image>
+                    <image class="newImg" x="12" y="29" xlink:href="../../../assets/img/banner-main2.png"></image> -->
+                   s <!-- <image class="newImg" x="0" y="8" xlink:href="../../../assets/img/banner.png"></image> -->
+                    <image class="newImg" x="-26" y="8" xlink:href="../../../assets/img/banner.png"></image>
+
+                </g>
+            </svg>
+
+        </div>
+
+        <div class="container-fluid flex-grow-1 mb-4" style="padding: 20px; padding-bottom: 10px; background-color: #f5f5f9;padding-top:0px">
+            <div class="slideshow-container">
+              <div class="slider">
+                <img class="mySlides" src="../../../assets/img/digestive care banner.jpg" alt="digestive care banner">
+                <img class="mySlides" src="../../../assets/img/Healthbanner.jpg" alt="Healthbanner">
+                <img class="mySlides" src="../../../assets/img/Sexual Care.jpg" alt="Sexual Care">
+              </div>
+            </div>
+          </div>
+
+      <div class="container-fluid flex-grow-1" style="padding: 30px; padding-bottom: 50px;"
+          style="background-color: #018662;">
+          <div class="row mt-1 mb-3">
+              <!-- 1st -->
+              <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-4" *ngFor="let product of data">
+                  <div class="card  text-white" style="height: 100%;">
+                      <img class="card-img glow-img" src={{product.imagePath}} alt={{product.productName}}
+                          style="padding: 10px; max-width: 100%; height: auto;">
+                          <div style="margin: 10px;padding: 10px;">
+                            <div class="mb-4">
+                              <div class="d-flex justify-content-between mb-2">
+                                <b class="text-muted-foreground text-lg" style="color: rgba(0, 0, 0, 0.7); font-size: 15px; font-family: 'Times New Roman', serif;">
+                                  Product:
+                                </b>
+                                <span class="text-muted-foreground text-lg" style="color: rgba(0, 0, 0, 0.7);font-size: 12px;margin-top: 4px; font-family: 'Times New Roman', serif;">
+                                  {{product.productName}}
+                                </span>
+                              </div>
+
+                              <div class="d-flex justify-content-between mb-2">
+                                <b class="text-muted-foreground" style="color: rgba(0, 0, 0, 0.7); font-family: 'Times New Roman', serif;">Pack:</b>
+                                <span style="font-weight: 500; color: black; font-family: 'Times New Roman', serif;">{{product.pack}}</span>
+                              </div>
+                              <div class="d-flex justify-content-between">
+                                <b class="text-muted-foreground" style="color: rgba(0, 0, 0, 0.7); font-family: 'Times New Roman', serif;">MRP:</b>
+                                <span style="font-size: 1rem; font-weight: bold; color: black; font-family: 'Times New Roman', serif;" class="text-success">{{product.price}} /-</span>
+                                <span style="font-size: 1rem; font-weight: bold; color: black; font-family: 'Times New Roman', serif;text-decoration: line-through;" *ngIf="product.oldPrice" class="text-danger">{{product.oldPrice}} /-</span>
+                              </div>
+                            </div>
+                            <div class="d-flex gap-2 mt-auto">
+                              <button class="btn btn-primary flex-fill" style="background-color: #FFD700; border: none; font-family: 'Times New Roman', serif; color: black;" (click)=Buynow(product)>Buy Now</button>
+                            </div>
+                          </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!--Contact Us-->
+      <div id="contact-us" class="container mt- mb-5">
+            <div class="row justify-content-center">
+              <div class="">
+                <div class="card">
+                  <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Contact Us</h2>
+                    <hr>
+                    <div class="row">
+                      <div class="col-6">
+
+                        <div>
+                          <a href="https://static.vecteezy.com/system/resources/previews/019/813/203/large_2x/modern-medical-and-health-care-center-ayurvedic-logo-design-illustration-free-vector.jpg"
+                            target="_blank">
+                            <img style="height: 100px; width: auto;"
+                              src="https://static.vecteezy.com/system/resources/previews/019/813/203/large_2x/modern-medical-and-health-care-center-ayurvedic-logo-design-illustration-free-vector.jpg"
+                              alt="Description of the image">
+                          </a>
+                        </div>
+                        <div class="row mt-4 mb-2">
+                          <h2>We are here for you</h2>
+                          <hr>
+                        </div>
+
+                        <address>
+                          <h4>
+                            <strong>Address:</strong><br>
+                          </h4>
+                          <h5>TF-39, Rudrax Complex-2,<br>
+                            OPP. Annapurna Resturant, GIDC road, phase-3,<br>
+                            Vatva GIDC, Ahmedabad, Gujarat 382445<br>
+                          </h5>
+                        </address>
+
+                        <h4><strong>Email:</strong></h4>
+                       <h5>
+                         <!-- <a href="shlokayurveda01@gmail.com"> shlokayurveda01@gmail.com</a> -->
+                         <a href="mailto:shlokayurveda01&#64;gmail.com">shlokayurveda01&#64;gmail.com</a>
+                       </h5>
+                        <h4>
+                          <strong>Help Line Number :</strong>
+                        </h4>
+                        <h5>
+                          <a href="tel:8128180101">8128180101</a><br> <br>
+                          <a href="tel:8733937101">8733937101</a>
+                        </h5>
+                      </div>
+                      <div class="col-6">
+                        <div class="card mb-4">
+                          <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3 class="mb-0">Fill details for more information</h3>
+                          </div>
+
+                          <div class="card-body">
+                            <form [formGroup]="contactForm" (ngSubmit)="onSubmitContactUs()">
+                              <div class="mb-3">
+                                <label class="form-label" for="basic-icon-default-fullname">Name</label>
+                                <div class="input-group input-group-merge">
+                                  <input type="text" class="form-control" id="basic-icon-default-fullname"
+                                    placeholder="Enter Your Name" aria-label="John Doe"
+                                    formControlName="name" 
+                                    aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                              </div>
+
+                              <div class="mb-3">
+                                <label class="form-label" for="basic-icon-default-fullname">Phone No</label>
+                                <div class="input-group input-group-merge">
+                                  <input type="text" class="form-control" id="basic-icon-default-fullname"
+                                    placeholder="Enter Phone Number" aria-label="John Doe"
+                                    formControlName="phone" 
+                                    aria-describedby="basic-icon-default-fullname2" />
+                                </div>
+                              </div>
+
+                              <div class="mb-3">
+                                <label class="form-label" for="basic-icon-default-fullname">Address</label>
+                                <div class="input-group input-group-merge">
+                                    <textarea type="text" class="form-control" id="basic-icon-default-fullname"
+                                    placeholder="Enter your address" formControlName="address">
+                                  </textarea>
+                                </div>
+                              </div>
+
+                              <div class="mb-3">
+                                <div class="styled-input wide">
+                                  <label class="form-label" for="basic-icon-default-fullname">Tell us your concern</label>
+                                  <textarea type="text" class="form-control" id="basic-icon-default-fullname"
+                                    placeholder="Enter About Your Problem" formControlName="concern" >
+                                  </textarea>
+                                </div>
+                              </div>
+
+                               <!-- Testing On Going... -->
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+
+
+        <div class="owl-carousel owl-loaded owl-drag">
+            <div class="owl-stage-outer">
+                <div class="owl-stage">
+                    <!-- Customer Review Items -->
+
+                    <div class="owl-item cloned" style="width: 305.25px;">
+                        <div class="product item">
+                            <div class="customer-review-box">
+                                <h5 class="mb-20">Rajesh Mahajan</h5>
+                                <p>"My experience with Shlok Ayurveda has been life-changing! Their medicine has truly transformed my health and well-being. I am incredibly grateful for their expertise and dedication. Thank you, Shlok Ayurveda."</p>
+                                <img class="review-start"
+                                    src="https://cdn.shopify.com/s/files/1/0535/1856/5556/files/Group_69.svg?v=1623226562"
+                                    alt="Shlok Ayurveda Review Star">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="owl-item cloned" style="width: 305.25px;">
+                        <div class="product item">
+                            <div class="customer-review-box">
+                                <h5 class="mb-20">Manu Prajapati</h5>
+                                <p>"I've tried various remedies for my health issues, but Shlok Ayurveda's medicine stands out for its authenticity and potency. It's helped me manage my condition effectively, and I'm impressed by its natural approach."</p>
+                                <img class="review-start"
+                                    src="https://cdn.shopify.com/s/files/1/0535/1856/5556/files/Group_69.svg?v=1623226562"
+                                    alt="Shlok Ayurveda Review Star">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="owl-item cloned" style="width: 305.25px;">
+                        <div class="product item">
+                            <div class="customer-review-box">
+                                <h5 class="mb-20">Anish Soni</h5>
+                                <p>"I was skeptical at first, but after trying Shlok Ayurveda's medicine, I'm a believer! It's provided me with relief from discomfort and improved my overall health. Thank you for delivering on your promise of holistic well-being."</p>
+                                <img class="review-start"
+                                    src="https://cdn.shopify.com/s/files/1/0535/1856/5556/files/Group_69.svg?v=1623226562"
+                                    alt="Shlok Ayurveda Review Star">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="owl-item cloned" style="width: 305.25px;">
+                        <div class="product item">
+                            <div class="customer-review-box">
+                                <h5 class="mb-20">Anish Patel</h5>
+                                <p>"Shlok Ayurveda's medicine has been a game-changer for me. It's helped me manage stress and improve my sleep quality. I'm grateful for the natural solution it offers."</p>
+                                <img class="review-start"
+                                    src="https://cdn.shopify.com/s/files/1/0535/1856/5556/files/Group_69.svg?v=1623226562"
+                                    alt="Shlok Ayurveda Review Star">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="advantages">
+          <h2>Advantages of Ayurveda and Ayurvedic Treatments</h2>
+          <p>Ayurvedic treatments use natural products so there are no side effects,they are safe and chemical-free.Ayurveda aims to cure diseases from the roots, reducing the chance of recurrence and providing long-term relief.
+          It helps in improving the digestive process, leading to a healthy and strong digestive system over time.
+          Ayurveda promotes natural balance, providing peace and harmony to body, mind, and soul.It may help in maintaining youthful appearance and vitality for a longer period.Regular practice can lead to a stronger and healthier body.
+          Ayurveda can reduce stress and alleviate symptoms of depression.It aids in building a strong immune system, enhancing overall health.</p>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Modal Structure -->
+<div class="d-flex justify-content-between align-items-center row py-0 gap-3 gap-md-0" *ngIf="selectedProduct">
+  <!-- Add User Drawer start -->
+  <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="mb-4">{{selectedProduct.productName}}</h3>
+          <!-- <h3 class="modal-title" id="productModalLabel">Product Details</h3> -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="padding-top: 0px;">
+          <div class="row">
+            <!-- Image Section -->
+            <div class="col-md-6">
+              <img class="img-fluid" src="{{selectedProduct?.imagePath2}}" alt="{{selectedProduct?.productName || 'Product Image'}}" style="max-width: 100%; height: auto;">
+              <li class="list-group-item">
+              <p><strong>Pack:</strong> {{selectedProduct.pack}}</p>
+              <p><strong>MRP:</strong> {{selectedProduct.price}} /- &nbsp; &nbsp; <span style="text-decoration: line-through;">{{selectedProduct.oldPrice}}</span></p>
+                </li>
+            </div>
+
+            <!-- Form Section -->
+            <div class="col-md-6">
+              <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+                <!-- User Information Fields -->
+                <div class="mb-2">
+                  <label for="name" class="form-label">Name</label>
+                  <input type="text" id="name" class="form-control" formControlName="name" placeholder="Enter name" required>
+                </div>
+                <div class="mb-2">
+                  <label for="email" class="form-label">Email Address</label>
+                  <input type="email" id="email" class="form-control" formControlName="email" placeholder="Enter email" required>
+                </div>
+                <div class="mb-2">
+                  <label for="phone" class="form-label">Phone Number</label>
+                  <input type="tel" id="phone" class="form-control" formControlName="phone" placeholder="Enter phone number" required appNumberonly10digits>
+                </div>
+                <div class="mb-2">
+                  <label for="address" class="form-label">Address</label>
+                  <textarea id="address" class="form-control" formControlName="address" rows="3" placeholder="Enter address" required></textarea>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-2">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="number" id="quantity" placeholder="Enter Quantity" class="form-control" formControlName="quantity" 
+                    [(ngModel)]="quantity"
+                    required appNumberonly10digits>
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    <label for="pincode" class="form-label">Pincode</label>
+                    <input type="text" id="pincode" class="form-control" formControlName="pincode" placeholder="Enter pincode" required appNumberonly10digits>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-start mt-2" style="font-weight:bold;">
+                  Total: {{selectedProduct.price * quantity || selectedProduct.price}}
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-primary me-2">Submit</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+                
+              </form>
+            </div>
+          </div>
+          <div>
+
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- whatsappp -->
+
+<div class="bottomcorner">
+    <a href="https://wa.me/8128180101">
+      <img src="/assets/img/whatsappp.png" style="height: auto; width: 65px; float: left;" alt="">
+    </a>
+  </div>
+
+
+  <div class="bottomleft">
+    <a href="tel:+91-8128180101">
+      <img src="/assets/img/phone.png" style="height: auto; width: 60px; float: left;" alt="">
+    </a>
+  </div>
+

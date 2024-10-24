@@ -1,0 +1,670 @@
+<div class="container-fluid flex-grow-1 container-p-y">
+    <div class="card">
+        <div class="card-header border-bottom">
+            <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0 ">
+                <!-- <div class="col-md-2">
+                    <input type="text" class="form-control" placeholder="Search Type.." [(ngModel)]="search"
+                        (input)="searchTicketBooking()">
+                </div> -->
+                <!-- <div class="col-md-2">
+                    Total Counts: {{totalCount}}
+                </div> -->
+
+                <div class="col" style="text-align: right;">
+                    <!-- <select class="form-control form-select" [(ngModel)]="fltTime" (change)="onTimeChangeEvent()"
+                        style="width: 149px;">
+                        <option value="0">Filter By Date</option>
+                        <option value="1">Today</option>
+                        <option value="2">Yesterday</option>
+                        <option value="3">This Week</option>
+                        <option value="4">Last Week</option>
+                        <option value="5">This Month</option>
+                        <option value="6">Last Month</option>
+                        <option value="7">This Year</option>
+                        <option value="8">Last Year</option>
+                        <option value="9">Custom Date</option>
+                    </select> -->
+
+                    <button type="button" class="btn btn-primary" style="margin-top:37px;"
+                        (click)="openTicketBookingDialog()">+
+                        Ticket Book</button>
+
+                    <b style="float: left;">
+                        Date : {{Date}}
+                    </b>
+
+                    <!-- <button type="button" class="btn btn-primary" style="margin-top:37px;" (click)="openQRDialog()">+
+                        QR</button> -->
+
+                    <!--  data-bs-toggle="modal" data-bs-target="#booking" -->
+
+                    <!-- Add User Drawer start -->
+                    <div class="modal fade" id="booking" data-bs-backdrop="static" tabindex="-1" style="display: none;"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-simple modal-enable-otp modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="mb-4">
+                                        <!-- <h3 class="m5-3" align="left">{{formTitle}} Booking</h3> -->
+
+                                        <div class="mt-3 g-3 fv-plugins-bootstrap5 fv-plugins-framework"
+                                            style="text-align: left;">
+
+                                            <form [formGroup]="TicketBookingForm" (ngSubmit)="addUpdateTicketBooking()">
+                                                <div>
+                                                    <div class="row mb-4 header">
+                                                        <label class="col-6" style="font-weight: bold;">Ticket
+                                                            Type</label>
+                                                        <label class="col-3" style="font-weight: bold;">Ticket
+                                                            Counts</label>
+                                                        <div class=" col-2 form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                [disabled]="tickets.length >= 2 || groupDisabled"
+                                                                (change)="onChangeRadioButton($event)" value="4"
+                                                                id="TicketG">
+                                                            <label class="form-check-label" for="1">
+                                                                Group
+                                                                <!-- {{tickets.length}} -->
+                                                                <!-- (change)="onChangeRadioButton($event)" formControlName="G"  -->
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div formArrayName="tickets">
+                                                        <!-- {{this.tickets.controls.length}} -->
+                                                        <div *ngFor="let t of tickets.controls; let i = index">
+                                                            <div [formGroupName]="i">
+                                                                <div class="row">
+                                                                    <div class="col mr mb-4">
+                                                                        <select type="text"
+                                                                            class="form-control form-select"
+                                                                            formControlName="tickettype"
+                                                                            (change)="tickettypeOnchange(tickets.controls[i].get('tickettype'))"
+                                                                            id="{{'tickettype'+i}}"
+                                                                            [ngClass]="{'invalid-feedback d-block': submitted && tickets.controls[i].get('tickettype')?.errors}">
+                                                                            <option value="">Select Ticket Type</option>
+                                                                            <ng-container
+                                                                                *ngFor="let tickettlst of tickettypeData">
+                                                                                <option
+                                                                                    *ngIf="this.selectedValues === 0 || (this.selectedValues > 0 && tickettlst.tickettypename !== 'NRI Female' && tickettlst.tickettypename !== 'NRI Male' && tickettlst.tickettypename !== 'NRI Children' && tickettlst.tickettypename !== 'Camara')"
+                                                                                    [ngValue]="tickettlst.tickettypeid"
+                                                                                    [disabled]="isOptionDisabled(tickettlst.tickettypeid, i)"
+                                                                                    [hidden]="tickettlst.tickettypename === 'Group'">
+                                                                                    {{tickettlst.tickettypename}}
+                                                                                </option>
+                                                                                <!-- *ngFor="let tickettlst of tickettypeData" -->
+                                                                            </ng-container>
+                                                                        </select>
+                                                                        <div *ngIf="submitted && tickets.controls[i].get('tickettype')?.errors"
+                                                                            class="invalid-feedback d-block">
+                                                                            <div
+                                                                                *ngIf="tickets.controls[i].get('tickettype')?.hasError('required')">
+                                                                                Ticket Type is required!
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col mr mb-4">
+                                                                        <select class="form-control-sm form-select"
+                                                                            formControlName="ticketcounts"
+                                                                            [ngClass]="{'invalid-feedback d-block': submitted && tickets.controls[i].get('ticketcounts')?.errors}">
+                                                                            <option value="">Select No Of Tickets
+                                                                            </option>
+                                                                            <option
+                                                                                *ngFor="let j of generateNumbers(1, 50)"
+                                                                                [ngValue]="j">{{ j }}</option>
+                                                                        </select>
+                                                                        <div *ngIf="submitted && tickets.controls[i].get('ticketcounts')?.errors"
+                                                                            class="invalid-feedback d-block">
+                                                                            <div
+                                                                                *ngIf="tickets.controls[i].get('ticketcounts')?.hasError('required')">
+                                                                                Please select numbers!
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="col-lg-1 mr mb-4">
+                                                                        <div class="row">
+                                                                            <a class="btn btn-primary btn-sm mr-1"
+                                                                                style="height: 36px; width: 40px;"
+                                                                                *ngIf="tickets.controls.length != 1"
+                                                                                (click)="deleteItem(i)">
+                                                                                <i class='bx bx-trash'></i>
+                                                                            </a>
+                                                                            <span *ngIf="!checked">
+                                                                            <a class="btn btn-primary btn-sm mt-2 me-3"
+                                                                                style="height: 36px; width: 40px;"
+                                                                                *ngIf="i + 1 == tickets.controls.length && i < tickettypeData.length-1"
+                                                                                (click)="addMoreitem()">
+                                                                                <i class='bx bx-user-plus'></i>
+                                                                            </a>
+                                                                            </span>
+                                                                            <span *ngIf="checked">
+                                                                                <a class="btn btn-primary btn-sm mt-2 me-3"
+                                                                                    style="height: 36px; width: 40px;"
+                                                                                    *ngIf="i + 1 == tickets.controls.length && i < 2"
+                                                                                    (click)="addMoreitem()">
+                                                                                    <i class='bx bx-user-plus'></i>
+                                                                                </a>
+                                                                            </span>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <select class="form-control form-control-sm"
+                                                            formControlName="tickettype"
+                                                            [ngClass]="{ 'has-error': submitted && f['tickettype'].errors }">
+                                                            <option value="">Select Ticket Type</option>
+                                                            <option *ngFor="let tickettlst of tickettypeData"
+                                                                [ngValue]="tickettlst.tickettypeid">
+                                                                {{tickettlst.tickettypename}}
+                                                            </option>
+                                                        </select>
+                                                        <div *ngIf="submitted && f['tickettype'].errors"
+                                                            class="has-error">
+                                                            <div *ngIf="f['tickettype'].errors['required']">Please
+                                                                select Ticket Type!</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <select class="form-control form-control-sm"
+                                                            formControlName="tickettype"
+                                                            [ngClass]="{ 'has-error': submitted && f['tickettype'].errors }">
+                                                            <option value="">Select No Of Tickets</option>
+                                                            <option *ngFor="let i of generateNumbers(1, 50)"
+                                                                [ngValue]="i">{{ i }}</option>
+                                                        </select>
+                                                        <div *ngIf="submitted && f['tickettype'].errors"
+                                                            class="has-error">
+                                                            <div *ngIf="f['tickettype'].errors['required']">Please
+                                                                select Ticket Type!</div>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+
+                                                <hr><br>
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered text-center" id="dataTable"
+                                                            width="100%" cellspacing="0">
+                                                            <tr>
+                                                                <th>Ticket Type</th>
+                                                                <th>Ticket Price</th>
+                                                                <th>Ticket Qty</th>
+                                                                <th>Ticket Total</th>
+                                                            </tr>
+                                                            <tr *ngFor="let t of tickets.controls; let i = index">
+                                                                <!-- *ngFor="let tickettlst of tickettypeData" -->
+                                                                <td>{{
+                                                                    getTicketTypeName(tickets.controls[i].get('tickettype')?.value)
+                                                                    }}</td>
+                                                                <td>
+                                                                    <span
+                                                                        *ngIf="selectedValues > 0 && tickets.controls[i].get('tickettype')?.value > 0">
+                                                                        {{
+                                                                        getTicketPrice(tickets.controls[i].get('tickettype')?.value)
+                                                                        - 10
+                                                                        }}
+                                                                    </span>
+                                                                    <span *ngIf="selectedValues <= 0">
+                                                                        {{
+                                                                        getTicketPrice(tickets.controls[i].get('tickettype')?.value)
+                                                                        }}
+                                                                    </span>
+                                                                </td>
+                                                                <td>{{ tickets.controls[i].get('ticketcounts')?.value }}
+                                                                </td>
+                                                                <td>
+                                                                    <span *ngIf="selectedValues > 0">
+                                                                        {{
+                                                                        calculateTotal(tickets.controls[i].get('tickettype')?.value,
+                                                                        tickets.controls[i].get('ticketcounts')?.value)
+                                                                        }}
+                                                                    </span>
+                                                                    <span *ngIf="selectedValues <= 0">
+                                                                        {{
+                                                                        calculateTotal(tickets.controls[i].get('tickettype')?.value,
+                                                                        tickets.controls[i].get('ticketcounts')?.value)
+                                                                        }}
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="font-weight: bold;">Total:</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td>{{ calculateGrandTotal() }}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-end mt-3">
+                                                    <button type="submit"
+                                                        class="btn btn-primary me-sm-3 me-1 data-submit">
+                                                        Generate Ticket</button>
+                                                    <button type="reset" class="btn btn-outline-secondary "
+                                                        data-bs-dismiss="modal" (click)="onCancel()">Cancel</button>
+                                                </div>
+                                            </form>
+
+                                            <!-- <form [formGroup]="TicketBookingForm" (ngSubmit)="addUpdateTicketBooking()">
+
+                                                <div>
+                                                    <div class="row mb-4 header">
+                                                        <label class="col" style="font-weight: bold;">Ticket
+                                                            Type</label>
+                                                        <label class="col" style="font-weight: bold;">Ticket
+                                                            Counts</label>
+                                                    </div>
+                                                    <div formArrayName="tickets">
+                                                        <div *ngFor="let t of tickets.controls; let i = index">
+                                                            <div [formGroupName]="i">
+                                                                hello
+                                                                <div class="row">
+                                                                    <div class="col mr mb-4">
+                                                                        <select type="text"
+                                                                            class="form-control form-select"
+                                                                            formControlName="tickettype"
+                                                                            id="{{'tickettype'+i}}"
+                                                                            [ngClass]="{'has-error': submitted && f['tickettype'].errors}">
+                                                                            <option value="">Select Ticket Type</option>
+                                                                            <option
+                                                                                *ngFor="let tickettlst of tickettypeData"
+                                                                                [ngValue]="tickettlst.tickettypeid">
+                                                                                {{tickettlst.tickettypename}}
+                                                                            </option>
+                                                                        </select>
+                                                                        <div *ngIf="submitted && f['tickettype'].errors"
+                                                                            class="has-error">
+                                                                            <div
+                                                                            *ngIf="f['tickettype'].errors['required']">
+                                                                                Ticket Type is required!</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col mr mb-4">
+                                                                        <select class="form-control form-control-sm"
+                                                                            formControlName="ticketcounts"
+                                                                            [ngClass]="{ 'has-error': submitted && f['ticketcounts'].errors }">
+                                                                            <option value="">Select No Of Tickets
+                                                                            </option>
+                                                                            <option
+                                                                                *ngFor="let i of generateNumbers(1, 50)"
+                                                                                [ngValue]="i">{{ i }}</option>
+                                                                        </select>
+                                                                        <div *ngIf="submitted && f['ticketcounts'].errors"
+                                                                            class="has-error">
+                                                                            <div
+                                                                                *ngIf="f['ticketcounts'].errors['required']">
+                                                                                Please select numbers!</div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-lg-1 mr mb-4">
+                                                                        <div class="row">
+                                                                            <a class="btn btn-danger btn-sm mr-1"
+                                                                                *ngIf="tickets.controls.length!=1"
+                                                                                (click)="deleteItem(i)">
+                                                                                <i class="fas fa-trash-alt"></i>
+                                                                            </a>
+                                                                            <a class="btn btn-info btn-sm "
+                                                                                *ngIf="i+1==tickets.controls.length && i<2"
+                                                                                (click)="addMoreitem()">
+                                                                                <i class="fas fa-plus"></i>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="d-flex justify-content-end mt-3">
+                                                    <button type="submit"
+                                                        class="btn btn-primary me-sm-3 me-1 data-submit">Generate Ticket</button>
+                                                    <button type="reset" class="btn btn-outline-secondary "
+                                                        data-bs-dismiss="modal" (click)="onCancel()">Cancel</button>
+                                                </div>
+
+                                            </form> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add User Drawer End -->
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table border-top dataTable no-footer dtr-column biiling-report-client"
+                    id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info">
+                    <thead>
+                        <tr>
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Ticket Id</th>
+                            <!-- <th class="sorting" tabindex="0" rowspan="1" colspan="1">Total</th> -->
+                            <th class="sorting" tabindex="0" rowspan="1" colspan="1">Time</th>
+                            <!-- <th class="sorting" tabindex="0" rowspan="1" colspan="1">Created By</th>-->
+                            <!-- <th class="sorting" tabindex="0" rowspan="1" colspan="1">Status</th> -->
+                            <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="Actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="ticketbookingfortodayData.length>0">
+                        <tr
+                            *ngFor="let ttbookedlst of ticketbookingfortodayData | paginate: { itemsPerPage: pageSize, currentPage: pageIndex, totalItems: totalCount }; let i = index">
+                            <td>{{ ttbookedlst.ticketuniqueid.split('-').join('/') }}</td>
+                            <!-- <td>{{ttbookedlst.tickettypename}}</td>
+                            <td>{{ttbookedlst.ticketrate}}</td> -->
+                            <td>
+                                {{Time}}
+                            </td>
+                            <td>
+                                <div class="d-inline-block text-nowrap">
+                                    <button class="btn btn-sm btn-icon" (click)="setTicketTypedata(ttbookedlst)">
+                                        <!-- <i class='bx bx-revision'></i> -->
+                                        <i class='bx bx-repeat'></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="ticketbookingfortodayData.length==0">
+                        <tr>
+                            <td colspan="100" class="text-center text-danger">No Ticket Created Today</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <!-- <div class="row mx-2">
+                <div class="col-sm-12 col-md-6">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-2">
+                            <div class="dataTables_length" id="DataTables_Table_0_length" style="margin-top: 10px;">
+                                <label><select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                                        class="form-select" [(ngModel)]="pageSize" (change)="changePageSize()">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select></label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-10">
+                            <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite"
+                                style="margin-top: 20px">
+                                Records per page out of total {{totalCount}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mt-3">
+                    <pagination-controls style="text-align: right;" (pageChange)="pageChangeEvent($event)">
+                    </pagination-controls>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+
+    <div class="content-backdrop fade"></div>
+</div>
+
+
+<!-- QR Code Model -->
+
+
+<!-- <div class="modal fade mt-1" id="QR" data-bs-backdrop="static" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-simple modal-enable-otp modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="g-3 fv-plugins-bootstrap5 fv-plugins-framework" style="text-align: left;">
+                    <div class="mb-2">
+                        <form [formGroup]="TicketBookingForm" (ngSubmit)="Print()" style="text-align: center;">
+                            <img src="/assets/img/sanjevani.png" alt="Dolls Museum" style="height: 100px;"
+                                style="height: 100px; width: 210px;">
+                            <br><br>
+
+                            <b>Ticket No:</b> {{modifiedTicketUniqueId}}<br>
+                            <b>Date:</b> {{Date}} <br>
+                            <b>Time:</b> {{Time}}<br>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered text-center" id="dataTable" width="100%"
+                                    cellspacing="0">
+                                    <tr>
+                                        <th>Ticket Type</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    <tr *ngFor="let td of IdWiseData">
+                                        <td>
+                                            <small>
+                                                {{td.tickettypename}}
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <small>
+                                                {{td.ticketrate}}
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <small>
+                                                {{td.total_counts}}
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <small>
+                                                {{td.total_pertype}}
+                                            </small>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="font-weight: bold;"><small>Total:</small></td>
+                                        <td><small>{{totalBill}}</small></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <small style="color: rgb(58, 183, 255);">Managed By:</small> <br>
+                            <small>Shri Arvindbhai Maniar Jankalyan Trust</small> <br>
+
+                            <small style="color: rgb(58, 183, 255);">Support: </small><br>
+                            <small>Rotary Club of Rajkot Midtown</small> <br>
+
+                            <small style="color: rgb(58, 183, 255);">Rotary Dolls Museum</small><br>
+                            <small><b>Address:</b> <br>
+                                <address>Opp, Heera Panna Complex,
+                                    Dr,. Yagnik Road, Rajkot-360 001.
+                                    Gujarat - India.</address>
+                                Phone : +91 281 2464352 |
+                                Cell : +91 89804 90158 <br>
+                                Web : <a href="http://www.rotary3060dolls.org"
+                                    target="_blank">www.rotary3060dolls.org</a><br>
+                                Email : rotarydollsmuseum@gmail.com <br>
+                            </small>
+                            <img src="/assets/img/feedbackQr.JPEG" alt="QR Code Image" style="height: 80px;"> <br>
+                            <small style="color: chocolate;">Kindly Rate Us Here!!!</small>
+
+                            <div class="mt-2" style="text-align: center;">
+                                <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">
+                                    Print Ticket</button>
+                                <button type="reset" class="btn btn-outline-secondary " data-bs-dismiss="modal"
+                                    (click)="onCancel()">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+<div class="modal fade mt-1" id="QR" data-bs-backdrop="static" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-simple modal-enable-otp modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="g-3 fv-plugins-bootstrap5 fv-plugins-framework" style="text-align: left;">
+                    <div class="mb-2">
+                        <form [formGroup]="TicketBookingForm" (ngSubmit)="Print()" style="text-align: center;">
+                            <!-- <div>
+                                <label class="col" style="font-weight: bold;">
+                                    Ticket Details</label>
+                            </div> -->
+                            <img src="/assets/img/sanjevani.png" alt="Dolls Museum"
+                                style="height: 100px; width: 210px;">
+                            <br><br>
+
+                            <b *ngIf="modifiedTicketUniqueId">Ticket No:</b>
+                            {{modifiedTicketUniqueId.split('-').join('/')}}<br>
+                            <!-- <b>Ticket No:</b> {{IdWiseData.ticketuniqueid.split('-').join('/')}} -->
+                            <b>Date:</b> {{Date}} <br>
+                            <b>Time:</b> {{Time}}<br>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered text-center" id="dataTable" width="100%"
+                                    cellspacing="0">
+                                    <tr>
+                                        <th>Ticket Type</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    <tr *ngFor="let td of IdWiseData">
+                                        <td>
+                                            <small>
+                                                {{ td.tickettypename }}
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <small>
+                                                {{ td.ticketrate }}
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <small>
+                                                {{ td.ticketcount }}
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <small>
+                                                {{ td.total_pertype }}
+                                            </small>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr *ngFor="let t of tickets.controls; let i = index">
+                                        <td>{{ getTicketTypeName(tickets.controls[i].get('tickettype')?.value) }}
+                                        </td>
+                                        <td>{{ getTicketPrice(tickets.controls[i].get('tickettype')?.value) }}</td>
+                                        <td>{{ tickets.controls[i].get('ticketcounts')?.value }}</td>
+                                        <td>{{ calculateTotal(tickets.controls[i].get('tickettype')?.value,
+                                            tickets.controls[i].get('ticketcounts')?.value) }}</td>
+                                    </tr> -->
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="font-weight: bold;"><small>Total:</small></td>
+                                        <!-- <td>{{ calculateGrandTotal() }}</td> -->
+                                        <td><small>{{totalBill}}</small></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <small style="color: rgb(58, 183, 255);">Managed By:</small> <br>
+                            <small>Shri Arvindbhai Maniar Jankalyan Trust</small> <br>
+
+                            <small style="color: rgb(58, 183, 255);">Support: </small><br>
+                            <small>Rotary Club of Rajkot Midtown</small> <br>
+
+                            <small style="color: rgb(58, 183, 255);">Rotary Dolls Museum</small><br>
+                            <small><b>Address:</b> <br>
+                                <address>Opp, Heera Panna Complex,
+                                    Dr,. Yagnik Road, Rajkot-360 001.
+                                    Gujarat - India.</address>
+                                Phone : +91 281 2464352 |
+                                Cell : +91 89804 90158 <br>
+                                Web : <a href="http://www.rotary3060dolls.org"
+                                    target="_blank">www.rotary3060dolls.org</a><br>
+                                <br>
+                            </small>
+                            <img src="/assets/img/feedbackQr.JPEG" alt="QR Code Image" style="height: 80px;"> <br>
+                            <small style="color: chocolate;">Please Scan This QR Code To Give Feedback,
+                                <br> Thank You !!!</small>
+                            <!-- Thanks For Visiting!!!❤️<br> -->
+
+                            <div class="mt-2" style="text-align: center;">
+                                <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">
+                                    Print Ticket</button>
+                                <button type="reset" class="btn btn-outline-secondary " data-bs-dismiss="modal"
+                                    (click)="onCancel()">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <div class="modal fade" id="openClosejobdialoge" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form class="user" [formGroup]="DateForm" (ngSubmit)="CustomeDate()">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Custome Date Filteration</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                
+                    <div class="form-group">
+                        <h6>Select Start Date</h6>
+                        <input type="date" class="form-control" placeholder="Enter Start Date"
+                            formControlName="startdate"
+                            [ngClass]="{ 'has-error': submitted && f3['startdate'].errors }">
+                        <div *ngIf="submitted && f3['startdate'].errors" class="has-error">
+                            <div *ngIf="f3['startdate'].errors['required']">Date is required!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h6>Select End Date</h6>
+                        <input type="date" class="form-control" placeholder="Enter End Date"
+                            formControlName="enddate"
+                            [ngClass]="{ 'has-error': submitted && f3['enddate'].errors }">
+                        <div *ngIf="submitted && f3['enddate'].errors" class="has-error">
+                            <div *ngIf="f3['enddate'].errors['required']">Date is required!
+                            </div>
+                        </div>
+                    </div>
+              
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal" (click)="onCancle()">Cancel</button>
+                    <button class="btn btn-primary" type="submit" *ngIf="!submitbtn"><i class="fas fa-save"></i> Filter </button>
+                    <button class="btn btn-primary" *ngIf="submitbtn" [disabled]="submitbtn">
+                        <i class="fa fa-spinner fa-spin"></i> Loading
+                      </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div> -->
