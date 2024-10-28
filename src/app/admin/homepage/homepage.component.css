@@ -1,45 +1,56 @@
 /* Importing Roboto font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-.home-banner-btn{
-    color: blue;
+.home-banner-btn {
+  color: blue;
 }
 
-.welcome-text{
-    color: #000000 !important;
+.welcome-text {
+  color: #000000 !important;
 }
 
 .h1 {
-    font-size: 4.375rem !important;
+  font-size: 4.375rem !important;
 }
 
 
-h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font-weight: 500;
-    line-height: 1.1;
-    color: #000000 !important;
+h6,
+.h6,
+h5,
+.h5,
+h4,
+.h4,
+h3,
+.h3,
+h2,
+.h2,
+h1,
+.h1 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  line-height: 1.1;
+  color: #000000 !important;
 }
 
 
 .customer-review-box {
-    text-align: center;
-    padding: 40px 20px 40px 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 16px rgb(0 0 0 / 7%);
-    margin-bottom: 15px;
-    height: auto;
+  text-align: center;
+  padding: 40px 20px 40px 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 16px rgb(0 0 0 / 7%);
+  margin-bottom: 15px;
+  height: auto;
 }
 
 .owl-carousel .item {
-    margin: 0 0px!important;
+  margin: 0 0px !important;
 }
 
 .review-start {
-    width: 100px !important;
-    height: auto !important;
-    margin: auto;
+  width: 100px !important;
+  height: auto !important;
+  margin: auto;
 }
 
 
@@ -48,50 +59,55 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 
 
 .slider-container {
-    width: 300px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .slider {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-  }
-
-  .slider-item {
-    flex: 0 0 33.33%;
-    box-sizing: border-box;
-  }
-
-  #box {
-background: orange;
-height: 50px;
-width: 60px;
+  width: 300px;
+  overflow: hidden;
+  position: relative;
 }
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slider-item {
+  flex: 0 0 33.33%;
+  box-sizing: border-box;
+}
+
+#box {
+  background: orange;
+  height: 50px;
+  width: 60px;
+}
+
 #box1 {
-background: red;
-height: 50px;
-width: 60px;
+  background: red;
+  height: 50px;
+  width: 60px;
 }
+
 #box2 {
-background: green;
-height: 50px;
-width: 60px;
+  background: green;
+  height: 50px;
+  width: 60px;
 }
- #box3 {
-background: pink;
-height: 50px;
-width: 60px;
+
+#box3 {
+  background: pink;
+  height: 50px;
+  width: 60px;
 }
-  #box4 {
-background: brown;
-height: 50px;
-width: 60px;
+
+#box4 {
+  background: brown;
+  height: 50px;
+  width: 60px;
 }
-  #box5 {
-background: purple;
-height: 50px;
-width: 60px;
+
+#box5 {
+  background: purple;
+  height: 50px;
+  width: 60px;
 }
 
 
@@ -105,28 +121,8 @@ width: 60px;
 
 
 
-
-.slider-container {
-    width: 300px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .slider {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-  }
-
-  .slider-item {
-    flex: 0 0 33.33%;
-    box-sizing: border-box;
-  }
-
-
 .newImg {
-    /* width: 94px; */
-    width: 119px;
-
+  width: 119px;
 }
 
 
@@ -152,7 +148,7 @@ body {
   z-index: 100000000;
 }
 
-.bottomleft{
+.bottomleft {
   position: fixed;
   bottom: 22px;
   left: 17px;
@@ -173,26 +169,30 @@ body {
 
 .owl-carousel .owl-item {
   flex: 0 0 auto;
-  width: 326.25px; /* Set the width of each item */
-  margin-right: 15px; /* Adjust margin between items */
+  width: 326.25px;
+  /* Set the width of each item */
+  margin-right: 15px;
+  /* Adjust margin between items */
 }
 
 /* Media queries for responsiveness */
 @media screen and (max-width: 600px) {
   .owl-carousel .owl-item {
-      width: 250px; /* Adjust width for smaller screens */
-      margin-left: 15px !important;
-      width:333.25px !important;
+    width: 250px;
+    /* Adjust width for smaller screens */
+    margin-left: 15px !important;
+    width: 333.25px !important;
   }
 
-  .customer-review-box{
-    padding:22px 20px 40px 20px !important;
+  .customer-review-box {
+    padding: 22px 20px 40px 20px !important;
   }
 }
 
 @media screen and (max-width: 400px) {
   .owl-carousel .owl-item {
-      width: 200px; /* Adjust width for even smaller screens */
+    width: 200px;
+    /* Adjust width for even smaller screens */
   }
 }
 
@@ -207,23 +207,41 @@ body {
   margin: auto;
   overflow: hidden;
   background-color: #ffffff;
-  white-space: nowrap; /* Ensure the slides stay in one line */
+  white-space: nowrap;
+  /* Ensure the slides stay in one line */
 }
 
 .mySlides {
   display: inline-block;
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
 }
 
 @keyframes slide {
-  0% { transform: translateX(0%); }
-  33.33% { transform: translateX(0%); }
-  44.44% { transform: translateX(-100%); }
-  77.77% { transform: translateX(-100%); }
-  88.88% { transform: translateX(-200%); }
-  100% { transform: translateX(-200%); }
+  0% {
+    transform: translateX(0%);
+  }
+
+  33.33% {
+    transform: translateX(0%);
+  }
+
+  44.44% {
+    transform: translateX(-100%);
+  }
+
+  77.77% {
+    transform: translateX(-100%);
+  }
+
+  88.88% {
+    transform: translateX(-200%);
+  }
+
+  100% {
+    transform: translateX(-200%);
+  }
 }
 
 .slideshow-container .slider {
@@ -241,11 +259,13 @@ body {
   padding: 20px;
   margin-bottom: 20px;
 }
+
 .advantages h2 {
   font-size: 24px;
   margin-bottom: 10px;
   color: #333;
 }
+
 .advantages p {
   font-size: 16px;
   line-height: 1.5;
@@ -265,7 +285,7 @@ body {
   font-size: 3rem;
 }
 
-.left-content h4, 
+.left-content h4,
 .left-content h5 {
   font-size: 1.5rem;
 }
@@ -277,37 +297,40 @@ body {
 /* Media query for devices with a width of 768px or less (Tablets and mobiles) */
 @media (max-width: 768px) {
   .col-xl-12 {
-      flex-direction: column;
-      align-items: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .left-content {
-      padding: 10px;
+    padding: 10px;
   }
 
   /* Adjust font sizes for mobile */
   .left-content h2 {
-      font-size: 2rem; /* Reduced from 2.5rem */
+    font-size: 2rem;
+    /* Reduced from 2.5rem */
   }
 
   .left-content h1 {
-      font-size: 2.5rem; /* Reduced from 3rem */
+    font-size: 2.5rem;
+    /* Reduced from 3rem */
   }
 
-  .left-content h4, 
+  .left-content h4,
   .left-content h5 {
-      font-size: 1.2rem; /* Reduced from 1.5rem */
+    font-size: 1.2rem;
+    /* Reduced from 1.5rem */
   }
 
   /* Stack the text content and ensure full width for images */
   .col-6 {
-      width: 100%;
+    width: 100%;
   }
 
   /* Adjust the SVG size for smaller screens */
   svg#sw-js-blob-svg {
-      width: 100%;
-      height: auto;
+    width: 100%;
+    height: auto;
   }
 
   /* .newImg {
@@ -317,31 +340,34 @@ body {
 
   /* Reduce padding/margin for mobile view */
   .left-content h5 {
-      margin: 15px 0;
+    margin: 15px 0;
   }
 }
 
 /* Media query for smaller mobile devices (max-width: 480px) */
 @media (max-width: 480px) {
   .left-content h2 {
-      font-size: 1.8rem; /* Further reduction */
+    font-size: 1.8rem;
+    /* Further reduction */
   }
 
   .left-content h1 {
-      font-size: 2.2rem;
+    font-size: 2.2rem;
   }
 
   .left-content h4,
   .left-content h5 {
-      font-size: 1rem; /* Further reduction for smaller screens */
+    font-size: 1rem;
+    /* Further reduction for smaller screens */
   }
 
   .left-content h5 {
-      margin-top: 10px;
+    margin-top: 10px;
   }
 
   .left-content {
-      text-align: center; /* Center content on smaller screens */
+    text-align: center;
+    /* Center content on smaller screens */
   }
 }
 
@@ -353,75 +379,87 @@ body {
 
 /* Base styles for the modal */
 .modal-content {
-  border-radius: 8px; /* Add some border radius for aesthetics */
+  border-radius: 8px;
+  /* Add some border radius for aesthetics */
 }
 
 /* Mobile styles */
 @media (max-width: 768px) {
   .modal-dialog {
-      margin: 1rem; /* Reduce margin on mobile */
-      width: 92%; 
-      max-width: none; /* Remove the max-width constraint */
+    margin: 1rem;
+    /* Reduce margin on mobile */
+    width: 92%;
+    max-width: none;
+    /* Remove the max-width constraint */
   }
-  
+
   .modal-header {
-      flex-direction: column; /* Stack header elements */
-      align-items: flex-start; /* Align items to the start */
-      text-align: left; /* Left-align text */
+    flex-direction: column;
+    /* Stack header elements */
+    align-items: flex-start;
+    /* Align items to the start */
+    text-align: left;
+    /* Left-align text */
   }
 
   .modal-title {
-      font-size: 1.5rem; /* Adjust font size for mobile */
-      margin-bottom: 0.5rem; /* Add space below the title */
+    font-size: 1.5rem;
+    /* Adjust font size for mobile */
+    margin-bottom: 0.5rem;
+    /* Add space below the title */
   }
 
   .modal-body {
-      padding: 0.5rem; /* Reduce padding in modal body */
+    padding: 0.5rem;
+    /* Reduce padding in modal body */
   }
 
   .row {
-      flex-direction: column; /* Stack columns vertically */
-      margin-top: 20px !important;
+    flex-direction: column;
+    /* Stack columns vertically */
+    margin-top: 20px !important;
   }
 
   .col-md-6 {
-      width: 100%; 
-      margin-bottom: 1rem; 
+    width: 100%;
+    margin-bottom: 1rem;
   }
-  .col-md-6.img{
+
+  .col-md-6.img {
     text-align: center;
   }
 
   .img-fluid {
-      max-height: 200px; 
-      object-fit: cover; 
-      text-align:center;
+    max-height: 200px;
+    object-fit: cover;
+    text-align: center;
   }
 
   .d-flex {
-      flex-direction: column; 
+    flex-direction: column;
   }
 
   /* Adjust font sizes and margins in form */
   .form-label {
-      font-size: 0.9rem; 
+    font-size: 0.9rem;
   }
-  
+
   .form-control {
-      font-size: 0.9rem;
+    font-size: 0.9rem;
   }
 
   .btn {
-      width: 100%; 
-      margin-bottom: 0.5rem; 
+    width: 100%;
+    margin-bottom: 0.5rem;
   }
+
   /* .modal .modal-header .btn-close{
     margin-top:-3.25rem;
-  } */  
+  } */
   .btn-close {
     margin-top: -3.25rem;
   }
-  
+
 }
 
 
@@ -443,7 +481,7 @@ body {
 
   .d-flexx .text-muted-foreground {
     font-size: 14px;
-    margin-right: 4px; 
+    margin-right: 4px;
     color: rgba(0, 0, 0, 0.7);
     font-family: 'Times New Roman', serif;
   }
@@ -464,19 +502,18 @@ body {
     right: 32px;
     top: 41px;
     padding: 0.5rem;
-    font-size: 1.25rem; 
+    font-size: 1.25rem;
   }
 
   /* Adjust modal title */
   .modal-header h3 {
     font-size: 1.1rem;
     margin: 0;
-    padding-right: 2rem; 
+    padding-right: 2rem;
     text-align: center;
   }
 
-  .owl-item .cloned{
-    margin-left:30px !important;
+  .owl-item .cloned {
+    margin-left: 30px !important;
   }
 }
-
