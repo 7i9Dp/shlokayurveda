@@ -1,45 +1,43 @@
 <div *ngIf="product" class="container mt-4">
   <div class="card shadow-sm border-light mb-4">
-    <div class="row">
-      <!-- Product Image Placeholder -->
-      <div class="col-md-5 mb-4">
+    <div class="row flex-md-row flex-column">
+      <!-- Product Image -->
+      <div class="col-md-5 mb-4 d-flex justify-content-center">
         <img src="{{product.imagePath}}" class="product-image" alt="{{product.productName}}">
       </div>
+      <!-- Product Details -->
       <div class="col-md-7 mb-4">
         <div class="card-body">
-          <h5 class="card-title">
+          <h5 class="card-title text-center text-md-start">
             <a href="#" class="text-decoration-none text-dark">{{product.productName}}</a>
           </h5>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item"><strong>Price:</strong> <span class="text-success">&nbsp;₹
-                {{product.price}}/-</span>
-            </li>
-            <li *ngIf="product.oldPrice" class="list-group-item"><strong>Offer Price:</strong> <span class="text-danger">&nbsp;<s>₹
-                  {{product.oldPrice}}/-</s> </span></li>
+          <ul class="list-group list-group-flush text-center text-md-start">
+            <li class="list-group-item"><strong>Price:</strong> <span class="text-danger">&nbsp;<s>₹{{product.oldPrice}}/-</s></span></li>
+            <li *ngIf="product.oldPrice" class="list-group-item"><strong>Offer Price:</strong> <span class="text-success">&nbsp;₹{{product.price}}/-</span></li>
             <li class="list-group-item" *ngIf="product.Include"><strong>Includes:</strong>
               <ul>
                 <li *ngFor="let item of product.Include">{{item}}</li>
               </ul>
             </li>
           </ul>
-          <div class="form-group mb-2" *ngIf="product.duration || product.pack">
+          <!-- Course Selection -->
+          <div class="form-group mb-2 text-center text-md-start" *ngIf="product.duration || product.pack">
             <strong>Course:</strong>
-            <select class="form-control" id="size" name="size">
+            <select class="form-control mt-2" id="size" name="size">
               <option value="">{{product.duration || product.pack}}</option>
             </select>
           </div>
-          <ul class="list-group list-group-flush mb-2" *ngIf="product.usefor">
+          <!-- Use For Section -->
+          <ul class="list-group list-group-flush mb-2 text-center text-md-start" *ngIf="product.usefor">
             <li class="list-group-item"><strong>Use For :</strong>
               <ul>
                 <li>{{product.usefor}}</li>
               </ul>
             </li>
           </ul>
-          <!-- <a class="btn btn-primary mt-3" (click)="Buynow(product)">Buy Now</a> -->
-          <div class="col-2 d-flex gap-2 mt-auto mt-2">
-            <button class="btn btn-primary flex-fill"
-              style="background-color: #FFD700; border: none; font-family: 'Times New Roman', serif; color: black;"
-              (click)=Buynow(product)>Buy Now</button>
+          <!-- Buy Now Button -->
+          <div class="d-flex justify-content-center justify-content-md-start gap-2 mt-3">
+            <button class="btn btn-primary flex-fill px-4" style="background-color: #FFD700; border: none; color: black;" (click)="Buynow(product)">Buy Now</button>
           </div>
         </div>
       </div>

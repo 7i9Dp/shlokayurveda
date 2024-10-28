@@ -1,6 +1,3 @@
-.newImg{
-    width: 70px;
-}
 /* Importing Roboto font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
@@ -24,8 +21,6 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
     line-height: 1.1;
     color: #000000 !important;
 }
-
-
 
 
 .customer-review-box {
@@ -128,13 +123,11 @@ width: 60px;
   }
 
 
-
 .newImg {
     /* width: 94px; */
     width: 119px;
 
 }
-
 
 
 
@@ -188,6 +181,12 @@ body {
 @media screen and (max-width: 600px) {
   .owl-carousel .owl-item {
       width: 250px; /* Adjust width for smaller screens */
+      margin-left: 15px !important;
+      width:333.25px !important;
+  }
+
+  .customer-review-box{
+    padding:22px 20px 40px 20px !important;
   }
 }
 
@@ -215,7 +214,7 @@ body {
   display: inline-block;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensures images cover the container */
+  object-fit: cover; 
 }
 
 @keyframes slide {
@@ -231,10 +230,6 @@ body {
   display: flex;
   animation: slide 15s infinite;
 }
-
-
-
-
 
 
 
@@ -256,3 +251,232 @@ body {
   line-height: 1.5;
   color: #666;
 }
+
+
+
+
+/* Media */
+
+.left-content h2 {
+  font-size: 2.5rem;
+}
+
+.left-content h1 {
+  font-size: 3rem;
+}
+
+.left-content h4, 
+.left-content h5 {
+  font-size: 1.5rem;
+}
+
+.left-content {
+  padding: 20px;
+}
+
+/* Media query for devices with a width of 768px or less (Tablets and mobiles) */
+@media (max-width: 768px) {
+  .col-xl-12 {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+
+  .left-content {
+      padding: 10px;
+  }
+
+  /* Adjust font sizes for mobile */
+  .left-content h2 {
+      font-size: 2rem; /* Reduced from 2.5rem */
+  }
+
+  .left-content h1 {
+      font-size: 2.5rem; /* Reduced from 3rem */
+  }
+
+  .left-content h4, 
+  .left-content h5 {
+      font-size: 1.2rem; /* Reduced from 1.5rem */
+  }
+
+  /* Stack the text content and ensure full width for images */
+  .col-6 {
+      width: 100%;
+  }
+
+  /* Adjust the SVG size for smaller screens */
+  svg#sw-js-blob-svg {
+      width: 100%;
+      height: auto;
+  }
+
+  /* .newImg {
+      width: 100%;
+      height: auto;
+  } */
+
+  /* Reduce padding/margin for mobile view */
+  .left-content h5 {
+      margin: 15px 0;
+  }
+}
+
+/* Media query for smaller mobile devices (max-width: 480px) */
+@media (max-width: 480px) {
+  .left-content h2 {
+      font-size: 1.8rem; /* Further reduction */
+  }
+
+  .left-content h1 {
+      font-size: 2.2rem;
+  }
+
+  .left-content h4,
+  .left-content h5 {
+      font-size: 1rem; /* Further reduction for smaller screens */
+  }
+
+  .left-content h5 {
+      margin-top: 10px;
+  }
+
+  .left-content {
+      text-align: center; /* Center content on smaller screens */
+  }
+}
+
+
+
+
+/* Model */
+
+
+/* Base styles for the modal */
+.modal-content {
+  border-radius: 8px; /* Add some border radius for aesthetics */
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .modal-dialog {
+      margin: 1rem; /* Reduce margin on mobile */
+      width: 92%; 
+      max-width: none; /* Remove the max-width constraint */
+  }
+  
+  .modal-header {
+      flex-direction: column; /* Stack header elements */
+      align-items: flex-start; /* Align items to the start */
+      text-align: left; /* Left-align text */
+  }
+
+  .modal-title {
+      font-size: 1.5rem; /* Adjust font size for mobile */
+      margin-bottom: 0.5rem; /* Add space below the title */
+  }
+
+  .modal-body {
+      padding: 0.5rem; /* Reduce padding in modal body */
+  }
+
+  .row {
+      flex-direction: column; /* Stack columns vertically */
+      margin-top: 20px !important;
+  }
+
+  .col-md-6 {
+      width: 100%; 
+      margin-bottom: 1rem; 
+  }
+  .col-md-6.img{
+    text-align: center;
+  }
+
+  .img-fluid {
+      max-height: 200px; 
+      object-fit: cover; 
+      text-align:center;
+  }
+
+  .d-flex {
+      flex-direction: column; 
+  }
+
+  /* Adjust font sizes and margins in form */
+  .form-label {
+      font-size: 0.9rem; 
+  }
+  
+  .form-control {
+      font-size: 0.9rem;
+  }
+
+  .btn {
+      width: 100%; 
+      margin-bottom: 0.5rem; 
+  }
+  /* .modal .modal-header .btn-close{
+    margin-top:-3.25rem;
+  } */  
+  .btn-close {
+    margin-top: -3.25rem;
+  }
+  
+}
+
+
+
+/* productdisplay */
+
+.d-flexx {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Mobile view styling (max-width: 576px) */
+@media (max-width: 576px) {
+  .d-flexx {
+    flex-direction: row;
+    justify-content: start;
+  }
+
+  .d-flexx .text-muted-foreground {
+    font-size: 14px;
+    margin-right: 4px; 
+    color: rgba(0, 0, 0, 0.7);
+    font-family: 'Times New Roman', serif;
+  }
+
+  .d-flexx .text-lg {
+    font-size: 13px;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  /* Style the close button */
+  .modal-header .btn-close {
+    position: absolute;
+    right: 32px;
+    top: 41px;
+    padding: 0.5rem;
+    font-size: 1.25rem; 
+  }
+
+  /* Adjust modal title */
+  .modal-header h3 {
+    font-size: 1.1rem;
+    margin: 0;
+    padding-right: 2rem; 
+    text-align: center;
+  }
+
+  .owl-item .cloned{
+    margin-left:30px !important;
+  }
+}
+

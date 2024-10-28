@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <svg id="sw-js-blob-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <svg id="sw-js-blob-svg"  [attr.viewBox]="viewBox" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient id="sw-gradient" x1="0" x2="1" y1="1" y2="0">
                         <stop id="stop1" stop-color="rgba(248, 117, 55, 1)" offset="0%"></stop>
@@ -44,9 +44,9 @@
                     </path>
                     <!-- <image class="newImg" x="12" y="29" xlink:href="../../../assets/img/banner-main.png"></image>
                     <image class="newImg" x="12" y="29" xlink:href="../../../assets/img/banner-main2.png"></image> -->
-                   s <!-- <image class="newImg" x="0" y="8" xlink:href="../../../assets/img/banner.png"></image> -->
+                   <!-- <image class="newImg" x="0" y="8" xlink:href="../../../assets/img/banner.png"></image> -->
                     <image class="newImg" x="-26" y="8" xlink:href="../../../assets/img/banner.png"></image>
-
+                    <!-- [attr.x]="x" -->
                 </g>
             </svg>
 
@@ -63,41 +63,51 @@
           </div>
 
       <div class="container-fluid flex-grow-1" style="padding: 30px; padding-bottom: 50px;"
-          style="background-color: #018662;">
-          <div class="row mt-1 mb-3">
-              <!-- 1st -->
-              <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-4" *ngFor="let product of data">
-                  <div class="card  text-white" style="height: 100%;">
-                      <img class="card-img glow-img" src={{product.imagePath}} alt={{product.productName}}
-                          style="padding: 10px; max-width: 100%; height: auto;">
-                          <div style="margin: 10px;padding: 10px;">
-                            <div class="mb-4">
-                              <div class="d-flex justify-content-between mb-2">
-                                <b class="text-muted-foreground text-lg" style="color: rgba(0, 0, 0, 0.7); font-size: 15px; font-family: 'Times New Roman', serif;">
-                                  Product:
-                                </b>
-                                <span class="text-muted-foreground text-lg" style="color: rgba(0, 0, 0, 0.7);font-size: 12px;margin-top: 4px; font-family: 'Times New Roman', serif;">
-                                  {{product.productName}}
-                                </span>
-                              </div>
-
-                              <div class="d-flex justify-content-between mb-2">
-                                <b class="text-muted-foreground" style="color: rgba(0, 0, 0, 0.7); font-family: 'Times New Roman', serif;">Pack:</b>
-                                <span style="font-weight: 500; color: black; font-family: 'Times New Roman', serif;">{{product.pack}}</span>
-                              </div>
-                              <div class="d-flex justify-content-between">
-                                <b class="text-muted-foreground" style="color: rgba(0, 0, 0, 0.7); font-family: 'Times New Roman', serif;">MRP:</b>
-                                <span style="font-size: 1rem; font-weight: bold; color: black; font-family: 'Times New Roman', serif;" class="text-success">{{product.price}} /-</span>
-                                <span style="font-size: 1rem; font-weight: bold; color: black; font-family: 'Times New Roman', serif;text-decoration: line-through;" *ngIf="product.oldPrice" class="text-danger">{{product.oldPrice}} /-</span>
-                              </div>
-                            </div>
-                            <div class="d-flex gap-2 mt-auto">
-                              <button class="btn btn-primary flex-fill" style="background-color: #FFD700; border: none; font-family: 'Times New Roman', serif; color: black;" (click)=Buynow(product)>Buy Now</button>
-                            </div>
-                          </div>
+        style="background-color: #018662;">
+        <div class="row mt-1 mb-3">
+          <!-- 1st -->
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-4" *ngFor="let product of data">
+            <div class="card  text-white" style="height: 100%;">
+              <img class="card-img glow-img" src={{product.imagePath}} alt={{product.productName}}
+                style="padding: 10px; max-width: 100%; height: auto;">
+              <div style="margin: 10px;padding: 10px;">
+                <div class="mb-4">
+                  <div class="d-flexx justify-content-between mb-2">
+                    <b class="text-muted-foreground text-lg"
+                      style="color: rgba(0, 0, 0, 0.7); font-size: 15px; font-family: 'Times New Roman', serif;">
+                      Product:
+                    </b>
+                    <span class="text-muted-foreground text-lg"
+                      style="color: rgba(0, 0, 0, 0.7);font-size: 12px;margin-top: 4px; font-family: 'Times New Roman', serif;">
+                      {{product.productName}}
+                    </span>
                   </div>
+      
+                  <div class="d-flexx justify-content-between mb-2">
+                    <b class="text-muted-foreground"
+                      style="color: rgba(0, 0, 0, 0.7); font-family: 'Times New Roman', serif;">Pack:</b>
+                    <span
+                      style="font-weight: 500; color: black; font-family: 'Times New Roman', serif;">{{product.pack}}</span>
+                  </div>
+                  <div class="d-flexx justify-content-between">
+                    <b class="text-muted-foreground"
+                      style="color: rgba(0, 0, 0, 0.7); font-family: 'Times New Roman', serif;">MRP:</b>
+                    <span style="font-size: 1rem; font-weight: bold; color: black; font-family: 'Times New Roman', serif;"
+                      class="text-success">{{product.price}} /-</span>
+                    <span
+                      style="font-size: 1rem; font-weight: bold; color: black; font-family: 'Times New Roman', serif;text-decoration: line-through;"
+                      *ngIf="product.oldPrice" class="text-danger">{{product.oldPrice}} /-</span>
+                  </div>
+                </div>
+                <div class="d-flexx gap-2 mt-auto">
+                  <button class="btn btn-primary flex-fill"
+                    style="background-color: #FFD700; border: none; font-family: 'Times New Roman', serif; color: black;"
+                    (click)=Buynow(product)>Buy Now</button>
+                </div>
               </div>
+            </div>
           </div>
+        </div>
       </div>
 
       <!--Contact Us-->
@@ -292,7 +302,7 @@
         <div class="modal-body" style="padding-top: 0px;">
           <div class="row">
             <!-- Image Section -->
-            <div class="col-md-6">
+            <div class="col-md-6 img">
               <img class="img-fluid" src="{{selectedProduct?.imagePath2}}" alt="{{selectedProduct?.productName || 'Product Image'}}" style="max-width: 100%; height: auto;">
               <li class="list-group-item">
               <p><strong>Pack:</strong> {{selectedProduct.pack}}</p>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductModel } from 'src/app/_interface/product';
 import { ProductBookingService } from 'src/app/_services/productbooking.service';
@@ -30,7 +30,20 @@ export class HomepageComponent implements OnInit {
   quantity:any;
   userForm: FormGroup;
   contactForm: FormGroup;
-  contactus:contactusModel
+  contactus:contactusModel;
+  viewBox: string = '0 0 100 100';
+  // x: string = '-26';
+
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateViewBox();
+  }
+
+  private updateViewBox() {
+    this.viewBox = window.innerWidth <= 768 ? '0 11 100 85' : '0 0 100 100';
+    // this.x = window.innerWidth <= 768 ? '-12' : '-26';
+  }
 
   constructor(private fb : FormBuilder,private ProductBookingService : ProductBookingService ) {
     this.userForm = this.fb.group({
@@ -86,6 +99,7 @@ export class HomepageComponent implements OnInit {
     };
   }
   ngOnInit(): void {
+  this.updateViewBox();
   this.data = [
     {
       "id": 10,
