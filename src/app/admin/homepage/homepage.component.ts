@@ -33,7 +33,8 @@ export class HomepageComponent implements OnInit {
   contactus:contactusModel;
   viewBox: string = '0 0 100 100';
   // x: string = '-26';
-
+  submitbtnc:boolean=false;
+  submitbtnu:boolean=false;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -47,27 +48,20 @@ export class HomepageComponent implements OnInit {
 
   constructor(private fb : FormBuilder,private ProductBookingService : ProductBookingService ) {
     this.userForm = this.fb.group({
-      // quantity: [0, Validators.required],
-      // email: ['', [Validators.required, Validators.email]],
-      // phone: [0, [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      // name: ['', Validators.required],
-      // address: ['', Validators.required],
-      // pincode: [0, [Validators.required, Validators.pattern('^[0-9]{6}$')]]
-      quantity: [],
-      email:[],
-      phone:[],
-      name:[],
-      address: [],
-      pincode:[],
+      quantity: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]], // Added email validator
+      phone: ['', Validators.required],
+      name: ['', Validators.required],
+      address: ['', Validators.required],
+      pincode: ['', Validators.required],
     });
 
     this.contactForm = this.fb.group({
-      name: [],
-      phone:[],
-      email:[],
-      address: [],
-      // pincode:[],
-      concern:[],
+      name: ['',Validators.required],
+      phone:['',Validators.required],
+      email:['',Validators.required],
+      address: ['',Validators.required],
+      concern:['',Validators.required],
     });
 
     this.contactus = {
@@ -182,14 +176,18 @@ export class HomepageComponent implements OnInit {
       "IsKit":false
     }
   ]
-  // this.selectedProduct = this.data;
-  // this.data
+
   }
 
   Buynow(product:any){
     this.selectedProduct = product;
      $("#productModal").modal('toggle');
   }
+
+  
+  get f() { return this.contactForm.controls; }
+  get uf() { return this.userForm.controls; }
+
 
   onSubmit(): void {
     this.submitted = true;
@@ -219,8 +217,8 @@ export class HomepageComponent implements OnInit {
           else {
             Swal.fire('', res.returnMessage, 'error');
           }
-          $("#booking").modal('toggle');
-          this.ResetForm();
+          $("#productModal").modal('toggle');
+          this.resetForm();
         },
         err => {
           Swal.fire('', err.error.message, 'error');
@@ -229,39 +227,56 @@ export class HomepageComponent implements OnInit {
     }
   }
 
-  ResetForm(){};
+  resetForm(): void {
+    this.submitted=false;
+    this.submitbtn=false;
+    this.userForm.reset();       
+    this.quantity = 1;           
+    this.userForm.get('quantity')?.setValue(1); 
+  }
 
-   onSubmitContactUs(): void {}
-  //   debugger
-  //   this.submitted = true;
-  //   if (this.userForm.invalid) {
-  //     return;
-  //   }
-  //   else{
-  //   this.submitbtn = true;
-  //   this.product.productname = this.selectedProduct.productName;
-  //   this.product.pack = this.selectedProduct.pack;
-  //   this.product.quantity = this.userForm.value.quantity;
-  //   this.product.email = this.userForm.value.email;
-  //   this.product.phone = this.userForm.value.phone;
-  //   this.product.name = this.userForm.value.name;
-  //   this.product.address = this.userForm.value.address;
-  //   this.product.pincode = this.userForm.value.pincode;
-  //   this.ProductBookingService.insertProduct(this.product).subscribe(
-  //     res => {
-  //       if (res.isSuccess) {
-
-
-  //       }
-  //       else {
-  //         Swal.fire('', res.returnMessage, 'error');
-  //       }
-  //       $("#booking").modal('toggle');
-  //     },
-  //     err => {
-  //       Swal.fire('', err.error.message, 'error');
-  //     }
-  //   );
-  // }
-  // }
+  onSubmitContactUs(): void {
+    debugger
+    this.submitted = true;
+    if (this.contactForm.invalid) {
+      return;
+    } else {
+      debugger
+      this.submitbtnc=true;
+      this.contactus.name = this.contactForm.value.name,
+        this.contactus.phone = this.contactForm.value.phone,
+        this.contactus.email = this.contactForm.value.email,
+        this.contactus.address = this.contactForm.value.address,
+        this.contactus.concern = this.contactForm.value.concern
+      this.ProductBookingService.insertContactUSDetails(this.contactus).subscribe(
+        res => {
+          if (res.isSuccess) {
+            Swal.fire(
+              'Thank you for reaching out!',
+              'Your request has been submitted successfully. Our team will get in touch within 24 hours. Stay tuned!',
+              'success'
+            );
+            this.resetContact();
+          } else {
+            Swal.fire('Error', res.returnMessage, 'error');
+          }
+        },
+        err => {
+          Swal.fire('Error', err.error.message, 'error');
+        }
+      );
+    }
+  }
+  
+  resetContact(){
+    this.submitted = false;
+    this.submitbtnc=false;
+    this.contactForm = this.fb.group({
+      name: ['',Validators.required],
+      phone:['',Validators.required],
+      email:['',Validators.required],
+      address: ['',Validators.required],
+      concern:['',Validators.required],
+    });
+  }
 }

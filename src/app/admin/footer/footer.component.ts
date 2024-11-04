@@ -19,4 +19,11 @@ export class FooterComponent {
       });
   }
 
+  selectPolicy(policy: string): void {
+    // Store selected policy in session storage
+    sessionStorage.setItem('selectedPolicy', policy);
+    // Navigate to the policy display component
+    this.router.navigate(['/policy-details']);
+  }
+
 }

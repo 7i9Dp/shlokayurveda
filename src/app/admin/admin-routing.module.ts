@@ -7,6 +7,7 @@ import { TicketreportsComponent } from './ticketreports/ticketreports.component'
 import { HomepageComponent } from './homepage/homepage.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { TickettypeComponent } from './tickettype/tickettype.component';
+import { InfoPageComponent } from './info-page/info-page.component';
 
 const routes: Routes = [{
   path: '', component: AdminComponent,
@@ -18,8 +19,8 @@ const routes: Routes = [{
     { path: 'ticket-reports', component: TicketreportsComponent, title: 'Reports - Ticket' },
     // { path: 'product-page', component: ProductpageComponent, title: 'Product - Page' },
     // { path: 'product-details', component: ProductDetailsComponent, title: 'Product Details' },
-    { path: 'product-details/:id', component: ProductDetailsComponent,title: 'Product - Deteils Page' }, // Route for product by ID
-
+    { path: 'product-details/:id', component: ProductDetailsComponent,title: 'Product - Details Page' }, // Route for product by ID
+    { path: 'info-page', component: InfoPageComponent, title: 'Info - Details Page' }, // Route for product by ID
   ]
 }];
 

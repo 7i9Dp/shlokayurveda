@@ -19,6 +19,7 @@ import { ContentPageComponent } from './content-page/content-page.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ProductpageComponent } from './productpage/productpage.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { InfoPageComponent } from './info-page/info-page.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
     ContentPageComponent,
     HomepageComponent,
     ProductpageComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    InfoPageComponent
   ],
   imports: [
     CommonModule,

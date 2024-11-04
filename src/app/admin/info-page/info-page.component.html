@@ -1,0 +1,16 @@
+<div class="policy-container" *ngIf="selectedPolicy === 'refund'">
+    <h1>Refund & Cancellation Policy</h1>
+    <p>Our priority is <span>complete customer satisfaction</span>. If you are not happy with any of our products or services already provided, we will refund your money subject to genuine reasons given, true and proved through investigation.</p>
+    <p>Please read the fine prints carefully, as they provide all the details about the product or services you purchase. In case you are not happy with our product or services in the process, customers have the freedom to cancel their product and request a refund from us.</p>
+    <button class="btn">Request a Refund</button>
+</div>
+
+<div class="policy-container" *ngIf="selectedPolicy === 'cancellation'">
+    <h1>Cancellation Policy</h1>
+    <p>For Cancellations please contact us via the <a href="#">“contact us”</a> link. You can cancel your order anytime within 24 hours of your purchase, and we will cancel your order on the basis of a genuine reason provided. After the product is dispatched, you cannot cancel your order. We will try our best to create suitable design concepts for our clients. We will refund using the same payment mode and on the same account you used to place an order with us. The refund will be credited back in your account within <span>7 to 10 business days</span>.</p>
+</div>
+
+<div class="policy-container" *ngIf="selectedPolicy === 'return'">
+    <h1>Refund /Return/ Replace Policy</h1>
+    <p>We can’t provide Refund, Return and Replacement for the product once delivered to you, if the delivered order is the same as described during placing the order. If you are not happy with any of our products or services already delivered, we will refund your money subject to genuine reasons given, true and proved through investigation.</p>
+</div>

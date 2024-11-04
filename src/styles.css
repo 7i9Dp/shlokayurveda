@@ -30,3 +30,11 @@
   max-width: 115px !important;
   height: 52px  !important;
 }
+
+.has-error{
+  color: red;
+}
+
+.text-danger{
+  margin-left: 2px;
+}

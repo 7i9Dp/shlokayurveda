@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ProductModel } from 'src/app/_interface/product';
 import { ProductBookingService } from 'src/app/_services/productbooking.service';
@@ -30,18 +30,12 @@ export class ProductDetailsComponent implements OnInit {
 constructor(private route: ActivatedRoute,private fb : FormBuilder,private ProductBookingService : ProductBookingService){
 
   this.userForm = this.fb.group({
-    // quantity: [0, Validators.required],
-    // email: ['', [Validators.required, Validators.email]],
-    // phone: [0, [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-    // name: ['', Validators.required],
-    // address: ['', Validators.required],
-    // pincode: [0, [Validators.required, Validators.pattern('^[0-9]{6}$')]]
-    quantity: [],
-    email:[],
-    phone:[],
-    name:[],
-    address: [],
-    pincode:[],
+    quantity: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]], // Added email validator
+    phone: ['', Validators.required],
+    name: ['', Validators.required],
+    address: ['', Validators.required],
+    pincode: ['', Validators.required],
   });
 
   this.products = {
@@ -262,6 +256,8 @@ getProductById(id: number) {
   this.product = this.data[id-1]
   // this.product = this.data.find((p:any) => p.id === id);
 }
+
+get uf() { return this.userForm.controls; }
 
 Buynow(product:any){
   this.selectedProduct = product;

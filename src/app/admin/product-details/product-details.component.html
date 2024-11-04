@@ -93,49 +93,126 @@
             <!-- Form Section -->
             <div class="col-md-6">
               <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-
-                <!-- User Information Fields -->
+                <!-- Name Field -->
                 <div class="mb-2">
-                  <label for="name" class="form-label">Name</label>
-                  <input type="text" id="name" class="form-control" formControlName="name" placeholder="Enter name"
-                    required>
+                  <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
+                  <input
+                    type="text"
+                    id="name"
+                    class="form-control"
+                    formControlName="name"
+                    placeholder="Enter name"
+                    [ngClass]="{ 'has-error': submitted && uf['name'].errors }"
+                    required
+                  />
+                  <div *ngIf="submitted && uf['name'].errors" class="has-error">
+                    <div *ngIf="uf['name'].errors['required']">Name is required!</div>
+                  </div>
                 </div>
+              
+                <!-- Email Field -->
                 <div class="mb-2">
-                  <label for="email" class="form-label">Email Address</label>
-                  <input type="email" id="email" class="form-control" formControlName="email" placeholder="Enter email"
-                    required>
+                  <label for="email" class="form-label">Email Address<span class="text-danger">*</span></label>
+                  <input
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    formControlName="email"
+                    placeholder="Enter email"
+                    [ngClass]="{ 'has-error': submitted && uf['email'].errors }"
+                    required
+                  />
+                  <div *ngIf="submitted && uf['email'].errors" class="has-error">
+                    <div *ngIf="uf['email'].errors['required']">Email is required!</div>
+                    <div *ngIf="uf['email'].errors['email']">Enter a valid email!</div>
+                  </div>
                 </div>
+              
+                <!-- Phone Field -->
                 <div class="mb-2">
-                  <label for="phone" class="form-label">Phone Number</label>
-                  <input type="tel" id="phone" class="form-control" formControlName="phone" placeholder="Enter phoneno"
-                    required appNumberonly10digits>
+                  <label for="phone" class="form-label">Phone Number<span class="text-danger">*</span></label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    class="form-control"
+                    formControlName="phone"
+                    placeholder="Enter phone number"
+                    [ngClass]="{ 'has-error': submitted && uf['phone'].errors }"
+                    required
+                    appNumberonly10digits
+                  />
+                  <div *ngIf="submitted && uf['phone'].errors" class="has-error">
+                    <div *ngIf="uf['phone'].errors['required']">Phone number is required!</div>
+                  </div>
                 </div>
+              
+                <!-- Address Field -->
                 <div class="mb-2">
-                  <label for="address" class="form-label">Address</label>
-                  <textarea id="address" class="form-control" formControlName="address" rows="3"
-                    placeholder="Enter address" required></textarea>
+                  <label for="address" class="form-label">Address<span class="text-danger">*</span></label>
+                  <textarea
+                    id="address"
+                    class="form-control"
+                    formControlName="address"
+                    rows="3"
+                    placeholder="Enter address"
+                    [ngClass]="{ 'has-error': submitted && uf['address'].errors }"
+                    required
+                  ></textarea>
+                  <div *ngIf="submitted && uf['address'].errors" class="has-error">
+                    <div *ngIf="uf['address'].errors['required']">Address is required!</div>
+                  </div>
                 </div>
+              
+                <!-- Quantity Field -->
                 <div class="row">
                   <div class="col-md-6 mb-2">
-                    <label for="quantity" class="form-label">Quantity</label>
-                    <input type="number" id="quantity" class="form-control" placeholder="Enter Quantity" formControlName="quantity" required
-                    [(ngModel)]="quantity"
-                      appNumberonly10digits>
+                    <label for="quantity" class="form-label">Quantity<span class="text-danger">*</span></label>
+                    <input
+                      type="number"
+                      id="quantity"
+                      placeholder="Enter Quantity"
+                      class="form-control"
+                      formControlName="quantity"
+                      [ngClass]="{ 'has-error': submitted && uf['quantity'].errors }"
+                      required
+                    />
+                    <div *ngIf="submitted && uf['quantity'].errors" class="has-error">
+                      <div *ngIf="uf['quantity'].errors['required']">Quantity is required!</div>
+                    </div>
                   </div>
+              
+                  <!-- Pincode Field -->
                   <div class="col-md-6 mb-2">
-                    <label for="pincode" class="form-label">Pincode</label>
-                    <input type="text" id="pincode" class="form-control" formControlName="pincode"
-                      placeholder="Enter pincode" required appNumberonly10digits>
+                    <label for="pincode" class="form-label">Pincode<span class="text-danger">*</span></label>
+                    <input
+                      type="text"
+                      id="pincode"
+                      class="form-control"
+                      formControlName="pincode"
+                      placeholder="Enter pincode"
+                      [ngClass]="{ 'has-error': submitted && uf['pincode'].errors }"
+                      required
+                      appNumberonly10digits
+                    />
+                    <div *ngIf="submitted && uf['pincode'].errors" class="has-error">
+                      <div *ngIf="uf['pincode'].errors['required']">Pincode is required!</div>
+                    </div>
                   </div>
                 </div>
-                <div class="d-flex justify-content-start mt-2" style="font-weight: bold;">
+              
+                <!-- Display Total -->
+                <div class="d-flex justify-content-start mt-2" style="font-weight:bold;">
                   Total: {{selectedProduct.price * quantity || selectedProduct.price}}
                 </div>
+              
+                <!-- Buttons -->
                 <div class="d-flex justify-content-end">
-                  <button type="submit" class="btn btn-primary me-2">Submit</button>
+                  <button type="submit" class="btn btn-primary me-2" *ngIf="!submitbtn">Submit</button>
+                  <button class="btn btn-primary" *ngIf="submitbtn" [disabled]="submitbtn">
+                    <i class="fa fa-spinner fa-spin"></i> Loading
+                  </button>
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
-                
               </form>
             </div>
           </div>
