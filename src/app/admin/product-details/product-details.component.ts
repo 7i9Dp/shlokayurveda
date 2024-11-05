@@ -207,8 +207,8 @@ ngOnInit(): void {
       "imagePath2": "../../../assets/img/Home/GASOLEFT CAPS WHITE-02.jpeg",
       productName: "GASOLEFT CAPSULES",
       pack: "30 CAPSULES",
-      price: "499",
-      oldPrice: null,
+      price: "399",
+      oldPrice: 499,
       IsKit:false
     },
     {
@@ -217,8 +217,8 @@ ngOnInit(): void {
       "imagePath2": "../../../assets/img/Home/Pilolex Mockup.jpg",
       productName: "PILOLEX CAPSULE",
       pack: "30 CAPSULE PACK",
-      price: "599",
-      oldPrice: null,
+      price: "499",
+      oldPrice: 599,
       IsKit:false
     },
     {
@@ -264,59 +264,71 @@ Buynow(product:any){
    $("#productModal").modal('toggle');
 }
 
-onSubmit(): void {
-  this.submitted = true;
-  if (this.userForm.invalid) {
-    return;
-  }
-  else{
-  this.submitbtn = true;
-  this.products.id = this.ID || 0;
-  debugger
-  this.products.productid = this.selectedProduct.id;
-  this.products.productname = this.selectedProduct.productName;
-
-    if (this.selectedProduct.IsKit) {
-      this.products.IsKit = this.selectedProduct.IsKit;
-
-      if (this.selectedProduct.pack) {
-        this.products.pack = this.selectedProduct.pack;
-      }
-      if (this.selectedProduct.duration) {
-        this.products.duration = this.selectedProduct.duration;
-      }
-      if (this.selectedProduct.usefor) {
-        this.products.usefor = this.selectedProduct.usefor;
-      }
-       if (this.selectedProduct.Include && Array.isArray(this.selectedProduct.Include)) {
-        const include = this.selectedProduct.Include.join(', ');
-        this.products.include = include;
-      }
-    }
-  this.products.quantity = this.userForm.value.quantity;
-  this.products.email = this.userForm.value.email;
-  this.products.phone = this.userForm.value.phone;
-  this.products.name = this.userForm.value.name;
-  this.products.address = this.userForm.value.address;
-  this.products.pincode = this.userForm.value.pincode;
-  this.products.price =  this.selectedProduct.price;
-  this.products.total = Number(this.userForm.value.quantity) * Number(this.selectedProduct.price);
-
-  this.ProductBookingService.insertProduct(this.products).subscribe(
-    res => {
-      if (res.isSuccess) {
-        Swal.fire('', res.returnMessage, 'success');
-      }
-      else {
-        Swal.fire('', res.returnMessage, 'error');
-      }
-      $("#booking").modal('toggle');
-    },
-    err => {
-      Swal.fire('', err.error.message, 'error');
-    }
-  );
+updateQuantity(event: any): void {
+  this.quantity = event.target.value;
 }
+
+  onSubmit(): void {
+    this.submitted = true;
+    if (this.userForm.invalid) {
+      return;
+    }
+    else {
+      this.submitbtn = true;
+      this.products.id = this.ID || 0;
+      this.products.productid = this.selectedProduct.id;
+      this.products.productname = this.selectedProduct.productName;
+
+      if (this.selectedProduct.IsKit) {
+        this.products.IsKit = this.selectedProduct.IsKit;
+
+        if (this.selectedProduct.pack) {
+          this.products.pack = this.selectedProduct.pack;
+        }
+        if (this.selectedProduct.duration) {
+          this.products.duration = this.selectedProduct.duration;
+        }
+        if (this.selectedProduct.usefor) {
+          this.products.usefor = this.selectedProduct.usefor;
+        }
+        if (this.selectedProduct.Include && Array.isArray(this.selectedProduct.Include)) {
+          const include = this.selectedProduct.Include.join(', ');
+          this.products.include = include;
+        }
+      }
+      this.products.quantity = this.userForm.value.quantity;
+      this.products.email = this.userForm.value.email;
+      this.products.phone = this.userForm.value.phone;
+      this.products.name = this.userForm.value.name;
+      this.products.address = this.userForm.value.address;
+      this.products.pincode = this.userForm.value.pincode;
+      this.products.price = this.selectedProduct.price;
+      this.products.total = Number(this.userForm.value.quantity) * Number(this.selectedProduct.price);
+
+      this.ProductBookingService.insertProduct(this.products).subscribe(
+        res => {
+          if (res.isSuccess) {
+            Swal.fire('', res.returnMessage, 'success');
+          }
+          else {
+            Swal.fire('', res.returnMessage, 'error');
+          }
+          $("#productModal").modal('toggle');
+          this.resetForm();
+        },
+        err => {
+          Swal.fire('', err.error.message, 'error');
+        }
+      );
+    }
+  }
+
+resetForm(): void {
+  this.submitted=false;
+  this.submitbtn=false;
+  this.userForm.reset();       
+  this.quantity = 1;           
+  this.userForm.get('quantity')?.setValue(1); 
 }
 
 }

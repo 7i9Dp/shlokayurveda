@@ -9985,7 +9985,8 @@ button.list-group-item-gray.active {
 
 .text-success {
   --bs-text-opacity: 1;
-  color: rgba(var(--bs-success-rgb), var(--bs-text-opacity)) !important;
+  /* color: rgba(var(--bs-success-rgb), var(--bs-text-opacity)) !important; */
+  color: rgb(79 139 47) !important;
 }
 
 .text-info {

@@ -173,6 +173,7 @@
                       placeholder="Enter Quantity"
                       class="form-control"
                       formControlName="quantity"
+                      (keyup)="updateQuantity($event)"
                       [ngClass]="{ 'has-error': submitted && uf['quantity'].errors }"
                       required
                     />

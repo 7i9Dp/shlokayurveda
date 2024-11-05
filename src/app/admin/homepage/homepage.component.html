@@ -9,15 +9,27 @@
                     <h1>For <span style="color:#437113"> Your <br> Healthy </span> Life</h1>
                     <h4 class="mb-4">Get your customized solution from our Healthcare experts.</h4>
                     <h5>For Free Consultation Contact Us On
-                        <a class="" href="https://wa.me/8128180101" target="_blank"
+                        <!-- <a class="" href="https://wa.me/8128180101" target="_blank"
                             aria-describedby="a11y-new-window-external-message" rel="null noopener">
                             <u>Whatsapp</u>
+                        </a> -->
+                        <a href="https://wa.me/8128180101" class="button whatsapp" target="_blank" 
+                        style="width: 140px;height: 30px;">
+                          <span>
+                            <i aria-hidden="true" class="fab fa-whatsapp"></i>
+                          </span>
+                          <span style="margin-left: 1px;">
+                            WHATSAPP
+                          </span>
                         </a>
-                    </h5>
+                        </h5>
 
                     <h5 class="mt-4">We love talking to you! Call now for personalized service that goes beyond
                         expectations. Your satisfaction is our priority.
-                        <a href="tel:+91-8128180101"><u>Call Now</u></a>
+                        <a href="tel:+91-8128180101" class="button call-now" style="width: 140px;height: 30px;">
+                          <i class="fa fa-phone" aria-hidden="true"></i>
+                          Call Now
+                        </a>
                     </h5>
                 </div>
             </div>
@@ -443,9 +455,11 @@
                       placeholder="Enter Quantity"
                       class="form-control"
                       formControlName="quantity"
+                      (keyup)="updateQuantity($event)"
                       [ngClass]="{ 'has-error': submitted && uf['quantity'].errors }"
                       required
                     />
+                    <!-- [(ngModel)]="quantity" -->
                     <div *ngIf="submitted && uf['quantity'].errors" class="has-error">
                       <div *ngIf="uf['quantity'].errors['required']">Quantity is required!</div>
                     </div>

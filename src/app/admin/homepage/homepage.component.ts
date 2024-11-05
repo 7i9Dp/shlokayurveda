@@ -188,6 +188,9 @@ export class HomepageComponent implements OnInit {
   get f() { return this.contactForm.controls; }
   get uf() { return this.userForm.controls; }
 
+  updateQuantity(event: any): void {
+    this.quantity = event.target.value;
+  }
 
   onSubmit(): void {
     this.submitted = true;
