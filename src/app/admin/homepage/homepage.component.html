@@ -206,6 +206,7 @@
                                     aria-label="Phone Number"
                                     formControlName="phone"
                                     [ngClass]="{ 'has-error': submitted && f['phone'].errors }"
+                                    appNumberonly10digits
                                   />
                                 </div>
                                 <div *ngIf="submitted && f['phone'].errors" class="has-error">
@@ -264,7 +265,7 @@
                               </div>
                             
                               <button type="submit" class="btn btn-primary" *ngIf="!submitbtnc">Submit</button>
-                              <button class="btn btn-primary" *ngIf="submitbtnc" [disabled]="submitbtn">
+                              <button class="btn btn-primary" *ngIf="submitbtnc" [disabled]="submitted">
                                 <i class="fa fa-spinner fa-spin"></i> Loading
                             </button>
                             </form>
@@ -490,13 +491,13 @@
                 </div>
               
                 <!-- Buttons -->
-                <div class="d-flex justify-content-end">
-                  <button type="submit" class="btn btn-primary me-2" *ngIf="!submitbtn">Submit</button>
-                  <button class="btn btn-primary" *ngIf="submitbtn" [disabled]="submitbtn">
-                    <i class="fa fa-spinner fa-spin"></i> Loading
-                  </button>
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                </div>
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary me-2" *ngIf="!submitbtn">Submit</button>
+                    <button class="btn btn-primary" *ngIf="submitbtn" [disabled]="submitbtn">
+                      <i class="fa fa-spinner fa-spin"></i> Loading
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  </div>
               </form>
               
             </div>

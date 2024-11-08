@@ -263,6 +263,7 @@ export class HomepageComponent implements OnInit {
           } else {
             Swal.fire('Error', res.returnMessage, 'error');
           }
+          
         },
         err => {
           Swal.fire('Error', err.error.message, 'error');
