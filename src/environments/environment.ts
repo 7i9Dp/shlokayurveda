@@ -4,8 +4,9 @@
 
 export const environment = {
   production: true,
-  apiURL: 'http://localhost:7892/api/',
-  fileURL:'http://localhost:7892/',
+  //apiURL: 'http://localhost:7892/api/',
+  apiURL: 'http://shlokayurveda.xyz/',
+  //fileURL:'http://localhost:7892/',
   recaptcha: {
     siteKey: '6LdfMCQhAAAAAB8W9xcG3yI-LgiXnDVWITsGJ2aa'
   },
