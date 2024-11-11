@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  apiURL: 'http://192.168.10.2:5114/api/',
-  fileURL:'http://192.168.10.2:5114/',
+  apiURL: 'http://shlokayurveda.xyz/',
+  //fileURL:'http://shlokayurveda.xyz/',
   recaptcha: {
     siteKey: '6LdfMCQhAAAAAB8W9xcG3yI-LgiXnDVWITsGJ2aa'
   },
