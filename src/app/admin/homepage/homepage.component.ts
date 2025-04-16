@@ -117,7 +117,7 @@ export class HomepageComponent implements OnInit {
     },
     {
       "id": 12,
-      "imagePath": "../../../assets/img/Home/HARD - X SPRAY .jpg",
+      "imagePath": "../../../assets/img/Home/HARD - X SPRAY.jpg",
       "imagePath2": "../../../assets/img/Home/HARD-X WHITE 2-02.jpeg",
       "productName": "DOUBLE HARD SPRAY",
       "pack": "30 ml",
