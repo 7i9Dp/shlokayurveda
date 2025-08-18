@@ -143,6 +143,7 @@
                   />
                   <div *ngIf="submitted && uf['phone'].errors" class="has-error">
                     <div *ngIf="uf['phone'].errors['required']">Phone number is required!</div>
+                    <div *ngIf="uf['phone'].errors['pattern']">Phone number must be exactly 10 digits!</div>
                   </div>
                 </div>
               
@@ -179,6 +180,8 @@
                     />
                     <div *ngIf="submitted && uf['quantity'].errors" class="has-error">
                       <div *ngIf="uf['quantity'].errors['required']">Quantity is required!</div>
+                      <div *ngIf="uf['quantity'].errors['min']">Minimum quantity is 1!</div>
+                      <div *ngIf="uf['quantity'].errors['max']">Maximum quantity allowed is 10!</div>
                     </div>
                   </div>
               

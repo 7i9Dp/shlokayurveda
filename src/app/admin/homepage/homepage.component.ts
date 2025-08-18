@@ -48,9 +48,9 @@ export class HomepageComponent implements OnInit {
 
   constructor(private fb : FormBuilder,private ProductBookingService : ProductBookingService ) {
     this.userForm = this.fb.group({
-      quantity: ['', Validators.required],
+      quantity: ['', [Validators.required, Validators.min(1), Validators.max(10)]],
       email: ['', [Validators.required, Validators.email]], // Added email validator
-      phone: ['', Validators.required],
+      phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       name: ['', Validators.required],
       address: ['', Validators.required],
       pincode: ['', Validators.required],
@@ -58,7 +58,7 @@ export class HomepageComponent implements OnInit {
 
     this.contactForm = this.fb.group({
       name: ['',Validators.required],
-      phone:['',Validators.required],
+      phone:['',[Validators.required, Validators.pattern(/^\d{10}$/)]],
       email:['',Validators.required],
       address: ['',Validators.required],
       concern:['',Validators.required],
