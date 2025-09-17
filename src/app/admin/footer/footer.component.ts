@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class FooterComponent {
   
+  date: any = new Date();
   constructor(private router: Router) {}
 
   scrollToContact() {
