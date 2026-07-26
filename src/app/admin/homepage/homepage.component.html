@@ -63,22 +63,16 @@
             </svg>
 
         </div>
-
-        <div class="container-fluid flex-grow-1 mb-4" style="padding: 20px; padding-bottom: 10px; background-color: #f5f5f9;padding-top:0px">
-            <div class="slideshow-container">
-              <div class="slider">
-                <!-- <img class="mySlides" src="../../../assets/img/digestive care banner.jpg" alt="digestive care banner">
-                <img class="mySlides" src="../../../assets/img/Healthbanner.jpg" alt="Healthbanner">
-                <img class="mySlides" src="../../../assets/img/Sexual Care.jpg" alt="Sexual Care"> -->
-                <img class="mySlides" src="../../../assets/img/bannners/L3.jpg" alt="digestive care banner">
-                <img class="mySlides" src="../../../assets/img/bannners/L1.jpg" alt="Healthbanner">
-                <img class="mySlides" src="../../../assets/img/bannners/L2.jpg" alt="Sexual Care">
-                <img class="mySlides" src="../../../assets/img/bannners/L4.jpg" alt="Pils Care">
-                <!-- Cloned first image for smooth looping -->
-                <img class="mySlides" src="../../../assets/img/bannners/L3.jpg" alt="Loop Start Again">
-              </div>
-            </div>
-          </div>
+      
+      <section class="certifications-section" aria-label="Product certifications and benefits">
+        <div class="certifications-grid">
+          <div class="certification-item"><div class="certification-card"><img src="assets/img/certifications/isologo.png" alt="ISO Certified" loading="lazy"><h3>ISO Certified</h3></div></div>
+          <div class="certification-item"><div class="certification-card"><img src="assets/img/certifications/gmplogo.png" alt="GMP Certified" loading="lazy"><h3>GMP Certified</h3></div></div>
+          <div class="certification-item"><div class="certification-card"><img src="assets/img/certifications/fssai-logo-df4c.png" alt="FSSAI Approved" loading="lazy"><h3>FSSAI Approved</h3></div></div>
+          <div class="certification-item"><div class="certification-card"><img src="assets/img/certifications/naturallogo.png" alt="Natural Product" loading="lazy"><h3>Natural Product</h3></div></div>
+          <div class="certification-item"><div class="certification-card"><img src="assets/img/certifications/no_side_effect.png" alt="No Side Effects" loading="lazy"><h3>No Side Effects</h3></div></div>
+        </div>
+      </section>
 
       <div class="container-fluid flex-grow-1" style="padding: 30px; padding-bottom: 50px;"
         style="background-color: #018662;">
@@ -127,6 +121,22 @@
           </div>
         </div>
       </div>
+
+      <div class="container-fluid flex-grow-1 mb-4" style="padding: 20px; padding-bottom: 10px; background-color: #f5f5f9;padding-top:23px">
+          <div class="slideshow-container">
+            <div class="slider">
+              <!-- <img class="mySlides" src="../../../assets/img/digestive care banner.jpg" alt="digestive care banner">
+              <img class="mySlides" src="../../../assets/img/Healthbanner.jpg" alt="Healthbanner">
+              <img class="mySlides" src="../../../assets/img/Sexual Care.jpg" alt="Sexual Care"> -->
+              <img class="mySlides" src="../../../assets/img/bannners/L3.jpg" alt="digestive care banner">
+              <img class="mySlides" src="../../../assets/img/bannners/L1.jpg" alt="Healthbanner">
+              <img class="mySlides" src="../../../assets/img/bannners/L2.jpg" alt="Sexual Care">
+              <img class="mySlides" src="../../../assets/img/bannners/L4.jpg" alt="Pils Care">
+              <!-- Cloned first image for smooth looping -->
+              <img class="mySlides" src="../../../assets/img/bannners/L3.jpg" alt="Loop Start Again">
+            </div>
+          </div>
+    </div>
 
       <!--Contact Us-->
       <div id="contact-us" class="container mt- mb-5">
@@ -287,10 +297,9 @@
       </div>
 
 
-        <div class="owl-carousel owl-loaded owl-drag">
+      <!--   <div class="owl-carousel owl-loaded owl-drag">
             <div class="owl-stage-outer">
-                <div class="owl-stage">
-                    <!-- Customer Review Items -->
+                <div class="owl-stage"> 
 
                     <div class="owl-item cloned" style="width: 305.25px;">
                         <div class="product item">
@@ -343,7 +352,28 @@
                 </div>
             </div>
 
+        </div>  -->
+
+        <div class="owl-carousel owl-loaded owl-drag">
+    <div class="owl-stage-outer">
+        <div class="owl-stage">
+
+            <!-- Customer Review Items -->
+            <div class="owl-item cloned" style="width: 305.25px;" *ngFor="let item of displayFeedbacks">
+                <div class="product item">
+                    <div class="customer-review-box">
+                        <h5 class="mb-20">{{ item.name }}</h5>
+                        <p>"{{ item.review }}"</p>
+                        <img class="review-start"
+                            src="https://cdn.shopify.com/s/files/1/0535/1856/5556/files/Group_69.svg?v=1623226562"
+                            alt="Shlok Ayurveda Review Star">
+                    </div>
+                </div>
+            </div>
+
         </div>
+    </div>
+</div>
 
         <div class="advantages">
           <h2>Advantages of Ayurveda and Ayurvedic Treatments</h2>
