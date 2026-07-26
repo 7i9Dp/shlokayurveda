@@ -541,3 +541,63 @@ body {
   line-height: 1.25;
 }
 
+/* Tablet */
+@media (max-width: 768px) {
+  .certifications-section {
+    width: calc(100% - 20px);
+    padding: 12px 0;
+  }
+
+  .certifications-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+
+  .certification-card {
+    min-height: 118px;
+    padding: 14px 6px;
+    border-radius: 16px;
+  }
+
+  .certification-card img {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 10px;
+  }
+
+  .certification-card h3 {
+    font-size: 11px;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+
+  .certifications-section {
+    width: calc(100% - 16px);
+  }
+
+  .certifications-grid {
+    gap: 6px;
+  }
+
+  .certification-card {
+    min-height: 108px;
+    padding: 12px 4px;
+    border-radius: 14px;
+  }
+
+  .certification-card img {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 8px;
+  }
+
+  .certification-card h3 {
+    font-size: 10px;
+    line-height: 1.15;
+  }
+}
