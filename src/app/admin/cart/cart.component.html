@@ -1,0 +1,137 @@
+<section class="cart">
+  <h1 class="cart__title">Your Cart</h1>
+
+  <!-- Empty -->
+  <div class="cart__empty" *ngIf="!lines.length">
+    <i class="fas fa-cart-shopping"></i>
+    <h2>Your cart is empty</h2>
+    <p>Browse our Ayurvedic kits and medicines, then add what you need.</p>
+    <button type="button" class="cart__cta" (click)="continueShopping()">Continue Shopping</button>
+  </div>
+
+  <div class="cart__layout" *ngIf="lines.length">
+
+    <!-- Lines -->
+    <div class="cart__lines">
+      <article class="cart-line" *ngFor="let line of lines">
+        <img class="cart-line__img" [src]="line.imagePath" [alt]="line.productName">
+
+        <div class="cart-line__body">
+          <h3 class="cart-line__name">{{ line.productName }}</h3>
+          <p class="cart-line__variant" *ngIf="line.variant">{{ line.variant }}</p>
+
+          <p class="cart-line__price">
+            ₹{{ line.price }}
+            <del *ngIf="line.oldPrice">₹{{ line.oldPrice }}</del>
+          </p>
+
+          <div class="cart-line__controls">
+            <div class="cart-stepper">
+              <button type="button" (click)="changeQuantity(line, -1)" aria-label="Decrease quantity">
+                <i class="fas fa-minus"></i>
+              </button>
+              <input type="number" min="1" max="10" [value]="line.quantity"
+                     (change)="setQuantity(line, $event)" aria-label="Quantity">
+              <button type="button" (click)="changeQuantity(line, 1)" aria-label="Increase quantity">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+
+            <button type="button" class="cart-line__remove" (click)="remove(line)">
+              <i class="fas fa-trash-can"></i> Remove
+            </button>
+          </div>
+        </div>
+
+        <p class="cart-line__total">₹{{ line.price * line.quantity }}</p>
+      </article>
+
+      <button type="button" class="cart__continue" (click)="continueShopping()">
+        <i class="fas fa-arrow-left"></i> Continue Shopping
+      </button>
+    </div>
+
+    <!-- Checkout -->
+    <aside class="cart__side">
+      <div class="cart-summary">
+        <h2>Order Summary</h2>
+
+        <div class="cart-summary__row">
+          <span>Items</span>
+          <span>{{ lines.length }}</span>
+        </div>
+        <div class="cart-summary__row" *ngIf="savings > 0">
+          <span>You save</span>
+          <span class="cart-summary__save">₹{{ savings }}</span>
+        </div>
+        <div class="cart-summary__row cart-summary__row--total">
+          <span>Total</span>
+          <strong>₹{{ subtotal }}</strong>
+        </div>
+      </div>
+
+      <form class="cart-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <h2>Delivery Details</h2>
+
+        <div class="pd-field">
+          <label for="cart-name">Name<span class="text-danger">*</span></label>
+          <input type="text" id="cart-name" class="form-control" formControlName="name" placeholder="Enter name"
+                 [ngClass]="{ 'has-error': submitted && uf['name'].errors }" />
+          <div *ngIf="submitted && uf['name'].errors" class="has-error">
+            <div *ngIf="uf['name'].errors['required']">Name is required!</div>
+          </div>
+        </div>
+
+        <div class="pd-field">
+          <label for="cart-email">Email Address<span class="text-danger">*</span></label>
+          <input type="email" id="cart-email" class="form-control" formControlName="email" placeholder="Enter email"
+                 [ngClass]="{ 'has-error': submitted && uf['email'].errors }" />
+          <div *ngIf="submitted && uf['email'].errors" class="has-error">
+            <div *ngIf="uf['email'].errors['required']">Email is required!</div>
+            <div *ngIf="uf['email'].errors['email']">Enter a valid email!</div>
+          </div>
+        </div>
+
+        <div class="pd-field">
+          <label for="cart-phone">Phone Number<span class="text-danger">*</span></label>
+          <input type="tel" id="cart-phone" class="form-control" formControlName="phone"
+                 placeholder="Enter phone number" appNumberonly10digits
+                 [ngClass]="{ 'has-error': submitted && uf['phone'].errors }" />
+          <div *ngIf="submitted && uf['phone'].errors" class="has-error">
+            <div *ngIf="uf['phone'].errors['required']">Phone number is required!</div>
+            <div *ngIf="uf['phone'].errors['pattern']">Phone number must be exactly 10 digits!</div>
+          </div>
+        </div>
+
+        <div class="pd-field">
+          <label for="cart-pincode">Pincode<span class="text-danger">*</span></label>
+          <input type="text" id="cart-pincode" class="form-control" formControlName="pincode"
+                 placeholder="Enter pincode" appNumberonly10digits
+                 [ngClass]="{ 'has-error': submitted && uf['pincode'].errors }" />
+          <div *ngIf="submitted && uf['pincode'].errors" class="has-error">
+            <div *ngIf="uf['pincode'].errors['required']">Pincode is required!</div>
+          </div>
+        </div>
+
+        <div class="pd-field">
+          <label for="cart-address">Address<span class="text-danger">*</span></label>
+          <textarea id="cart-address" class="form-control" formControlName="address" rows="3"
+                    placeholder="Enter address"
+                    [ngClass]="{ 'has-error': submitted && uf['address'].errors }"></textarea>
+          <div *ngIf="submitted && uf['address'].errors" class="has-error">
+            <div *ngIf="uf['address'].errors['required']">Address is required!</div>
+          </div>
+        </div>
+
+        <button type="submit" class="cart__place" *ngIf="!submitbtn">
+          Place Order · ₹{{ subtotal }}
+        </button>
+        <button class="cart__place" *ngIf="submitbtn" [disabled]="submitbtn">
+          <i class="fa fa-spinner fa-spin"></i> Placing order…
+        </button>
+
+        <p class="cart-form__note">Our team will call you to confirm before dispatch.</p>
+      </form>
+    </aside>
+  </div>
+</section>

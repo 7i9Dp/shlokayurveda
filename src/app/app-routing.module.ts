@@ -11,16 +11,9 @@ const routes: Routes = [
   //{ path: 'admin',canActivate: [AuthGuard], loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   //,canActivate: [AuthGuard]
-  {
-    path: '**',
-    redirectTo: '/login'
-  },
-
-   // {path: '404.html', component: NotofoundComponent},
-  // {
-  //   path: '**',
-  //   redirectTo: '/404'
-  // }
+  // The login route is commented out, so unknown URLs must fall back to the
+  // storefront — redirecting to /login left the router with nothing to match.
+  { path: '**', redirectTo: '/admin' },
 ];
 
 

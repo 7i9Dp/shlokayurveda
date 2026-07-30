@@ -1,229 +1,255 @@
-<div *ngIf="product" class="container mt-4">
-  <div class="card shadow-sm border-light mb-4">
-    <div class="row flex-md-row flex-column">
-      <!-- Product Image -->
-      <div class="col-md-5 mb-4 d-flex justify-content-center">
-        <img src="{{product.imagePath}}" class="product-image" alt="{{product.productName}}">
+<ng-container *ngIf="product; else notFound">
+
+  <!-- ============================================================ OVERVIEW -->
+  <section class="pd">
+    <div class="pd__grid">
+
+      <!-- Gallery -->
+      <div class="pd__gallery">
+        <div class="pd__stage">
+          <img [src]="gallery[activeImage]" [alt]="product.productName">
+          <span class="pd__counter" *ngIf="gallery.length > 1">{{ activeImage + 1 }} / {{ gallery.length }}</span>
+        </div>
+
+        <div class="pd__thumbs" *ngIf="gallery.length > 1">
+          <button type="button" class="pd__thumb" *ngFor="let image of gallery; let i = index"
+                  [class.is-active]="i === activeImage" (click)="selectImage(i)"
+                  [attr.aria-label]="'View image ' + (i + 1)">
+            <img [src]="image" [alt]="product.productName">
+          </button>
+        </div>
       </div>
-      <!-- Product Details -->
-      <div class="col-md-7 mb-4">
-        <div class="card-body">
-          <h5 class="card-title text-center text-md-start">
-            <a href="#" class="text-decoration-none text-dark">{{product.productName}}</a>
-          </h5>
-          <ul class="list-group list-group-flush text-center text-md-start">
-            <li class="list-group-item"><strong>Price:</strong> <span class="text-danger">&nbsp;<s>₹{{product.oldPrice}}/-</s></span></li>
-            <li *ngIf="product.oldPrice" class="list-group-item"><strong>Offer Price:</strong> <span class="text-success">&nbsp;₹{{product.price}}/-</span></li>
-            <li class="list-group-item" *ngIf="product.Include"><strong>Includes:</strong>
-              <ul>
-                <li *ngFor="let item of product.Include">{{item}}</li>
-              </ul>
-            </li>
-          </ul>
-          <!-- Course Selection -->
-          <div class="form-group mb-2 text-center text-md-start" *ngIf="product.duration || product.pack">
-            <strong>Course:</strong>
-            <select class="form-control mt-2" id="size" name="size">
-              <option value="">{{product.duration || product.pack}}</option>
-            </select>
+
+      <!-- Info -->
+      <div class="pd__info">
+        <span class="pd__pill">
+          <i class="fas fa-star"></i> {{ product.rating }} &nbsp;·&nbsp; {{ product.users }}
+        </span>
+
+        <h1 class="pd__title">{{ product.productName }}</h1>
+
+        <p class="pd__lead" *ngIf="product.careFor">{{ product.careFor }}.</p>
+
+        <!-- Trust badges -->
+        <div class="pd__badges">
+          <div class="pd__badge" *ngFor="let cert of certifications">
+            <img [src]="cert.image" [alt]="cert.title" loading="lazy">
+            <span>{{ cert.title }}</span>
           </div>
-          <!-- Use For Section -->
-          <ul class="list-group list-group-flush mb-2 text-center text-md-start" *ngIf="product.usefor">
-            <li class="list-group-item"><strong>Use For :</strong>
-              <ul>
-                <li>{{product.usefor}}</li>
-              </ul>
-            </li>
+        </div>
+
+        <!-- Price -->
+        <div class="pd__price">
+          <span class="pd__now">₹{{ product.price }}</span>
+          <del class="pd__was" *ngIf="product.oldPrice">₹{{ product.oldPrice }}</del>
+          <span class="pd__tax">Inclusive of all taxes</span>
+        </div>
+
+        <!-- Quantity -->
+        <div class="pd__qty-row" [formGroup]="userForm">
+          <span class="pd__qty-label">Quantity</span>
+          <div class="pd__stepper">
+            <button type="button" (click)="changeQuantity(-1)" aria-label="Decrease quantity">
+              <i class="fas fa-minus"></i>
+            </button>
+            <input type="number" formControlName="quantity" min="1" max="10" aria-label="Quantity">
+            <button type="button" (click)="changeQuantity(1)" aria-label="Increase quantity">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="button" class="pd__buy" (click)="scrollToOrder()">
+          <i class="fas fa-bolt"></i> Buy Now
+        </button>
+
+        <!-- Key benefits -->
+        <div class="pd__block" *ngIf="benefits.length">
+          <h2 class="pd__h2">Key Benefits</h2>
+          <div class="pd__chips">
+            <span class="pd__chip" *ngFor="let benefit of benefits">
+              <i class="fas fa-circle-check"></i> {{ benefit }}
+            </span>
+          </div>
+        </div>
+
+        <!-- What's inside (kits) -->
+        <div class="pd__block" *ngIf="product.Include?.length">
+          <h2 class="pd__h2">What's Inside</h2>
+          <ul class="pd__list">
+            <li *ngFor="let item of product.Include">{{ item }}</li>
           </ul>
-          <!-- Buy Now Button -->
-          <div class="d-flex justify-content-center justify-content-md-start gap-2 mt-3">
-            <button class="btn btn-primary flex-fill px-4" style="background-color: #FFD700; border: none; color: black;" (click)="Buynow(product)">Buy Now</button>
+        </div>
+
+        <!-- Pack / course -->
+        <div class="pd__block">
+          <h2 class="pd__h2">{{ product.IsKit ? 'Course' : 'Pack' }}</h2>
+          <p class="pd__meta">{{ product.duration || product.pack }}</p>
+        </div>
+
+        <!-- Use for -->
+        <div class="pd__block" *ngIf="conditions.length">
+          <h2 class="pd__h2">Use For</h2>
+          <div class="pd__chips">
+            <span class="pd__chip pd__chip--plain" *ngFor="let condition of conditions">{{ condition }}</span>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- If product not found, show an error message -->
-<div *ngIf="!product">
-  <p>Product not found.</p>
-</div>
+  <!-- ========================================================= ORDER FORM -->
+  <section class="pd-order" #orderForm id="order">
+    <div class="pd-order__card">
+      <div class="pd-order__head">
+        <h2>Place Your Order</h2>
+        <p>Fill in your delivery details and our team will confirm your order on call.</p>
+      </div>
 
+      <div class="pd-order__body">
+        <!-- Summary -->
+        <aside class="pd-order__summary">
+          <img [src]="product.imagePath" [alt]="product.productName">
+          <div>
+            <h3>{{ product.productName }}</h3>
+            <p class="pd-order__sub">{{ product.duration || product.pack }}</p>
+            <p class="pd-order__unit">
+              ₹{{ product.price }}
+              <del *ngIf="product.oldPrice">₹{{ product.oldPrice }}</del>
+            </p>
+          </div>
+          <div class="pd-order__total">
+            <span>Total</span>
+            <strong>₹{{ total }}</strong>
+          </div>
+        </aside>
 
-<!-- Modal Structure -->
-<div class="d-flex justify-content-between align-items-center row py-0 gap-3 gap-md-0" *ngIf="selectedProduct">
-  <!-- Add User Drawer start -->
-  <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <!-- <h3 class="modal-title" id="productModalLabel">Product Details</h3> -->
-          <h3 class="modal-title mb-2">{{selectedProduct.productName}}</h3>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" style="padding-top: 0px;">
-          <div class="row">
-            <!-- Image Section -->
-            <div class="col-md-6">
-              <img class="img-fluid" src="{{selectedProduct?.imagePath}}"
-                alt="{{selectedProduct?.productName || 'Product Image'}}" style="max-width: 100%; height: auto;">
-                <li class="list-group-item" *ngIf="product.Include && selectedProduct.price">
-                  <strong>Include:</strong>
-                  <ul *ngIf="product.Include">
-                    <li *ngFor="let item of product.Include">{{item}}</li>
-                  </ul>
-                  <p class="mt-2">
-                    <strong>MRP:</strong> {{selectedProduct.price}} /- &nbsp; &nbsp; 
-                    <span style="text-decoration: line-through;">{{selectedProduct.oldPrice}} /-</span>
-                    </p>
-                </li>
-                <li class="list-group-item" *ngIf="selectedProduct.price && !product.Include">
-                  <!-- <strong>Include:</strong>
-                  <ul *ngIf="product.Include">
-                    <li *ngFor="let item of product.Include">{{item}}</li>
-                  </ul> -->
-                  <p class="mt-2">
-                    <strong>MRP:</strong> {{selectedProduct.price}} /- &nbsp; &nbsp; 
-                    <span style="text-decoration: line-through;">{{selectedProduct.oldPrice}} /-</span>
-                    </p>
-                </li>
-              </div>
-
-            <!-- Form Section -->
-            <div class="col-md-6">
-              <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                <!-- Name Field -->
-                <div class="mb-2">
-                  <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
-                  <input
-                    type="text"
-                    id="name"
-                    class="form-control"
-                    formControlName="name"
-                    placeholder="Enter name"
-                    [ngClass]="{ 'has-error': submitted && uf['name'].errors }"
-                    required
-                  />
-                  <div *ngIf="submitted && uf['name'].errors" class="has-error">
-                    <div *ngIf="uf['name'].errors['required']">Name is required!</div>
-                  </div>
-                </div>
-              
-                <!-- Email Field -->
-                <div class="mb-2">
-                  <label for="email" class="form-label">Email Address<span class="text-danger">*</span></label>
-                  <input
-                    type="email"
-                    id="email"
-                    class="form-control"
-                    formControlName="email"
-                    placeholder="Enter email"
-                    [ngClass]="{ 'has-error': submitted && uf['email'].errors }"
-                    required
-                  />
-                  <div *ngIf="submitted && uf['email'].errors" class="has-error">
-                    <div *ngIf="uf['email'].errors['required']">Email is required!</div>
-                    <div *ngIf="uf['email'].errors['email']">Enter a valid email!</div>
-                  </div>
-                </div>
-              
-                <!-- Phone Field -->
-                <div class="mb-2">
-                  <label for="phone" class="form-label">Phone Number<span class="text-danger">*</span></label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    class="form-control"
-                    formControlName="phone"
-                    placeholder="Enter phone number"
-                    [ngClass]="{ 'has-error': submitted && uf['phone'].errors }"
-                    required
-                    appNumberonly10digits
-                  />
-                  <div *ngIf="submitted && uf['phone'].errors" class="has-error">
-                    <div *ngIf="uf['phone'].errors['required']">Phone number is required!</div>
-                    <div *ngIf="uf['phone'].errors['pattern']">Phone number must be exactly 10 digits!</div>
-                  </div>
-                </div>
-              
-                <!-- Address Field -->
-                <div class="mb-2">
-                  <label for="address" class="form-label">Address<span class="text-danger">*</span></label>
-                  <textarea
-                    id="address"
-                    class="form-control"
-                    formControlName="address"
-                    rows="3"
-                    placeholder="Enter address"
-                    [ngClass]="{ 'has-error': submitted && uf['address'].errors }"
-                    required
-                  ></textarea>
-                  <div *ngIf="submitted && uf['address'].errors" class="has-error">
-                    <div *ngIf="uf['address'].errors['required']">Address is required!</div>
-                  </div>
-                </div>
-              
-                <!-- Quantity Field -->
-                <div class="row">
-                  <div class="col-md-6 mb-2">
-                    <label for="quantity" class="form-label">Quantity<span class="text-danger">*</span></label>
-                    <input
-                      type="number"
-                      id="quantity"
-                      placeholder="Enter Quantity"
-                      class="form-control"
-                      formControlName="quantity"
-                      (keyup)="updateQuantity($event)"
-                      [ngClass]="{ 'has-error': submitted && uf['quantity'].errors }"
-                      required
-                    />
-                    <div *ngIf="submitted && uf['quantity'].errors" class="has-error">
-                      <div *ngIf="uf['quantity'].errors['required']">Quantity is required!</div>
-                      <div *ngIf="uf['quantity'].errors['min']">Minimum quantity is 1!</div>
-                      <div *ngIf="uf['quantity'].errors['max']">Maximum quantity allowed is 10!</div>
-                    </div>
-                  </div>
-              
-                  <!-- Pincode Field -->
-                  <div class="col-md-6 mb-2">
-                    <label for="pincode" class="form-label">Pincode<span class="text-danger">*</span></label>
-                    <input
-                      type="text"
-                      id="pincode"
-                      class="form-control"
-                      formControlName="pincode"
-                      placeholder="Enter pincode"
-                      [ngClass]="{ 'has-error': submitted && uf['pincode'].errors }"
-                      required
-                      appNumberonly10digits
-                    />
-                    <div *ngIf="submitted && uf['pincode'].errors" class="has-error">
-                      <div *ngIf="uf['pincode'].errors['required']">Pincode is required!</div>
-                    </div>
-                  </div>
-                </div>
-              
-                <!-- Display Total -->
-                <div class="d-flex justify-content-start mt-2" style="font-weight:bold;">
-                  Total: {{selectedProduct.price * quantity || selectedProduct.price}}
-                </div>
-              
-                <!-- Buttons -->
-                <div class="d-flex justify-content-end">
-                  <button type="submit" class="btn btn-primary me-2" *ngIf="!submitbtn">Submit</button>
-                  <button class="btn btn-primary" *ngIf="submitbtn" [disabled]="submitbtn">
-                    <i class="fa fa-spinner fa-spin"></i> Loading
-                  </button>
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                </div>
-              </form>
+        <!-- Form: same fields, same validation, same API call as before -->
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="pd-order__form">
+          <div class="pd-field">
+            <label for="name">Name<span class="text-danger">*</span></label>
+            <input type="text" id="name" class="form-control" formControlName="name" placeholder="Enter name"
+                   [ngClass]="{ 'has-error': submitted && uf['name'].errors }" required />
+            <div *ngIf="submitted && uf['name'].errors" class="has-error">
+              <div *ngIf="uf['name'].errors['required']">Name is required!</div>
             </div>
           </div>
-          <div>
+
+          <div class="pd-field">
+            <label for="email">Email Address<span class="text-danger">*</span></label>
+            <input type="email" id="email" class="form-control" formControlName="email" placeholder="Enter email"
+                   [ngClass]="{ 'has-error': submitted && uf['email'].errors }" required />
+            <div *ngIf="submitted && uf['email'].errors" class="has-error">
+              <div *ngIf="uf['email'].errors['required']">Email is required!</div>
+              <div *ngIf="uf['email'].errors['email']">Enter a valid email!</div>
+            </div>
           </div>
-        </div>
+
+          <div class="pd-field">
+            <label for="phone">Phone Number<span class="text-danger">*</span></label>
+            <input type="tel" id="phone" class="form-control" formControlName="phone"
+                   placeholder="Enter phone number" appNumberonly10digits
+                   [ngClass]="{ 'has-error': submitted && uf['phone'].errors }" required />
+            <div *ngIf="submitted && uf['phone'].errors" class="has-error">
+              <div *ngIf="uf['phone'].errors['required']">Phone number is required!</div>
+              <div *ngIf="uf['phone'].errors['pattern']">Phone number must be exactly 10 digits!</div>
+            </div>
+          </div>
+
+          <div class="pd-field">
+            <label for="pincode">Pincode<span class="text-danger">*</span></label>
+            <input type="text" id="pincode" class="form-control" formControlName="pincode"
+                   placeholder="Enter pincode" appNumberonly10digits
+                   [ngClass]="{ 'has-error': submitted && uf['pincode'].errors }" required />
+            <div *ngIf="submitted && uf['pincode'].errors" class="has-error">
+              <div *ngIf="uf['pincode'].errors['required']">Pincode is required!</div>
+            </div>
+          </div>
+
+          <div class="pd-field pd-field--wide">
+            <label for="address">Address<span class="text-danger">*</span></label>
+            <textarea id="address" class="form-control" formControlName="address" rows="3"
+                      placeholder="Enter address"
+                      [ngClass]="{ 'has-error': submitted && uf['address'].errors }" required></textarea>
+            <div *ngIf="submitted && uf['address'].errors" class="has-error">
+              <div *ngIf="uf['address'].errors['required']">Address is required!</div>
+            </div>
+          </div>
+
+          <div class="pd-field">
+            <label for="quantity">Quantity<span class="text-danger">*</span></label>
+            <input type="number" id="quantity" class="form-control" formControlName="quantity"
+                   placeholder="Enter Quantity" (keyup)="updateQuantity($event)"
+                   [ngClass]="{ 'has-error': submitted && uf['quantity'].errors }" required />
+            <div *ngIf="submitted && uf['quantity'].errors" class="has-error">
+              <div *ngIf="uf['quantity'].errors['required']">Quantity is required!</div>
+              <div *ngIf="uf['quantity'].errors['min']">Minimum quantity is 1!</div>
+              <div *ngIf="uf['quantity'].errors['max']">Maximum quantity allowed is 10!</div>
+            </div>
+          </div>
+
+          <div class="pd-order__actions">
+            <p class="pd-order__grand">Total: <strong>₹{{ total }}</strong></p>
+            <button type="submit" class="pd-order__submit" *ngIf="!submitbtn">Submit Order</button>
+            <button class="pd-order__submit" *ngIf="submitbtn" [disabled]="submitbtn">
+              <i class="fa fa-spinner fa-spin"></i> Loading
+            </button>
+          </div>
+        </form>
       </div>
     </div>
+  </section>
+
+  <!-- ============================================================ REVIEWS -->
+  <section class="pd-reviews" *ngIf="reviews.length">
+    <h2 class="pd-reviews__title">Reviews for {{ product.productName }}</h2>
+    <p class="pd-reviews__sub">
+      Genuine feedback from customers who bought this product
+      <span *ngIf="reviews.length > ownReviewCount"> · plus general feedback about our service</span>
+    </p>
+
+    <div class="pd-reviews__grid">
+      <article class="review-card" *ngFor="let review of reviews; let i = index">
+        <div class="review-card__top">
+          <div class="review-card__stars" [attr.aria-label]="review.rating + ' out of 5 stars'">
+            <i class="fas fa-star" *ngFor="let filled of starStates(review.rating)"
+               [class.is-empty]="!filled"></i>
+          </div>
+          <i class="fas fa-quote-right review-card__quote" aria-hidden="true"></i>
+        </div>
+
+        <p class="review-card__text" [class.is-expanded]="isReviewExpanded(i)">“{{ review.review }}”</p>
+
+        <div class="review-card__foot">
+          <div>
+            <p class="review-card__name">{{ review.name }}</p>
+            <p class="review-card__date">{{ review.date }}</p>
+          </div>
+          <button type="button" class="review-card__more" (click)="toggleReview(i)">
+            {{ isReviewExpanded(i) ? 'Show less' : 'Read more' }}
+          </button>
+        </div>
+      </article>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #notFound>
+  <div class="pd-empty">
+    <h2>Product not found.</h2>
+    <a [routerLink]="['/admin']">Back to home</a>
   </div>
+</ng-template>
+
+<!-- ==================================================== FLOATING CONTACTS -->
+<div class="bottomcorner">
+  <a href="https://wa.me/8128180101" aria-label="Chat on WhatsApp">
+    <img src="assets/img/whatsappp.png" alt="WhatsApp">
+  </a>
+</div>
+
+<div class="bottomleft">
+  <a href="tel:+91-8128180101" aria-label="Call us">
+    <img src="assets/img/phone.png" alt="Call">
+  </a>
 </div>

@@ -1,0 +1,1032 @@
+{
+  "brand": {
+    "name": "Shlok Ayurveda",
+    "tagline": "For Your Healthy Life",
+    "logo": "assets/img/slok.png"
+  },
+  "contact": {
+    "phones": [
+      "8128180101",
+      "8733937101"
+    ],
+    "whatsapp": "8128180101",
+    "email": "shlokayurveda01@gmail.com",
+    "address": "Rudrax Complex, Vatva Road, Ahmedabad 342445, Gujarat"
+  },
+  "certifications": [
+    {
+      "title": "ISO Certified",
+      "image": "assets/img/certifications/isologo.png"
+    },
+    {
+      "title": "GMP Certified",
+      "image": "assets/img/certifications/gmplogo.png"
+    },
+    {
+      "title": "FSSAI Approved",
+      "image": "assets/img/certifications/fssai-logo-df4c.png"
+    },
+    {
+      "title": "Natural Product",
+      "image": "assets/img/certifications/naturallogo.png"
+    },
+    {
+      "title": "No Side Effects",
+      "image": "assets/img/certifications/no_side_effect.png"
+    }
+  ],
+  "banners": [
+    {
+      "image": "assets/img/bannners/L3.jpg",
+      "alt": "Digestive Care"
+    },
+    {
+      "image": "assets/img/bannners/L1.jpg",
+      "alt": "Health Care"
+    },
+    {
+      "image": "assets/img/bannners/L2.jpg",
+      "alt": "Personal Care"
+    },
+    {
+      "image": "assets/img/bannners/L4.jpg",
+      "alt": "Piles Care"
+    }
+  ],
+  "categories": [
+    {
+      "key": "digestive",
+      "name": "Digestive Care",
+      "image": "assets/img/Home/Kits/Digetive Full kit.jpg",
+      "kitIds": [
+        1,
+        2,
+        3
+      ],
+      "productIds": [
+        13,
+        14
+      ]
+    },
+    {
+      "key": "piles",
+      "name": "Piles Care",
+      "image": "assets/img/Home/Kits/Piles Full Kit.jpg",
+      "kitIds": [
+        4,
+        5,
+        6
+      ],
+      "productIds": [
+        15
+      ]
+    },
+    {
+      "key": "personal",
+      "name": "Personal Care",
+      "image": "assets/img/Home/Kits/Seaxual Trial Kit.jpg",
+      "kitIds": [
+        7,
+        8,
+        9
+      ],
+      "productIds": [
+        10,
+        11,
+        12,
+        16,
+        17
+      ]
+    }
+  ],
+  "kits": [
+    {
+      "id": 1,
+      "productName": "Digestive Care Trial Kit",
+      "shortName": "Trial Kit",
+      "category": "digestive",
+      "imagePath": "assets/img/Home/Kits/Digetive Trial kit.jpg",
+      "imagePath2": "assets/img/Home/Kits/Digetive Trial kit.jpg",
+      "Include": [
+        "1. Constibest Powder- 100Gm",
+        "2. Gasoleft Capsule - 30 Capsule"
+      ],
+      "price": "1199",
+      "oldPrice": "1298",
+      "usefor": "GAS\tACIDITY\tCONSTIPATION",
+      "careFor": "Relieves Gas, Acidity & Constipation",
+      "duration": "15 Days",
+      "rating": 4.5,
+      "users": "50k+ People Using",
+      "IsKit": true
+    },
+    {
+      "id": 2,
+      "productName": "Digestive Care Full Kit",
+      "shortName": "Full Kit",
+      "category": "digestive",
+      "imagePath": "assets/img/Home/Kits/Digetive Full kit.jpg",
+      "imagePath2": "assets/img/Home/Kits/Digetive Full kit.jpg",
+      "Include": [
+        "1. Constibest Powder- 100Gm",
+        "2. Gasoleft Capsule - 60 Capsule"
+      ],
+      "price": "1399",
+      "oldPrice": "1698",
+      "usefor": "GAS\tACIDITY\tCONSTIPATION",
+      "careFor": "Relieves Gas, Acidity & Constipation",
+      "duration": "30 Days",
+      "rating": 4.6,
+      "users": "50k+ People Using",
+      "IsKit": true
+    },
+    {
+      "id": 3,
+      "productName": "Digestive Care Strong Kit",
+      "shortName": "Strong Kit",
+      "category": "digestive",
+      "imagePath": "assets/img/Home/Kits/Digetive Strong kit.jpg",
+      "imagePath2": "assets/img/Home/Kits/Digetive Strong kit.jpg",
+      "Include": [
+        "1. Constibest Powder- 100Gm",
+        "2. Gasoleft Capsule - 120 Capsule"
+      ],
+      "price": "2099",
+      "oldPrice": "2597",
+      "usefor": "GAS\tACIDITY\tCONSTIPATION",
+      "careFor": "Relieves Gas, Acidity & Constipation",
+      "duration": "30 Days",
+      "rating": 4.6,
+      "users": "50k+ People Using",
+      "IsKit": true
+    },
+    {
+      "id": 4,
+      "productName": "Piles Care Trial Kit",
+      "shortName": "Trial Kit",
+      "category": "piles",
+      "imagePath": "assets/img/Home/Kits/Piles trial Kit.jpg",
+      "imagePath2": "assets/img/Home/Kits/Piles trial Kit.jpg",
+      "Include": [
+        "1. Constibest Powder- 100Gm",
+        "2. Gasoleft Capsule - 30 Capsule",
+        "3. Pilolex Capsule - 30 Capsule"
+      ],
+      "price": "1499",
+      "oldPrice": "1897",
+      "usefor": "PILES\tFISSURE\tFISTULA",
+      "careFor": "Relieves Piles, Fissure & Fistula",
+      "duration": "15 Days",
+      "rating": 4.4,
+      "users": "50k+ People Using",
+      "IsKit": true
+    },
+    {
+      "id": 5,
+      "productName": "Piles Care Full Kit",
+      "shortName": "Full Kit",
+      "category": "piles",
+      "imagePath": "assets/img/Home/Kits/Piles Full Kit.jpg",
+      "imagePath2": "assets/img/Home/Kits/Piles Full Kit.jpg",
+      "Include": [
+        "1. Constibest Powder- 100Gm",
+        "2. Gasoleft Capsule - 60 Capsule",
+        "3. Pilolex Capsule - 60 Capsule"
+      ],
+      "price": "1950",
+      "oldPrice": "2896",
+      "usefor": "PILES\tFISSURE\tFISTULA",
+      "careFor": "Relieves Piles, Fissure & Fistula",
+      "duration": "30 Days",
+      "rating": 4.5,
+      "users": "50k+ People Using",
+      "IsKit": true
+    },
+    {
+      "id": 6,
+      "productName": "Piles Care Strong Kit",
+      "shortName": "Strong Kit",
+      "category": "piles",
+      "imagePath": "assets/img/Home/Kits/Piles Strong Kit.jpg",
+      "imagePath2": "assets/img/Home/Kits/Piles Strong Kit.jpg",
+      "Include": [
+        "1. Constibest Powder- 100Gm",
+        "2. Gasoleft Capsule - 60 Capsule",
+        "3. Pilolex Capsule - 120 Capsule"
+      ],
+      "price": "2550",
+      "oldPrice": "4094",
+      "usefor": "PILES\tFISSURE\tFISTULA",
+      "careFor": "Relieves Piles, Fissure & Fistula",
+      "duration": "30 Days",
+      "rating": 4.5,
+      "users": "50k+ People Using",
+      "IsKit": true
+    },
+    {
+      "id": 7,
+      "productName": "Personal Care Trial Kit",
+      "shortName": "Trial Kit",
+      "category": "personal",
+      "imagePath": "assets/img/Home/Kits/Seaxual Trial Kit.jpg",
+      "imagePath2": "assets/img/Home/Kits/Seaxual Trial Kit.jpg",
+      "Include": [
+        "1. Strongjosh Booster Capsule - 30 Capsule",
+        "2. Wild-X Capsule - 30 Capsule"
+      ],
+      "price": "1399",
+      "oldPrice": "1798",
+      "usefor": "Erectile Dysfunction Men Problems",
+      "careFor": "Supports Men's Strength, Stamina & Confidence",
+      "duration": "15 Days",
+      "rating": 4.4,
+      "users": "50k+ People Using",
+      "IsKit": true
+    },
+    {
+      "id": 8,
+      "productName": "Personal Care Full Kit",
+      "shortName": "Full Kit",
+      "category": "personal",
+      "imagePath": "assets/img/Home/Kits/Seaxual Trial Kit.jpg",
+      "imagePath2": "assets/img/Home/Kits/Seaxual Trial Kit.jpg",
+      "Include": [
+        "1. Strongjosh Booster Capsule - 30 Capsule",
+        "2. Wild-X Capsule - 30 Capsule",
+        "3. Double Hard Spray"
+      ],
+      "price": "1950",
+      "oldPrice": "2797",
+      "usefor": "Erectile Dysfunction Men Problems",
+      "careFor": "Supports Men's Strength, Stamina & Confidence",
+      "duration": "15 Days",
+      "rating": 4.5,
+      "users": "50k+ People Using",
+      "IsKit": true
+    },
+    {
+      "id": 9,
+      "productName": "Personal Care Strong Kit",
+      "shortName": "Strong Kit",
+      "category": "personal",
+      "imagePath": "assets/img/Home/Kits/Seaxual Trial Kit.jpg",
+      "imagePath2": "assets/img/Home/Kits/Seaxual Trial Kit.jpg",
+      "Include": [
+        "1. Strongjosh Booster Capsule - 60 Capsule",
+        "2. Wild-X Capsule - 60 Capsule",
+        "3. Double Hard Spray"
+      ],
+      "price": "2499",
+      "oldPrice": "4197",
+      "usefor": "Erectile Dysfunction Men Problems",
+      "careFor": "Supports Men's Strength, Stamina & Confidence",
+      "duration": "30 Days",
+      "rating": 4.6,
+      "users": "50k+ People Using",
+      "IsKit": true
+    }
+  ],
+  "products": [
+    {
+      "id": 10,
+      "productName": "Strongjosh Booster Capsule",
+      "shortName": "Strongjosh Booster Capsule",
+      "category": "personal",
+      "imagePath": "assets/img/Home/60 - STRONG JOSH CAPSULE.jpg",
+      "imagePath2": "assets/img/Home/STRONGJOSH 30-02.jpeg",
+      "pack": "60 CAPSULE PACK",
+      "price": "1099",
+      "oldPrice": "1399",
+      "careFor": "Boosts Stamina, Improves Strength & Daily Energy",
+      "rating": 4.5,
+      "users": "50k+ People Using",
+      "IsKit": false
+    },
+    {
+      "id": 11,
+      "productName": "Wild-X Capsule",
+      "shortName": "Wild-X Capsule",
+      "category": "personal",
+      "imagePath": "assets/img/Home/60 - WILD- X CAPSULE.jpg",
+      "imagePath2": "assets/img/Home/WILD X 30.jpg",
+      "pack": "60 CAPSULE PACK",
+      "price": "1499",
+      "oldPrice": "1799",
+      "careFor": "Supports Men's Vitality, Improves Performance",
+      "rating": 4.5,
+      "users": "50k+ People Using",
+      "IsKit": false
+    },
+    {
+      "id": 12,
+      "productName": "Double Hard Spray",
+      "shortName": "Double Hard Spray",
+      "category": "personal",
+      "imagePath": "assets/img/Home/HARD - X SPRAY.jpg",
+      "imagePath2": "assets/img/Home/HARD-X WHITE 2-02.jpeg",
+      "pack": "30 ml",
+      "price": "799",
+      "oldPrice": "999",
+      "careFor": "Helps Improve Control, Confidence & Timing",
+      "rating": 4.3,
+      "users": "50k+ People Using",
+      "IsKit": false
+    },
+    {
+      "id": 13,
+      "productName": "Constibest Powder",
+      "shortName": "Constibest Powder",
+      "category": "digestive",
+      "imagePath": "assets/img/Home/CONSTIBEST POWDER.jpg",
+      "imagePath2": "assets/img/Home/Constibest Mockup.jpg",
+      "pack": "100 gm",
+      "price": "699",
+      "oldPrice": "799",
+      "careFor": "Relieves Constipation, Softens Hard Stool",
+      "rating": 4.4,
+      "users": "50k+ People Using",
+      "IsKit": false
+    },
+    {
+      "id": 14,
+      "productName": "Gasoleft Capsules",
+      "shortName": "Gasoleft Capsule",
+      "category": "digestive",
+      "imagePath": "assets/img/Home/GASOLEFT CAPSULE.jpg",
+      "imagePath2": "assets/img/Home/GASOLEFT CAPS WHITE-02.jpeg",
+      "pack": "30 CAPSULES",
+      "price": "499",
+      "oldPrice": null,
+      "careFor": "Relieves Excess Gas, Acidity & Bloating",
+      "rating": 4.4,
+      "users": "50k+ People Using",
+      "IsKit": false
+    },
+    {
+      "id": 15,
+      "productName": "Pilolex Capsule",
+      "shortName": "Pilolex Capsule",
+      "category": "piles",
+      "imagePath": "assets/img/Home/PILOLEX CAPSULE.jpg",
+      "imagePath2": "assets/img/Home/Pilolex Mockup.jpg",
+      "pack": "30 CAPSULE PACK",
+      "price": "599",
+      "oldPrice": null,
+      "careFor": "Relieves Piles Pain, Burning & Bleeding",
+      "rating": 4.3,
+      "users": "50k+ People Using",
+      "IsKit": false
+    },
+    {
+      "id": 16,
+      "productName": "Wild-X Capsule",
+      "shortName": "Wild-X Capsule (30)",
+      "category": "personal",
+      "imagePath": "assets/img/Home/WILD X CAPSULE.jpg",
+      "imagePath2": "assets/img/Home/WILD X 30.jpg",
+      "pack": "30 CAPSULE PACK",
+      "price": "799",
+      "oldPrice": "999",
+      "careFor": "Supports Men's Vitality, Improves Performance",
+      "rating": 4.4,
+      "users": "50k+ People Using",
+      "IsKit": false
+    },
+    {
+      "id": 17,
+      "productName": "Strongjosh Booster Capsule",
+      "shortName": "Strongjosh Booster Capsule (30)",
+      "category": "personal",
+      "imagePath": "assets/img/Home/STRONG JOSH BOOSTER CAPSULE .jpg",
+      "imagePath2": "assets/img/Home/STRONGJOSH 30-02.jpeg",
+      "pack": "30 CAPSULE PACK",
+      "price": "699",
+      "oldPrice": "799",
+      "careFor": "Boosts Stamina, Improves Strength & Daily Energy",
+      "rating": 4.3,
+      "users": "50k+ People Using",
+      "IsKit": false
+    }
+  ],
+  "menu": {
+    "primary": [
+      {
+        "label": "Home",
+        "type": "route",
+        "link": "/admin"
+      },
+      {
+        "label": "Kits",
+        "type": "kits"
+      },
+      {
+        "label": "Products",
+        "type": "products"
+      },
+      {
+        "label": "About Us",
+        "type": "scroll",
+        "target": "about-us"
+      },
+      {
+        "label": "Contact Us",
+        "type": "scroll",
+        "target": "contact-us"
+      }
+    ]
+  },
+  "advantages": {
+    "title": "Advantages of Ayurveda and Ayurvedic Treatments",
+    "text": "Ayurvedic treatments use natural products so there are no side effects, they are safe and chemical-free. Ayurveda aims to cure diseases from the roots, reducing the chance of recurrence and providing long-term relief. It helps in improving the digestive process, leading to a healthy and strong digestive system over time. Ayurveda promotes natural balance, providing peace and harmony to body, mind, and soul. It may help in maintaining youthful appearance and vitality for a longer period. Regular practice can lead to a stronger and healthier body. Ayurveda can reduce stress and alleviate symptoms of depression. It aids in building a strong immune system, enhancing overall health."
+  },
+  "reviews": [
+    {
+      "name": "Amit Mehta",
+      "rating": 5,
+      "date": "14/8/2025",
+      "lang": "en",
+      "productIds": [
+        1
+      ],
+      "review": "I picked the Digestive Care Trial Kit first because I did not want to commit to a long course. Fifteen days was enough to tell me it suits me — the bloating after dinner reduced noticeably. Ordered the bigger pack after this."
+    },
+    {
+      "name": "राकेश यादव",
+      "rating": 4,
+      "date": "2/9/2025",
+      "lang": "hi",
+      "productIds": [
+        1
+      ],
+      "review": "डाइजेस्टिव केयर ट्रायल किट पहले मंगवाया था क्योंकि पूरा कोर्स लेने से पहले जाँचना चाहता था। पंद्रह दिन में पेट भारी लगना कम हो गया। छोटा पैक मिलने से पैसे बर्बाद होने का डर नहीं रहा।"
+    },
+    {
+      "name": "મયુર જોષી",
+      "rating": 5,
+      "date": "21/9/2025",
+      "lang": "gu",
+      "productIds": [
+        1
+      ],
+      "review": "ડાયજેસ્ટિવ કેર ટ્રાયલ કિટથી શરૂઆત કરી હતી. પંદર દિવસમાં જ જમ્યા પછીની ભારેપણાની ફરિયાદ ઓછી થઈ. પછી આખો કોર્સ મંગાવ્યો."
+    },
+    {
+      "name": "Girish Menon",
+      "rating": 5,
+      "date": "5/10/2025",
+      "lang": "en",
+      "productIds": [
+        2
+      ],
+      "review": "My wife ordered the Digestive Care Full Kit for me. One full month of use and the heaviness after meals is gone. I eat outside food occasionally now without regretting it later."
+    },
+    {
+      "name": "प्रवीण गोस्वामी",
+      "rating": 4,
+      "date": "23/10/2025",
+      "lang": "hi",
+      "productIds": [
+        2
+      ],
+      "review": "डाइजेस्टिव केयर फुल किट एक महीने तक लिया। पेट फूलना और खट्टी डकार दोनों में साफ फर्क पड़ा। असर धीरे हुआ पर टिकाऊ रहा।"
+    },
+    {
+      "name": "ભાવેશ પટેલ",
+      "rating": 5,
+      "date": "8/11/2025",
+      "lang": "gu",
+      "productIds": [
+        2
+      ],
+      "review": "ડાયજેસ્ટિવ કેર ફુલ કિટ આખો મહિનો લીધું. ગેસ અને ભારેપણું બંનેમાં ઘણો ફેર પડ્યો અને ભૂખ પણ બરાબર લાગવા માંડી."
+    },
+    {
+      "name": "Kailash Joshi",
+      "rating": 5,
+      "date": "26/11/2025",
+      "lang": "en",
+      "productIds": [
+        3
+      ],
+      "review": "Two months on the Digestive Care Strong Kit. My digestion is far more regular than it has been in years and there is no night-time heaviness at all. Worth the price for the quantity you get."
+    },
+    {
+      "name": "महेश वर्मा",
+      "rating": 5,
+      "date": "12/12/2025",
+      "lang": "hi",
+      "productIds": [
+        3
+      ],
+      "review": "डाइजेस्टिव केयर स्ट्रॉन्ग किट दो महीने लिया। अब खाना समय पर पचता है और रात को पेट भारी नहीं रहता। पुरानी शिकायत काफी हद तक ठीक हुई।"
+    },
+    {
+      "name": "કિરણ પંડ્યા",
+      "rating": 4,
+      "date": "29/12/2025",
+      "lang": "gu",
+      "productIds": [
+        3
+      ],
+      "review": "ડાયજેસ્ટિવ કેર સ્ટ્રોંગ કિટ બે મહિના સુધી લીધું. પાચન નિયમિત થયું અને રાત્રે પેટમાં ભાર લાગતો બંધ થયો."
+    },
+    {
+      "name": "Sunil Rathod",
+      "rating": 4,
+      "date": "9/1/2026",
+      "lang": "en",
+      "productIds": [
+        4
+      ],
+      "review": "Started with the Piles Care Trial Kit because I did not want to spend much before knowing whether it suits me. The burning reduced in about ten days, so I moved up to the bigger pack."
+    },
+    {
+      "name": "अजय सिंह",
+      "rating": 5,
+      "date": "24/1/2026",
+      "lang": "hi",
+      "productIds": [
+        4
+      ],
+      "review": "पाइल्स केयर ट्रायल किट से शुरुआत की थी। दस-बारह दिन में जलन कम हो गई तो भरोसा बना और आगे का कोर्स लिया।"
+    },
+    {
+      "name": "જયંતિ પ્રજાપતિ",
+      "rating": 5,
+      "date": "7/2/2026",
+      "lang": "gu",
+      "productIds": [
+        4
+      ],
+      "review": "પાઇલ્સ કેર ટ્રાયલ કિટ પહેલા મંગાવ્યું હતું. પંદર દિવસમાં દુખાવો ઓછો થયો એટલે વિશ્વાસ બેઠો અને પછી આખો કોર્સ કર્યો."
+    },
+    {
+      "name": "Deepak Kumar",
+      "rating": 5,
+      "date": "20/2/2026",
+      "lang": "en",
+      "productIds": [
+        5
+      ],
+      "review": "Ordered the Piles Care Full Kit after a doctor suggested surgery. Six weeks in, the bleeding has stopped completely and the pain is much less. Genuinely relieved I tried this first."
+    },
+    {
+      "name": "पंकज मिश्रा",
+      "rating": 5,
+      "date": "6/3/2026",
+      "lang": "hi",
+      "productIds": [
+        5
+      ],
+      "review": "बवासीर की वजह से बैठना तक मुश्किल हो गया था। पाइल्स केयर फुल किट एक महीना लिया, खून आना बिलकुल बंद हो गया और दर्द भी काफी कम है।"
+    },
+    {
+      "name": "પ્રકાશ સોલંકી",
+      "rating": 4,
+      "date": "21/3/2026",
+      "lang": "gu",
+      "productIds": [
+        5
+      ],
+      "review": "પાઇલ્સ કેર ફુલ કિટ એક મહિનો લીધું. લોહી પડવાનું બંધ થઈ ગયું અને બળતરા પણ ઘણી ઓછી થઈ. આયુર્વેદિક હોવાથી ચિંતા નહોતી."
+    },
+    {
+      "name": "Suhas Patil",
+      "rating": 4,
+      "date": "4/4/2026",
+      "lang": "en",
+      "productIds": [
+        6
+      ],
+      "review": "The Piles Care Strong Kit is a long course and I finished it properly. Relief was gradual — nearly a month before it felt solid — but it has held up since. Do not expect overnight results."
+    },
+    {
+      "name": "धर्मेंद्र यादव",
+      "rating": 5,
+      "date": "18/4/2026",
+      "lang": "hi",
+      "productIds": [
+        6
+      ],
+      "review": "पाइल्स केयर स्ट्रॉन्ग किट पूरा कोर्स किया। ऑपरेशन की सलाह मिली थी, अब उसकी जरूरत नहीं लगती। दवा से कोई तकलीफ नहीं हुई।"
+    },
+    {
+      "name": "જીગ્નેશ ત્રિવેદી",
+      "rating": 5,
+      "date": "2/5/2026",
+      "lang": "gu",
+      "productIds": [
+        6
+      ],
+      "review": "પાઇલ્સ કેર સ્ટ્રોંગ કિટ બે મહિના લીધું. ઓપરેશન કરાવવાની સલાહ મળી હતી, હવે એની જરૂર નથી લાગતી."
+    },
+    {
+      "name": "Rohan Deshmukh",
+      "rating": 4,
+      "date": "16/5/2026",
+      "lang": "en",
+      "productIds": [
+        7
+      ],
+      "review": "Took the Personal Care Trial Kit on a friend's recommendation. Fifteen days is short but it was enough to notice a change in energy levels. Packing was plain, which matters for this kind of product."
+    },
+    {
+      "name": "मनोज पांडे",
+      "rating": 4,
+      "date": "30/5/2026",
+      "lang": "hi",
+      "productIds": [
+        7
+      ],
+      "review": "पर्सनल केयर ट्रायल किट दोस्त की सलाह पर लिया था। पंद्रह दिन में ही थोड़ा फर्क महसूस हुआ। पैकिंग सादी थी इसलिए घर में किसी को पता नहीं चला।"
+    },
+    {
+      "name": "ધવલ મહેતા",
+      "rating": 5,
+      "date": "13/6/2026",
+      "lang": "gu",
+      "productIds": [
+        7
+      ],
+      "review": "પર્સનલ કેર ટ્રાયલ કિટથી શરૂઆત કરી. ટૂંકો કોર્સ હોવા છતાં ફરક જણાયો એટલે પછી મોટું પેક લીધું."
+    },
+    {
+      "name": "Imran Shaikh",
+      "rating": 5,
+      "date": "27/6/2026",
+      "lang": "en",
+      "productIds": [
+        8
+      ],
+      "review": "Honest review of the Personal Care Full Kit — it did help and my confidence improved over the month. The courier box had no product name printed on it, which I appreciated."
+    },
+    {
+      "name": "सुरेश गुप्ता",
+      "rating": 4,
+      "date": "11/7/2026",
+      "lang": "hi",
+      "productIds": [
+        8
+      ],
+      "review": "पर्सनल केयर फुल किट पूरा कोर्स किया। कमजोरी पहले से काफी कम है और आत्मविश्वास भी बढ़ा। डिलीवरी भी सादे डिब्बे में आई।"
+    },
+    {
+      "name": "ચિરાગ શાહ",
+      "rating": 5,
+      "date": "24/7/2026",
+      "lang": "gu",
+      "productIds": [
+        8
+      ],
+      "review": "પર્સનલ કેર ફુલ કિટ લીધા પછી શરીરમાં સ્ફૂર્તિ અનુભવાઈ. પેકિંગ સાદું આવ્યું એટલે કોઈને ખબર ના પડી."
+    },
+    {
+      "name": "Nitin Chavan",
+      "rating": 5,
+      "date": "12/8/2025",
+      "lang": "en",
+      "productIds": [
+        9
+      ],
+      "review": "The Personal Care Strong Kit is a two month course and I completed it properly. Stamina and confidence both improved noticeably by the second month. No side effects at any point."
+    },
+    {
+      "name": "संदीप ठाकुर",
+      "rating": 4,
+      "date": "28/8/2025",
+      "lang": "hi",
+      "productIds": [
+        9
+      ],
+      "review": "पर्सनल केयर स्ट्रॉन्ग किट लिया था। रिजल्ट धीरे-धीरे मिला लेकिन एक महीने बाद साफ फर्क महसूस हुआ। कोई साइड इफेक्ट नहीं।"
+    },
+    {
+      "name": "મહેશ ઠાકોર",
+      "rating": 5,
+      "date": "15/9/2025",
+      "lang": "gu",
+      "productIds": [
+        9
+      ],
+      "review": "પર્સનલ કેર સ્ટ્રોંગ કિટ બે મહિના સુધી લીધું. તાકાત અને આત્મવિશ્વાસ બંનેમાં સારો ફેરફાર થયો."
+    },
+    {
+      "name": "Rajesh Mahajan",
+      "rating": 5,
+      "date": "1/10/2025",
+      "lang": "en",
+      "productIds": [
+        10,
+        17
+      ],
+      "review": "I am 46 and used to feel completely drained by 6 pm. Started Strongjosh Booster on a friend's suggestion and finished two bottles. By the third week the evening tiredness was clearly less. I still take it daily."
+    },
+    {
+      "name": "Nikhil Shah",
+      "rating": 5,
+      "date": "19/10/2025",
+      "lang": "en",
+      "productIds": [
+        10,
+        17
+      ],
+      "review": "Third order now. Strongjosh Booster has become part of my morning routine along with a walk, and my energy through the day is much steadier than it used to be."
+    },
+    {
+      "name": "सुरेश चंद्र",
+      "rating": 5,
+      "date": "3/11/2025",
+      "lang": "hi",
+      "productIds": [
+        10,
+        17
+      ],
+      "review": "उम्र 52 है और कमजोरी बहुत लगती थी। स्ट्रॉन्गजोश बूस्टर के दो डिब्बे पूरे किए, अब सीढ़ियाँ चढ़ने में साँस नहीं फूलती।"
+    },
+    {
+      "name": "धर्मेंद्र सिंह",
+      "rating": 4,
+      "date": "22/11/2025",
+      "lang": "hi",
+      "productIds": [
+        10,
+        17
+      ],
+      "review": "स्ट्रॉन्गजोश बूस्टर लगभग एक महीने तक लिया। पहले की तुलना में अब दिनभर ज्यादा ऊर्जा महसूस होती है। असर धीरे-धीरे दिखा।"
+    },
+    {
+      "name": "હર્ષ પટેલ",
+      "rating": 5,
+      "date": "7/12/2025",
+      "lang": "gu",
+      "productIds": [
+        10,
+        17
+      ],
+      "review": "સ્ટ્રોંગજોશ બૂસ્ટર એક મહિનો લીધા પછી શરીરમાં પહેલા કરતાં ઘણી વધારે તાકાત લાગે છે. સાંજે થાક નથી લાગતો."
+    },
+    {
+      "name": "Manu Prajapati",
+      "rating": 4,
+      "date": "24/12/2025",
+      "lang": "en",
+      "productIds": [
+        11,
+        16
+      ],
+      "review": "Wild-X did not show anything in the first ten days and I almost stopped. Continued because the shopkeeper said give it a month. Around day 25 I noticed the difference. Good product, just needs patience."
+    },
+    {
+      "name": "Vishal Gohil",
+      "rating": 4,
+      "date": "8/1/2026",
+      "lang": "en",
+      "productIds": [
+        11,
+        16
+      ],
+      "review": "Tried the smaller Wild-X pack first to see how it goes. Price is reasonable compared to what the chemist was quoting for similar Ayurvedic capsules, and I have reordered since."
+    },
+    {
+      "name": "सुनील शर्मा",
+      "rating": 4,
+      "date": "25/1/2026",
+      "lang": "hi",
+      "productIds": [
+        11,
+        16
+      ],
+      "review": "वाइल्ड-एक्स कैप्सूल का असर धीरे-धीरे दिखा, शुरू के दो हफ्ते कुछ खास नहीं लगा। लेकिन एक महीने बाद परिणाम अच्छे मिले।"
+    },
+    {
+      "name": "रोहित अग्रवाल",
+      "rating": 5,
+      "date": "9/2/2026",
+      "lang": "hi",
+      "productIds": [
+        11,
+        16
+      ],
+      "review": "वाइल्ड-एक्स कैप्सूल का रिजल्ट मेरे लिए अच्छा रहा। पहले छोटा पैक लिया था, अब नियमित रूप से मंगवा रहा हूँ।"
+    },
+    {
+      "name": "યશ પટેલ",
+      "rating": 5,
+      "date": "26/2/2026",
+      "lang": "gu",
+      "productIds": [
+        11,
+        16
+      ],
+      "review": "વાઇલ્ડ-એક્સ કેપ્સ્યુલ વિશે સાંભળીને મંગાવી હતી. ધીમે ધીમે સારો ફેરફાર અનુભવાયો અને હવે નિયમિત લઉં છું."
+    },
+    {
+      "name": "Anish Soni",
+      "rating": 5,
+      "date": "12/3/2026",
+      "lang": "en",
+      "productIds": [
+        12
+      ],
+      "review": "Double Hard Spray is simple to use and does not burn like the one I tried earlier. Discreet packing too — the courier box had no product name on it, which I appreciated."
+    },
+    {
+      "name": "विकास चौहान",
+      "rating": 4,
+      "date": "28/3/2026",
+      "lang": "hi",
+      "productIds": [
+        12
+      ],
+      "review": "डबल हार्ड स्प्रे इस्तेमाल करने में आसान है और कोई जलन नहीं होती। पैकिंग सादी थी इसलिए घर में किसी को पता नहीं चला।"
+    },
+    {
+      "name": "કેતન જોષી",
+      "rating": 4,
+      "date": "14/4/2026",
+      "lang": "gu",
+      "productIds": [
+        12
+      ],
+      "review": "ડબલ હાર્ડ સ્પ્રેનો ઉપયોગ સરળ છે અને કોઈ બળતરા થતી નથી. પરિણામ પણ સારું મળ્યું, ફરીથી ઓર્ડર કરીશ."
+    },
+    {
+      "name": "Vivek Nair",
+      "rating": 4,
+      "date": "29/4/2026",
+      "lang": "en",
+      "productIds": [
+        13
+      ],
+      "review": "Constibest Powder worked for my father who is 68 and had chronic constipation. Two spoons at night with warm water. The only issue is the taste, so he mixes it in warm milk now."
+    },
+    {
+      "name": "Tarun Bhatia",
+      "rating": 4,
+      "date": "15/5/2026",
+      "lang": "en",
+      "productIds": [
+        13
+      ],
+      "review": "Constibest works but you have to drink enough water with it, otherwise there is not much effect. Once I fixed that it became regular within a week."
+    },
+    {
+      "name": "महेश चौधरी",
+      "rating": 5,
+      "date": "31/5/2026",
+      "lang": "hi",
+      "productIds": [
+        13
+      ],
+      "review": "कॉन्स्टिबेस्ट पाउडर रात को गर्म पानी के साथ लेता हूँ। पहले हफ्ते से ही पेट साफ रहने लगा। दस साल पुरानी कब्ज की शिकायत थी।"
+    },
+    {
+      "name": "श्याम सुंदर",
+      "rating": 4,
+      "date": "14/6/2026",
+      "lang": "hi",
+      "productIds": [
+        13
+      ],
+      "review": "कॉन्स्टिबेस्ट पाउडर से फायदा हुआ पर स्वाद थोड़ा कड़वा है। दूध में मिलाकर लेने से आसान हो गया, बाकी कोई शिकायत नहीं।"
+    },
+    {
+      "name": "સાગર પરમાર",
+      "rating": 4,
+      "date": "28/6/2026",
+      "lang": "gu",
+      "productIds": [
+        13
+      ],
+      "review": "કોન્સ્ટિબેસ્ટ પાવડર ખરેખર સારું છે, પણ સાથે પૂરતું પાણી પીવું જરૂરી છે. એ ધ્યાન રાખ્યા પછી પેટ નિયમિત સાફ રહે છે."
+    },
+    {
+      "name": "Ravi Sharma",
+      "rating": 5,
+      "date": "12/7/2026",
+      "lang": "en",
+      "productIds": [
+        14
+      ],
+      "review": "Acidity after lunch was a daily thing for me. Gasoleft after meals sorted it within about ten days and I have stopped the antacid tablets I was buying every week."
+    },
+    {
+      "name": "Prashant Kulkarni",
+      "rating": 3,
+      "date": "23/7/2026",
+      "lang": "en",
+      "productIds": [
+        14
+      ],
+      "review": "Gasoleft helped with the bloating but the acidity came back once I stopped taking it. It works while you are on it — three stars only because I expected a longer lasting effect."
+    },
+    {
+      "name": "अजय वर्मा",
+      "rating": 5,
+      "date": "16/8/2025",
+      "lang": "hi",
+      "productIds": [
+        14
+      ],
+      "review": "खाने के बाद गैस और जलन बहुत होती थी। गैसोलेफ्ट कैप्सूल लेने के बाद अब ऐसा नहीं होता, बाहर का खाना भी पचा लेता हूँ।"
+    },
+    {
+      "name": "नरेश पाल",
+      "rating": 4,
+      "date": "4/9/2025",
+      "lang": "hi",
+      "productIds": [
+        14
+      ],
+      "review": "गैसोलेफ्ट कैप्सूल लेने के बाद पेट हल्का रहता है और डकार की शिकायत कम हुई। मुझे अच्छा अनुभव रहा।"
+    },
+    {
+      "name": "નિરવ શાહ",
+      "rating": 5,
+      "date": "20/9/2025",
+      "lang": "gu",
+      "productIds": [
+        14
+      ],
+      "review": "જમ્યા પછી ગેસ અને અપચાની બહુ તકલીફ હતી. ગેસોલેફ્ટ કેપ્સ્યુલ લીધા પછી દસેક દિવસમાં જ ફરક દેખાયો."
+    },
+    {
+      "name": "Sameer Qureshi",
+      "rating": 5,
+      "date": "7/10/2025",
+      "lang": "en",
+      "productIds": [
+        15
+      ],
+      "review": "Pilolex gave me relief in about three weeks. The burning in the morning was the first thing to reduce. No side effects felt at any point during the course."
+    },
+    {
+      "name": "पंकज तिवारी",
+      "rating": 5,
+      "date": "25/10/2025",
+      "lang": "hi",
+      "productIds": [
+        15
+      ],
+      "review": "पाइलोलेक्स कैप्सूल लेने के बाद तीन हफ्ते में ही राहत मिल गई। सुबह की जलन सबसे पहले कम हुई। आयुर्वेदिक इलाज पर भरोसा बढ़ गया।"
+    },
+    {
+      "name": "પ્રકાશ પટેલ",
+      "rating": 4,
+      "date": "10/11/2025",
+      "lang": "gu",
+      "productIds": [
+        15
+      ],
+      "review": "પાયલોલેક્સ કેપ્સ્યુલથી ઘણી રાહત મળી. લગભગ એક મહિનો લાગ્યો પણ પરિણામ ટકાઉ રહ્યું."
+    },
+    {
+      "name": "Sandeep Verma",
+      "rating": 4,
+      "date": "27/11/2025",
+      "lang": "en",
+      "productIds": [],
+      "review": "Quality feels genuine — proper seal, batch number and expiry printed on the bottle. Delivery took five days to Nagpur which was a bit slow, but everything arrived intact."
+    },
+    {
+      "name": "Karan Joshi",
+      "rating": 5,
+      "date": "13/12/2025",
+      "lang": "en",
+      "productIds": [],
+      "review": "I called their number before ordering because I was confused between two kits. The person actually asked about my symptoms and suggested the cheaper one. That is what built trust for me."
+    },
+    {
+      "name": "मुकेश तिवारी",
+      "rating": 5,
+      "date": "30/12/2025",
+      "lang": "hi",
+      "productIds": [],
+      "review": "फोन पर बात की थी, उन्होंने पूरी परेशानी सुनी और सस्ती वाली दवा बताई। महँगा किट बेचने की कोशिश नहीं की, इसी बात से भरोसा बना।"
+    },
+    {
+      "name": "अरविंद शर्मा",
+      "rating": 4,
+      "date": "17/1/2026",
+      "lang": "hi",
+      "productIds": [],
+      "review": "दवा की पैकिंग मजबूत थी, डिब्बे में कुछ टूटा नहीं। बोतल पर बैच नंबर और तारीख सब लिखा हुआ था। डिलीवरी में चार दिन लगे।"
+    },
+    {
+      "name": "અંકિત પટેલ",
+      "rating": 5,
+      "date": "3/2/2026",
+      "lang": "gu",
+      "productIds": [],
+      "review": "ત્રીજી વાર ઓર્ડર કર્યો છે. દરેક વખતે દવા સમયસર અને બરાબર પેક થઈને આવે છે, ક્વોલિટીમાં કોઈ ફેર નથી આવ્યો."
+    },
+    {
+      "name": "સાગર પરીખ",
+      "rating": 4,
+      "date": "19/2/2026",
+      "lang": "gu",
+      "productIds": [],
+      "review": "શ્લોક આયુર્વેદની સેવા સારી છે. ઓર્ડર પછી ફોન કરીને પુષ્ટિ કરી હતી અને ડિલિવરી પણ કહ્યા મુજબ મળી."
+    }
+  ]
+}
