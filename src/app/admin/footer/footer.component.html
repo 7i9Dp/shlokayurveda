@@ -1,151 +1,82 @@
-<!-- <footer class="content-footer footer bg-footer-theme">
-    <div class="container-fluid  d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
-      <div class="mb-2 mb-md-0">
-        ©
-        2023
-        , Made with ❤️ by
-        <a href="https://www.aceqe.com/" target="_blank" class="footer-link fw-bolder">Jignesh</a>
+<footer class="ft">
+  <div class="ft__inner">
+
+    <!-- Brand -->
+    <div class="ft__brand">
+      <img class="ft__logo" src="assets/img/brand/logo.png" alt="Shlok Ayurveda">
+      <p class="ft__blurb">
+        At Shlok Ayurveda we believe Ayurveda uplifts every soul for profound well-being.
+        Authentic formulations, made in ISO &amp; GMP certified facilities.
+      </p>
+
+      <div class="ft__social">
+        <a href="https://wa.me/8128180101" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a [href]="'tel:' + contact.phones[0]" aria-label="Call us">
+          <i class="fas fa-phone"></i>
+        </a>
+        <a [href]="'mailto:' + contact.email" aria-label="Email us">
+          <i class="fas fa-envelope"></i>
+        </a>
       </div>
     </div>
-  </footer> -->
 
-<!-- Remove the container if you want to extend the Footer to full width. -->
-<div>
-  <!-- Footer -->
-  <footer class="text-center text-lg-start text-dark" style="background-color: #ECEFF1">
-    <!-- Section: Social media -->
-    <section class="d-flex justify-content-between p-4 text-white" style="background-color: #437113">
-      <!-- #21D192 -->
-      <!-- Left -->
-      <div class="me-5">
-        <span>Get connected with us on social networks:</span>
-      </div>
-      <!-- Left -->
+    <!-- Products -->
+    <nav class="ft__col" aria-label="Products">
+      <h3 class="ft__title">Products</h3>
+      <ul class="ft__list">
+        <li *ngFor="let product of products">
+          <a href="javascript:void(0)" (click)="goToItem(product)">{{ product.productName }}</a>
+        </li>
+      </ul>
+    </nav>
 
-      <!-- Right -->
-      <div>
-        <a href="" class="text-white me-4">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="" class="text-white me-4">
-          <i class="fab fa-twitter"></i>
-        </a>
-        <a href="" class="text-white me-4">
-          <i class="fab fa-google"></i>
-        </a>
-        <a href="" class="text-white me-4">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="" class="text-white me-4">
-          <i class="fab fa-linkedin"></i>
-        </a>
-        <a href="" class="text-white me-4">
-          <i class="fab fa-github"></i>
-        </a>
-      </div>
-      <!-- Right -->
-    </section>
-    <!-- Section: Social media -->
+    <!-- Kits -->
+    <nav class="ft__col" aria-label="Kits">
+      <h3 class="ft__title">Kits</h3>
+      <ul class="ft__list">
+        <li *ngFor="let kit of kits">
+          <a href="javascript:void(0)" (click)="goToItem(kit)">{{ kit.productName }}</a>
+        </li>
+      </ul>
+    </nav>
 
-    <!-- Section: Links  -->
-    <section class="">
-      <div class="container text-center text-md-start mt-5">
-        <!-- Grid row -->
-        <div class="row mt-3">
-          <!-- Grid column -->
-          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-            <!-- Content -->
-            <h6 class="text-uppercase fw-bold" style="color: black;">Shlok Ayurveda</h6>
-            <br>
-            <p>
-              <!-- <a class="site-footer__linklist-item" style="color: black;">
-                Contact Us
-              </a> -->
-              <!-- href="/admin/contact-us" -->
-              <a (click)="scrollToContact()" class="site-footer__linklist-item" style="color: black;cursor: pointer;">
-                Contact Us
-              </a>
-            </p>
-            <p style="color: black;">
-              About Us
-            </p>
-          </div>
-          <!-- Grid column -->
+    <!-- Company -->
+    <nav class="ft__col" aria-label="Company">
+      <h3 class="ft__title">Company</h3>
+      <ul class="ft__list">
+        <li><a href="javascript:void(0)" (click)="scrollToSection('about-us')">About Us</a></li>
+        <li><a href="javascript:void(0)" (click)="scrollToSection('contact-us')">Contact Us</a></li>
+        <li><a href="javascript:void(0)" (click)="selectPolicy('refund')">Refund Policy</a></li>
+        <li><a href="javascript:void(0)" (click)="selectPolicy('cancellation')">Cancellation Policy</a></li>
+        <li><a href="javascript:void(0)" (click)="selectPolicy('return')">Return &amp; Replace Policy</a></li>
+      </ul>
+    </nav>
 
-          <!-- Grid column -->
-          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold" style="color: black;">Products</h6>
-            <br>
+    <!-- Contact -->
+    <div class="ft__col ft__contact">
+      <h3 class="ft__title">Contact</h3>
 
-            <p>
-              <a class="text-dark" style="color: black;" [routerLink]="['/admin/product-details', 10]">Strong Josh Boosters Capsules</a>
-            </p>
-            <p>
-              <a class="text-dark" style="color: black;" [routerLink]="['/admin/product-details', 11]">Wild-X Capsules</a>
-            </p>
-            <p>
-              <a class="text-dark" style="color: black;" [routerLink]="['/admin/product-details', 12]">Double Hard Spray</a>
-            </p>
-            <p>
-              <a class="text-dark" style="color: black;" [routerLink]="['/admin/product-details', 13]">Constibest Powder</a>
-            </p>
-            <p>
-              <a class="text-dark" style="color: black;" [routerLink]="['/admin/product-details', 14]">Gasoleft Capsule</a>
-            </p>
-            <p>
-              <a class="text-dark" style="color: black;" [routerLink]="['/admin/product-details', 15]">Pilolex Capsule</a>
-            </p>
-          </div>
-          <!-- Grid column -->
+      <p class="ft__line">
+        <i class="fas fa-location-dot"></i>
+        <span>{{ contact.address }}</span>
+      </p>
 
-          <!-- Grid column -->
-          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold" style="color: black;">Helpful Links</h6>
-            <br>
-            <p><a href="/admin/info-page" (click)="selectPolicy('refund')">Refund & Cancellation Policy</a></p>
-            <p><a href="/admin/info-page" (click)="selectPolicy('cancellation')">Cancellation Policy</a></p>
-            <p><a href="/admin/info-page" (click)="selectPolicy('return')">Return & Replace Policy</a></p>
-          </div>
-          <!-- Grid column -->
-          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-            <!-- Links -->
-            <h6 class="text-uppercase fw-bold" style="color: black;">Contact Us</h6>
-            <br>
+      <p class="ft__line">
+        <i class="fas fa-envelope"></i>
+        <a [href]="'mailto:' + contact.email">{{ contact.email }}</a>
+      </p>
 
-            <p>
-              At Shlok Ayurveda, we believe Ayurveda uplifts every soul for profound well-being.
-            </p>
-            <!-- <p>Email: shlokayurveda01@gmail.com</p> -->
-            <p>shlokayurveda01&#64;gmail.com</p>
-            <!-- <p><i class="fas fa-phone mr-3"></i> 8128180101</p>
-            <p><i class="fas fa-print mr-3"></i> 8733937101</p> -->
-            <p>
-              Phone :<br>
-              +91-8128180101 <br>
-              +91-8733937101
-            </p>
-            <p>
-              Address: Rudrax Complex,
-              Vatva Road, Ahmedabad 342445, Gujarat
-            </p>
-          </div>
-          <!-- Grid column -->
-        </div>
-        <!-- Grid row -->
-      </div>
-    </section>
-    <!-- Section: Links  -->
-
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-      © {{date | date:'yyyy'}} Copyright:
-      <!-- <a class="text-dark" href="shlokayurveda01@gmail.com">shlokayurveda01@gmail.com</a> -->
-      <a href="mailto:shlokayurveda01&#64;gmail.com">shlokayurveda01&#64;gmail.com</a>
+      <p class="ft__line" *ngFor="let phone of contact.phones">
+        <i class="fas fa-phone"></i>
+        <a [href]="'tel:+91-' + phone">+91-{{ phone }}</a>
+      </p>
     </div>
-    <!-- Copyright -->
-  </footer>
-  <!-- Footer -->
-</div>
-<!-- End of .container -->
+  </div>
+
+  <div class="ft__bar">
+    <p>© {{ year }} Shlok Ayurveda. All rights reserved.</p>
+    <p class="ft__bar-note">Ayurvedic wellness products · Made in India</p>
+  </div>
+</footer>

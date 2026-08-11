@@ -1,3 +1,164 @@
+/* ==========================================================================
+   SweetAlert2 — frosted glass popups
+   --------------------------------------------------------------------------
+   Global on purpose. Most popups in the app still call Swal.fire() directly
+   rather than going through _shared/alert.ts, so styling the library's own
+   classes here is what actually reaches every one of them — including the
+   stock purple confirm button those raw calls would otherwise render.
+   ========================================================================== */
+
+.swal2-container {
+  background: rgba(17, 24, 15, 0.28) !important;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.swal2-popup {
+  border-radius: 22px !important;
+  border: 1px solid rgba(255, 255, 255, 0.55) !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  backdrop-filter: blur(30px) saturate(180%);
+  /* Tight contact shadow + a wide soft one, so the panel reads as floating
+     above the page rather than pasted onto it. */
+  box-shadow:
+    0 1px 2px rgba(20, 32, 13, 0.08),
+    0 24px 60px -12px rgba(20, 32, 13, 0.28) !important;
+  padding: 2rem 1.75rem 1.5rem !important;
+}
+
+/* Without backdrop-filter the translucent fill alone would leave the page
+   showing through the text, so fall back to a near-opaque panel. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .swal2-popup { background: rgba(255, 255, 255, 0.97) !important; }
+  .swal2-container { background: rgba(17, 24, 15, 0.45) !important; }
+}
+
+.swal2-title {
+  color: #14200d !important;
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em;
+}
+
+.swal2-html-container {
+  color: #4b5563 !important;
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+}
+
+.swal2-actions { gap: 0.6rem; margin-top: 1.4rem !important; }
+
+.swal2-styled.swal2-confirm,
+.swal2-styled.swal2-deny,
+.swal2-styled.swal2-cancel {
+  border-radius: 12px !important;
+  padding: 0.7em 1.9em !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  box-shadow: none !important;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+/* !important is load-bearing here: SweetAlert writes confirmButtonColor as an
+   inline style, which a plain class rule could not override. */
+.swal2-styled.swal2-confirm {
+  background: #2f6b1f !important;
+  color: #ffffff !important;
+}
+
+.swal2-styled.swal2-cancel { background: rgba(107, 114, 128, 0.15) !important; color: #374151 !important; }
+.swal2-styled.swal2-deny   { background: #b91c1c !important; color: #ffffff !important; }
+
+.swal2-styled:hover  { filter: brightness(1.07); transform: translateY(-1px); }
+.swal2-styled:active { transform: translateY(0); }
+
+.swal2-styled:focus-visible {
+  outline: 2px solid #2f6b1f !important;
+  outline-offset: 2px;
+  box-shadow: none !important;
+}
+
+/* Icons.
+   SweetAlert draws the success tick by animating two lines and then masking the
+   overshoot with white shapes (swal2-success-circular-line-left/right and
+   swal2-success-fix). Against the stock opaque panel those masks are invisible;
+   on a translucent one they stack up into a solid grey disc behind the tick.
+   They are painted with inline background-color, so clearing them needs
+   !important. The tick and its ring are all that should remain. */
+.swal2-icon {
+  border-color: transparent !important;
+  margin: 0.5rem auto 1rem !important;
+  background: transparent !important;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-circular-line'],
+.swal2-icon.swal2-success [class*=' swal2-success-circular-line'],
+.swal2-icon.swal2-success .swal2-success-fix {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+  border: 4px solid rgba(47, 107, 31, 0.28) !important;
+  background: transparent !important;
+}
+
+.swal2-icon.swal2-success [class^='swal2-success-line'] {
+  background-color: #2f6b1f !important;
+}
+
+.swal2-icon.swal2-error  { border-color: rgba(185, 28, 28, 0.28) !important; }
+.swal2-icon.swal2-error [class^='swal2-x-mark-line'] { background-color: #b91c1c !important; }
+.swal2-icon.swal2-warning,
+.swal2-icon.swal2-info,
+.swal2-icon.swal2-question { border-color: rgba(107, 114, 128, 0.3) !important; }
+
+.swal2-close:focus { box-shadow: none !important; }
+
+@media (prefers-color-scheme: dark) {
+  .swal2-popup {
+    background: rgba(28, 32, 26, 0.75) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+  }
+  .swal2-title { color: #f3f6f1 !important; }
+  .swal2-html-container { color: #c3cbbd !important; }
+  .swal2-styled.swal2-cancel { background: rgba(255, 255, 255, 0.14) !important; color: #e5e7eb !important; }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .swal2-popup { background: rgba(28, 32, 26, 0.97) !important; }
+  }
+}
+
+/* Phones. The stock popup keeps a fixed 32em width that overflows a small screen,
+   and side-by-side buttons end up below the 44px comfortable tap target — so the
+   actions stack and go full width instead. */
+@media (max-width: 480px) {
+  .swal2-popup {
+    width: calc(100vw - 2.5rem) !important;
+    max-width: calc(100vw - 2.5rem) !important;
+    padding: 1.6rem 1.25rem 1.25rem !important;
+    border-radius: 18px !important;
+  }
+
+  .swal2-title { font-size: 1.18rem !important; line-height: 1.35 !important; }
+  .swal2-html-container { font-size: 0.9rem !important; }
+
+  /* Deliberately NOT resized with width/height. SweetAlert lays the two tick
+     strokes out in em offsets against the icon's default 5em box, so setting a
+     rem width/height moves the box without moving the strokes and the tick comes
+     out crooked. font-size scales the box and the strokes together. */
+  .swal2-icon { font-size: 0.9em !important; margin: 0.25rem auto 0.9rem !important; }
+
+  .swal2-actions { flex-direction: column-reverse; width: 100%; gap: 0.5rem; }
+  .swal2-actions .swal2-styled { width: 100%; margin: 0 !important; padding: 0.85em 1em !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swal2-popup, .swal2-styled { animation: none !important; transition: none !important; }
+  .swal2-styled:hover { transform: none; }
+}
+
 /* You can add global styles to this file, and also import other style files */
 .ngx-pagination .current {
     background: #696cff !important;

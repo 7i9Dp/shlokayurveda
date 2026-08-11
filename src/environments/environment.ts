@@ -1,23 +1,16 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
+// Replaced by environment.prod.ts on a production build (angular.json -> fileReplacements).
+// Both files point at the live API on purpose, so no build path can ship a localhost URL.
 
 export const environment = {
   production: true,
-  //apiURL: 'http://localhost:7892/api/',
-  // apiURL: 'https://shlokayurveda.xyz/api/',
+  // The API is hosted on the .shop domain; .com serves the Angular storefront.
+  // Swap these two lines to work against a local API — don't commit it that way.
   apiURL: 'https://shlokaayurveda.shop/api/',
-  //fileURL:'http://localhost:7892/',
+  // apiURL: 'http://localhost:7892/api/',
   recaptcha: {
     siteKey: '6LdfMCQhAAAAAB8W9xcG3yI-LgiXnDVWITsGJ2aa'
   },
+  // Online payment (Razorpay) is temporarily switched off — checkout shows COD only.
+  // Flip this back to true to bring the "Pay Online" option back.
+  paymentEnabled: false,
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

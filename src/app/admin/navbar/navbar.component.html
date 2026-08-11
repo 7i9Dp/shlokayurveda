@@ -1,186 +1,225 @@
-<header style="padding: 1rem 0; background-color: #ffffff; border-bottom: 1px solid #ddd;">
-  <div style="margin: 0 auto; padding: 0 1rem;">
-    <div style="display: flex; justify-content: space-between; align-items: center;">
+<header class="sa-header" [class.sa-header--scrolled]="scrolled">
+  <div class="sa-header__bar">
 
-      <!-- Logo Section -->
-      <div style="flex-basis: 30%;">
-        <a href="#">
-          <img src="/assets/img/slok.png" alt="Logo" style="height: auto; width: 183px;">
-        </a>
-      </div>
+    <!-- Logo -->
+    <a class="sa-logo" href="javascript:void(0)" (click)="goHome()" aria-label="Shlok Ayurveda home">
+      <img src="assets/img/brand/logo.png" alt="Shlok Ayurveda">
+    </a>
 
-      <!-- Future Empty Sections (Search, Cart) -->
-      <div style="flex-basis: 50%; text-align: center;">
-        <!-- You can place search or additional buttons here in the future -->
-      </div>
+    <!-- Desktop navigation -->
+    <nav class="sa-nav" aria-label="Main">
+      <ul class="sa-nav__list">
 
-      <!-- Menu Button -->
-      <div style="flex-basis: 10%; text-align: right;">
-        <button style="border: none; background: transparent; font-size: 24px; cursor: pointer;" data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse">
-          <i class="fas fa-bars"></i>
+        <li class="sa-nav__item">
+          <a class="sa-nav__link" href="javascript:void(0)" (click)="goHome()">Home</a>
+        </li>
+
+        <!-- Kits -->
+        <li class="sa-nav__item sa-has-menu" (mouseenter)="openMenuOn('kits')" (mouseleave)="closeMenu()">
+          <button type="button" class="sa-nav__link sa-nav__link--toggle"
+                  [class.is-open]="openMenu === 'kits'"
+                  (click)="toggleMenu('kits', $event)"
+                  [attr.aria-expanded]="openMenu === 'kits'">
+            Kits
+            <i class="fas fa-chevron-down sa-caret"></i>
+          </button>
+
+          <div class="sa-mega" *ngIf="openMenu === 'kits'">
+            <div class="sa-mega__cols">
+              <div class="sa-mega__col" *ngFor="let cat of categories">
+                <p class="sa-mega__heading">{{ cat.name }}</p>
+                <a class="sa-mega__item" *ngFor="let kit of kitsOf(cat.key)"
+                   href="javascript:void(0)" (click)="goToItem(kit)">
+                  <span class="sa-mega__thumb">
+                    <img [src]="kit.imagePath" [alt]="kit.productName" loading="lazy">
+                  </span>
+                  <span class="sa-mega__text">
+                    <span class="sa-mega__name">{{ kit.shortName || kit.productName }}</span>
+                    <span class="sa-mega__price">₹{{ kit.price }}</span>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Products -->
+        <li class="sa-nav__item sa-has-menu" (mouseenter)="openMenuOn('products')" (mouseleave)="closeMenu()">
+          <button type="button" class="sa-nav__link sa-nav__link--toggle"
+                  [class.is-open]="openMenu === 'products'"
+                  (click)="toggleMenu('products', $event)"
+                  [attr.aria-expanded]="openMenu === 'products'">
+            Products
+            <i class="fas fa-chevron-down sa-caret"></i>
+          </button>
+
+          <div class="sa-mega sa-mega--products" *ngIf="openMenu === 'products'">
+            <div class="sa-mega__grid">
+              <a class="sa-mega__item" *ngFor="let product of products"
+                 href="javascript:void(0)" (click)="goToItem(product)">
+                <span class="sa-mega__thumb">
+                  <img [src]="product.imagePath" [alt]="product.productName" loading="lazy">
+                </span>
+                <span class="sa-mega__text">
+                  <span class="sa-mega__name">{{ product.productName }}</span>
+                  <span class="sa-mega__meta">{{ product.pack }}</span>
+                  <span class="sa-mega__price">₹{{ product.price }}</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <li class="sa-nav__item">
+          <a class="sa-nav__link" href="javascript:void(0)" (click)="scrollToSection('about-us')">About Us</a>
+        </li>
+
+        <li class="sa-nav__item">
+          <a class="sa-nav__link" href="javascript:void(0)" (click)="scrollToSection('contact-us')">Contact Us</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Actions -->
+    <div class="sa-actions">
+      <button type="button" class="sa-icon-btn" (click)="toggleSearch()"
+              [attr.aria-label]="searchOpen ? 'Close search' : 'Search products'" [attr.aria-expanded]="searchOpen">
+        <i class="fas" [ngClass]="searchOpen ? 'fa-times' : 'fa-search'"></i>
+      </button>
+
+      <button type="button" class="sa-icon-btn sa-cart-btn" (click)="goToCart()"
+              [attr.aria-label]="'Cart, ' + cartCount + ' items'">
+        <i class="fas fa-cart-shopping"></i>
+        <span class="sa-cart-badge" *ngIf="cartCount">{{ cartCount }}</span>
+      </button>
+
+      <button type="button" class="sa-icon-btn sa-burger" (click)="toggleDrawer()"
+              aria-label="Open menu" [attr.aria-expanded]="drawerOpen">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Search panel -->
+  <div class="sa-search" *ngIf="searchOpen">
+    <div class="sa-search__inner">
+      <div class="sa-search__field">
+        <i class="fas fa-search"></i>
+        <input #searchInput type="text" placeholder="Search kits, capsules, powders…"
+               [value]="searchTerm"
+               (input)="onSearch($any($event.target).value)"
+               (keyup.enter)="submitSearch()"
+               aria-label="Search products">
+        <button type="button" class="sa-search__clear" *ngIf="searchTerm" (click)="clearSearch()" aria-label="Clear">
+          <i class="fas fa-times"></i>
         </button>
+      </div>
+
+      <div class="sa-search__results" *ngIf="searchTerm">
+        <a class="sa-search__result" *ngFor="let item of searchResults"
+           href="javascript:void(0)" (click)="goToItem(item)">
+          <img [src]="item.imagePath" [alt]="item.productName" loading="lazy">
+          <span class="sa-search__result-text">
+            <span class="sa-search__result-name">{{ item.productName }}</span>
+            <span class="sa-search__result-meta">{{ item.pack || item.duration }}</span>
+          </span>
+          <span class="sa-search__result-price">₹{{ item.price }}</span>
+        </a>
+
+        <p class="sa-search__empty" *ngIf="!searchResults.length">
+          No products matched “{{ searchTerm }}”.
+        </p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile drawer -->
+<div class="sa-backdrop" [class.is-open]="drawerOpen" (click)="closeDrawer()"></div>
+
+<aside class="sa-drawer" [class.is-open]="drawerOpen" aria-label="Mobile menu">
+  <div class="sa-drawer__head">
+    <img class="sa-drawer__logo" src="assets/img/brand/logo.png" alt="Shlok Ayurveda">
+    <button type="button" class="sa-icon-btn" (click)="closeDrawer()" aria-label="Close menu">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <nav class="sa-drawer__body">
+    <a class="sa-drawer__row" href="javascript:void(0)" (click)="goHome()">
+      <span>Home</span>
+      <i class="fas fa-chevron-right sa-drawer__chev"></i>
+    </a>
+
+    <!-- Kits -->
+    <button type="button" class="sa-drawer__row" (click)="toggleSection('kits')"
+            [attr.aria-expanded]="isSectionOpen('kits')">
+      <span>Kits</span>
+      <i class="fas sa-drawer__chev" [ngClass]="isSectionOpen('kits') ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+    </button>
+
+    <div class="sa-drawer__panel" *ngIf="isSectionOpen('kits')">
+      <div class="sa-drawer__group" *ngFor="let cat of categories">
+        <button type="button" class="sa-drawer__row sa-drawer__row--sub" (click)="toggleSection(cat.key)"
+                [attr.aria-expanded]="isSectionOpen(cat.key)">
+          <span class="sa-drawer__cat">
+            <img [src]="cat.image" [alt]="cat.name" loading="lazy">
+            {{ cat.name }}
+          </span>
+          <i class="fas sa-drawer__chev" [ngClass]="isSectionOpen(cat.key) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        </button>
+
+        <div class="sa-drawer__panel sa-drawer__panel--deep" *ngIf="isSectionOpen(cat.key)">
+          <a class="sa-drawer__leaf" *ngFor="let kit of kitsOf(cat.key)"
+             href="javascript:void(0)" (click)="goToItem(kit)">
+            <span>{{ kit.shortName || kit.productName }}</span>
+            <span class="sa-drawer__price">₹{{ kit.price }}</span>
+          </a>
+        </div>
       </div>
     </div>
 
-  <!-- Collapsible Menu -->
-  <div class="collapse" id="menuCollapse"
-    style="background-color: #f8f9fa; padding: 15px; margin-top: 5px; border-radius: 8px;">
-    <ul style="list-style: none; padding: 0; margin: 0;">
+    <!-- Products -->
+    <button type="button" class="sa-drawer__row" (click)="toggleSection('products')"
+            [attr.aria-expanded]="isSectionOpen('products')">
+      <span>Products</span>
+      <i class="fas sa-drawer__chev" [ngClass]="isSectionOpen('products') ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+    </button>
 
-      <!-- Home Link -->
-      <li style="margin-bottom: 1rem;">
-        <a href="javascript:void(0)" [routerLink]="['/admin']"
-          style="text-decoration: none; font-weight: bold; font-size: 1.1rem; color: #437113; display: flex; align-items: center;">
-          Home
-        </a>
-      </li>
-      <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
+    <div class="sa-drawer__panel" *ngIf="isSectionOpen('products')">
+      <a class="sa-drawer__product" *ngFor="let product of products"
+         href="javascript:void(0)" (click)="goToItem(product)">
+        <img [src]="product.imagePath" [alt]="product.productName" loading="lazy">
+        <span class="sa-drawer__product-text">
+          <span class="sa-drawer__product-name">{{ product.productName }}</span>
+          <span class="sa-drawer__product-meta">{{ product.pack }}</span>
+        </span>
+        <span class="sa-drawer__price">₹{{ product.price }}</span>
+      </a>
+    </div>
 
-      <!-- Kits Dropdown -->
-      <li style="margin-bottom: 1rem;">
-        <b>
-          <a href="javascript:void(0);" (click)="toggleDropdown('kits')" data-toggle="collapse"
-            data-target="#nestedDropdownkit"
-            style="display: flex; align-items: center; font-weight: bold; font-size: 1.1rem; text-decoration: none; color: #437113;">
-            Kits
-            <i class="fas"
-              [ngClass]="{'fa-chevron-up': isDropdownOpen('kits'), 'fa-chevron-down': !isDropdownOpen('kits')}"
-              style="font-size: 1rem; margin-left: auto;"></i>
-          </a>
-        </b>
-        <div class="collapse" id="nestedDropdownkit">
-          <ul style="list-style: none; padding-left: 20px;">
-            <li style="margin-top: 0.5rem;">
-              <b>
-                <a href="javascript:void(0);" (click)="toggleDropdown('digestive')" data-toggle="collapse"
-                  data-target="#nestedDropdownDigestive"
-                  style="font-size: 1rem; color: #437113; display: flex; align-items: center;">
-                  Digestive Care
-                  <i class="fas"
-                    [ngClass]="{'fa-chevron-up': isDropdownOpen('digestive'), 'fa-chevron-down': !isDropdownOpen('digestive')}"
-                    style="font-size: 1rem; margin-left: auto;"></i>
-                </a>
-              </b>
-              <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-              <div class="collapse" id="nestedDropdownDigestive">
-                <ul style="list-style: none; padding-left: 20px;">
-                  <!-- <a [routerLink]="['/product', product.id]" class="btn btn-primary mt-3">View Product</a> -->
-                  <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 1]" style="color: #000000;">Trial Kit</a></li>
-                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-                  <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 2]" style="color: #000000;">Full Kit</a></li>
-                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-                  <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 3]" style="color: #000000;">Strong Kit</a></li>
-                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-                </ul>
-              </div>
-            </li>
+    <a class="sa-drawer__row" href="javascript:void(0)" (click)="goToCart()">
+      <span>Cart <span class="sa-drawer__count" *ngIf="cartCount">{{ cartCount }}</span></span>
+      <i class="fas fa-chevron-right sa-drawer__chev"></i>
+    </a>
 
-            <li style="margin-top: 0.5rem;">
-              <b>
-                <a href="javascript:void(0);" (click)="toggleDropdown('piles')" data-toggle="collapse"
-                  data-target="#nestedDropdownPiles"
-                  style="font-size: 1rem; color: #437113; display: flex; align-items: center;">
-                  Piles Care
-                  <i class="fas"
-                    [ngClass]="{'fa-chevron-up': isDropdownOpen('piles'), 'fa-chevron-down': !isDropdownOpen('piles')}"
-                    style="font-size: 1rem; margin-left: auto;"></i>
-                </a>
-              </b>
-              <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-              <div class="collapse" id="nestedDropdownPiles">
-                <ul style="list-style: none; padding-left: 20px;">
-                  <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 4]" style="color: #000000;">Trial Kit</a></li>
-                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-                  <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 5]" style="color: #000000;">Full Kit</a></li>
-                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-                  <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 6]" style="color: #000000;">Strong Kit</a></li>
-                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-                </ul>
-              </div>
-            </li>
+    <a class="sa-drawer__row" href="javascript:void(0)" (click)="scrollToSection('about-us')">
+      <span>About Us</span>
+      <i class="fas fa-chevron-right sa-drawer__chev"></i>
+    </a>
 
-            <li style="margin-top: 0.5rem;">
-              <b>
-                <a href="javascript:void(0);" (click)="toggleDropdown('sexual')" data-toggle="collapse"
-                  data-target="#nestedDropdownSexualCare"
-                  style="font-size: 1rem; color: #437113; display: flex; align-items: center;">
-                  Personal Care
-                  <i class="fas"
-                    [ngClass]="{'fa-chevron-up': isDropdownOpen('sexual'), 'fa-chevron-down': !isDropdownOpen('sexual')}"
-                    style="font-size: 1rem; margin-left: auto;"></i>
-                </a>
-              </b>
-              <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-              <div class="collapse" id="nestedDropdownSexualCare">
-                <ul style="list-style: none; padding-left: 20px;">
-                  <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 7]" style="color: #000000;">Trial Kit</a></li>
-                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-                  <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 8]" style="color: #000000;">Full Kit</a></li>
-                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-                  <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 9]" style="color: #000000;">Strong Kit</a></li>
-                  <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </li>
+    <a class="sa-drawer__row" href="javascript:void(0)" (click)="scrollToSection('contact-us')">
+      <span>Contact Us</span>
+      <i class="fas fa-chevron-right sa-drawer__chev"></i>
+    </a>
+  </nav>
 
-      <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-
-      <!-- Products Dropdown -->
-      <li style="margin-bottom: 1rem;">
-        <b>
-          <a href="javascript:void(0);" (click)="toggleDropdown('products')" data-toggle="collapse"
-            data-target="#nestedDropdownProducts"
-            style="display: flex; align-items: center; font-weight: bold; font-size: 1.1rem; text-decoration: none; color: #437113;">
-            Products
-            <i class="fas" [ngClass]="{'fa-chevron-up': isDropdownOpen('products'), 'fa-chevron-down': !isDropdownOpen('products')}"
-              style="font-size: 1rem; margin-left: auto;"></i>
-          </a>
-        </b>
-        <div class="collapse" id="nestedDropdownProducts">
-          <ul style="list-style: none; padding-left: 20px;">
-            <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 10]" style="color: #000000;">Strong Josh Boosters Capsule</a></li>
-            <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-            <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 11]" style="color: #000000;">Wild-X Capsule</a></li>
-            <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-            <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 12]" style="color: #000000;">Double Hard Spray</a></li>
-            <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-            <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 13]" style="color: #000000;">Constibest Powder</a></li>
-            <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-            <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 14]" style="color: #000000;">Gasoleft Capsule</a></li>
-            <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-            <li data-toggle="collapse" data-target="#menuCollapse" aria-label="collapse"><a href="javascript:void(0)" [routerLink]="['/admin/product-details', 15]" style="color: #000000;">Pilolex Capsule</a></li>
-          </ul>
-        </div>
-      </li>
-      <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-
-      <!-- About Us and Contact Us Links -->
-      <li style="margin-bottom: 1rem;">
-        <b><a href="javascript:void(0)"
-            style="text-decoration: none; font-weight: bold; font-size: 1.1rem; color: #437113; display: flex; align-items: center;">
-            About Us
-          </a></b>
-      </li>
-      <hr style="border: none; border-top: 1px solid #ddd; margin: 0 0 1rem 0;">
-      <li>
-        <b><a href="javascript:void(0)" (click)="scrollToContact()" class="site-footer__linklist-item"
-            style="text-decoration: none; font-weight: bold; font-size: 1.1rem; color: #437113; display: flex; align-items: center;">
-            Contact Us
-          </a></b>
-          <!-- <a (click)="scrollToContact()" class="site-footer__linklist-item" style="color: black;cursor: pointer;">
-            Contact Us
-          </a> -->
-      </li>
-    </ul>
+  <div class="sa-drawer__foot">
+    <a class="sa-drawer__cta sa-drawer__cta--call" href="tel:+91-8128180101">
+      <i class="fas fa-phone"></i> Call Now
+    </a>
+    <a class="sa-drawer__cta sa-drawer__cta--wa" href="https://wa.me/8128180101" target="_blank" rel="noopener">
+      <i class="fab fa-whatsapp"></i> Whatsapp
+    </a>
   </div>
-</div>
-</header>
-
-<!-- You can customize the component below or remove it -->
-<app-printticket></app-printticket>
-
-<!-- External CSS for Icons (optional if you want a menu icon) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</aside>
