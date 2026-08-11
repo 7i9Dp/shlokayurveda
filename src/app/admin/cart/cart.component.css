@@ -260,7 +260,8 @@
 
 .pd-field { margin-bottom: 14px; }
 
-.pd-field label {
+/* Direct-child combinator so this never leaks into a nested label (e.g. a payment-option card). */
+.pd-field > label {
   display: block;
   margin-bottom: 6px;
   font-size: 14px;
@@ -291,6 +292,80 @@
   margin-top: 5px;
   font-size: 13px;
   color: #dc2626;
+}
+
+/* ----------------------------------------------------- payment method picker */
+
+.cart-pay__title {
+  margin: 22px 0 10px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.cart-pay {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+/* label.cart-pay__option (not just .cart-pay__option) so this ties the specificity of
+   ".pd-field label" above and wins on source order — otherwise that rule's
+   display:block leaks in here and collapses the icon/name/hint stack inline. */
+label.cart-pay__option {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: 2px;
+  padding: 12px 10px;
+  margin: 0;
+  border: 1.5px solid #e2e5e1;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color .2s ease, background-color .2s ease;
+}
+
+.cart-pay__option:hover { border-color: var(--sa-green); }
+
+.cart-pay__option--active {
+  border-color: var(--sa-green);
+  background: rgba(47, 107, 31, .06);
+}
+
+.cart-pay__option i {
+  font-size: 18px;
+  color: var(--sa-green);
+}
+
+/* The radio drives the form control and keyboard focus, but the card is what the
+   customer sees. Clipped rather than hidden or sized to zero, both of which can
+   drop it out of the accessibility tree and off the tab order. */
+.cart-pay__radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.cart-pay__option:focus-within {
+  outline: 2px solid var(--sa-green);
+  outline-offset: 2px;
+}
+
+.cart-pay__name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cart-pay__hint {
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--sa-muted);
 }
 
 .cart__place {
@@ -341,4 +416,7 @@
   }
 
   .cart-line__controls { gap: 12px; }
+
+  /* Two payment cards side by side get too cramped to read at this width. */
+  .cart-pay { grid-template-columns: 1fr; }
 }

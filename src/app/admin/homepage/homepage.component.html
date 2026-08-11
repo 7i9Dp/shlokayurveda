@@ -29,7 +29,7 @@
     </div>
 
     <div class="hero__art">
-      <img src="assets/img/banner.png" alt="Shlok Ayurveda healthcare expert" fetchpriority="high">
+      <img src="assets/img/brand/hero-doctor.png" alt="Shlok Ayurveda healthcare expert" fetchpriority="high">
     </div>
   </div>
 </section>
@@ -169,8 +169,49 @@
 <!-- ============================================================== ABOUT US -->
 <section class="section" id="about-us">
   <div class="about">
-    <h2>{{ advantages.title }}</h2>
-    <p>{{ advantages.text }}</p>
+    <div class="about__content">
+      <p class="about__eyebrow"><i class="fas fa-leaf"></i> Why Shlok Ayurveda</p>
+      <h2>{{ advantages.title }}</h2>
+      <p>{{ advantages.text }}</p>
+
+      <div class="about__highlights">
+        <div class="about__highlight" *ngFor="let item of aboutHighlights">
+          <span class="about__highlight-icon"><i class="fas" [ngClass]="item.icon"></i></span>
+          <span>{{ item.text }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="about__stats">
+      <div class="about__stat">
+        <span class="about__stat-icon"><i class="fas fa-star"></i></span>
+        <div class="about__stat-body">
+          <strong>{{ averageRating }}<small>/5</small></strong>
+          <span>Average Rating</span>
+        </div>
+      </div>
+      <div class="about__stat">
+        <span class="about__stat-icon"><i class="fas fa-comment-dots"></i></span>
+        <div class="about__stat-body">
+          <strong>{{ reviews.length }}+</strong>
+          <span>Verified Reviews</span>
+        </div>
+      </div>
+      <div class="about__stat">
+        <span class="about__stat-icon"><i class="fas fa-users"></i></span>
+        <div class="about__stat-body">
+          <strong>50k+</strong>
+          <span>Happy Customers</span>
+        </div>
+      </div>
+      <div class="about__stat">
+        <span class="about__stat-icon"><i class="fas fa-flask"></i></span>
+        <div class="about__stat-body">
+          <strong>{{ formulationCount }}</strong>
+          <span>Ayurvedic Formulations</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -184,16 +225,31 @@
 
     <div class="contact__grid">
       <div class="contact__info">
-        <h3>Address</h3>
-        <p>{{ contact.address }}</p>
+        <div class="contact__row">
+          <span class="contact__row-icon"><i class="fas fa-location-dot"></i></span>
+          <div>
+            <h3>Address</h3>
+            <p>{{ contact.address }}</p>
+          </div>
+        </div>
 
-        <h3>Email</h3>
-        <p><a [href]="'mailto:' + contact.email">{{ contact.email }}</a></p>
+        <div class="contact__row">
+          <span class="contact__row-icon"><i class="fas fa-envelope"></i></span>
+          <div>
+            <h3>Email</h3>
+            <p><a [href]="'mailto:' + contact.email">{{ contact.email }}</a></p>
+          </div>
+        </div>
 
-        <h3>Help Line Number</h3>
-        <p *ngFor="let phone of contact.phones">
-          <a [href]="'tel:' + phone">{{ phone }}</a>
-        </p>
+        <div class="contact__row">
+          <span class="contact__row-icon"><i class="fas fa-phone"></i></span>
+          <div>
+            <h3>Help Line Number</h3>
+            <p *ngFor="let phone of contact.phones">
+              <a [href]="'tel:' + phone">{{ phone }}</a>
+            </p>
+          </div>
+        </div>
 
         <div class="contact__badges">
           <img *ngFor="let cert of certifications" [src]="cert.image" [alt]="cert.title" loading="lazy">
@@ -266,12 +322,12 @@
 <!-- ==================================================== FLOATING CONTACTS -->
 <div class="bottomcorner">
   <a href="https://wa.me/8128180101" aria-label="Chat on WhatsApp">
-    <img src="assets/img/whatsappp.png" alt="WhatsApp">
+    <img src="assets/img/brand/icon-whatsapp.png" alt="WhatsApp">
   </a>
 </div>
 
 <div class="bottomleft">
   <a href="tel:+91-8128180101" aria-label="Call us">
-    <img src="assets/img/phone.png" alt="Call">
+    <img src="assets/img/brand/icon-phone.png" alt="Call">
   </a>
 </div>

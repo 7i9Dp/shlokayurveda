@@ -101,6 +101,51 @@ export class CartService {
     return this.lines$.value.some(line => line.id === Number(id));
   }
 
+  /**
+   * Brings stored lines back in line with the live catalog. Carts sit in
+   * localStorage for as long as the browser keeps them, so a price change would
+   * otherwise reach checkout as a stale amount — and the API rejects those rather
+   * than quietly charging something the cart never displayed. Items that have left
+   * the catalog are dropped for the same reason.
+   *
+   * Returns what changed so the caller can tell the customer.
+   */
+  syncWithCatalog(catalog: CatalogItem[]): { repriced: boolean; removed: string[] } {
+    const removed: string[] = [];
+    let repriced = false;
+
+    if (!catalog.length) {
+      return { repriced, removed };
+    }
+
+    const byId = new Map(catalog.map(item => [Number(item.id), item]));
+
+    const lines = this.lines$.value.reduce<CartLine[]>((kept, line) => {
+      const current = byId.get(line.id);
+
+      if (!current) {
+        removed.push(line.productName);
+        return kept;
+      }
+
+      const price = Number(current.price);
+      const oldPrice = current.oldPrice ? Number(current.oldPrice) : null;
+
+      if (price !== line.price) {
+        repriced = true;
+      }
+
+      kept.push({ ...line, price, oldPrice, productName: current.productName });
+      return kept;
+    }, []);
+
+    if (repriced || removed.length) {
+      this.commit(lines);
+    }
+
+    return { repriced, removed };
+  }
+
   private commit(lines: CartLine[]): void {
     this.lines$.next(lines);
     try {

@@ -9,6 +9,7 @@ export interface CatalogItem {
   category?: string;
   imagePath: string;
   imagePath2?: string;
+  imagePath3?: string;
   pack?: string;
   price: string;
   oldPrice?: string | null;
@@ -19,6 +20,8 @@ export interface CatalogItem {
   rating?: number;
   users?: string;
   IsKit: boolean;
+  /** Certification badge titles (matching site-data "certifications") to hide on this product's page. */
+  hideCertifications?: string[];
 }
 
 export interface Category {

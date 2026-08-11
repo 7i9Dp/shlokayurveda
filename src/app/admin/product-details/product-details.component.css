@@ -41,6 +41,29 @@
   display: block;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .pd__stage.is-zooming { cursor: none; }
+}
+
+.pd__lens {
+  position: absolute;
+  z-index: 5;
+  width: 160px;
+  height: 160px;
+  overflow: hidden;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background-color: #f6f8f5;
+  box-shadow: 0 8px 26px rgba(20, 32, 13, .35), 0 0 0 1px rgba(20, 32, 13, .06);
+  pointer-events: none;
+}
+
+.pd__lens-img {
+  position: absolute;
+  max-width: none;
+  object-fit: cover;
+}
+
 .pd__counter {
   position: absolute;
   top: 12px;
@@ -279,6 +302,34 @@
 
 .pd__chip--plain { background: #fff; }
 
+/* "Use For" condition tags — a distinct icon + colour per condition so they read at a glance. */
+.pd__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.pd__tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(20, 32, 13, .12);
+}
+
+.pd__tag--sky    { background: #e0f2fe; color: #0369a1; }
+.pd__tag--amber  { background: #ffedd5; color: #c2410c; }
+.pd__tag--teal   { background: #d7f5f0; color: #0f766e; }
+.pd__tag--rose   { background: #fde2e7; color: #be123c; }
+.pd__tag--violet { background: #ede4fd; color: #7c3aed; }
+.pd__tag--indigo { background: #e3e6fd; color: #4338ca; }
+.pd__tag--gold   { background: #fdf0cf; color: #b45309; }
+.pd__tag--green  { background: var(--sa-green-soft, #eaf6e6); color: var(--sa-green); }
+
 .pd__list {
   margin: 0;
   padding-left: 20px;
@@ -411,7 +462,9 @@
   grid-column: 1 / -1;
 }
 
-.pd-field label {
+/* Direct-child combinator: this must style only the field's own label, not the
+   .pd-pay__option labels nested two levels deeper inside the payment-method field. */
+.pd-field > label {
   display: block;
   margin-bottom: 6px;
   font-size: 14px;
@@ -455,6 +508,78 @@
   padding-top: 6px;
   border-top: 1px solid var(--sa-line);
   margin-top: 4px;
+}
+
+/* ----------------------------------------------------- payment method picker */
+
+.pd-pay {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* label.pd-pay__option (not just .pd-pay__option) so this ties the specificity of
+   ".pd-field label" above and wins on source order — otherwise that rule's
+   display:block leaks in here and collapses the icon/name/hint stack inline. */
+label.pd-pay__option {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: 2px;
+  padding: 12px 10px;
+  margin: 0;
+  border: 1.5px solid var(--sa-line);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color .2s ease, background-color .2s ease;
+}
+
+.pd-pay__option:hover { border-color: var(--sa-green); }
+
+.pd-pay__option--active {
+  border-color: var(--sa-green);
+  background: rgba(47, 107, 31, .06);
+}
+
+.pd-pay__option i {
+  font-size: 18px;
+  color: var(--sa-green);
+}
+
+/* The radio drives the form control and keyboard focus, but the card is what the
+   customer sees. Clipped rather than hidden or sized to zero, both of which can
+   drop it out of the accessibility tree and off the tab order. */
+.pd-pay__radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.pd-pay__option:focus-within {
+  outline: 2px solid var(--sa-green);
+  outline-offset: 2px;
+}
+
+.pd-pay__name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.pd-pay__hint {
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--sa-muted);
+}
+
+@media (max-width: 575.98px) {
+  /* Two cards side by side get too cramped to read at this width. */
+  .pd-pay { grid-template-columns: 1fr; }
 }
 
 .pd-order__grand {

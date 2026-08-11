@@ -1,5 +1,6 @@
 :host {
   --sa-green: #2f6b1f;
+  --sa-green-dark: #245417;
   --sa-green-soft: #eaf6e6;
   --sa-ink: #14200d;
   --sa-muted: #6b7280;
@@ -547,25 +548,201 @@
 
 /* ------------------------------------------------------------------ about */
 
+/* The sticky header covers the first ~90px of whatever we scrollIntoView to. */
+#about-us,
+#contact-us {
+  scroll-margin-top: 90px;
+}
+
 .about {
-  padding: 26px 22px;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: 28px;
+  padding: 34px 30px;
   border: 1px solid var(--sa-line);
-  border-radius: 18px;
-  background: #fafcf9;
+  border-radius: 20px;
+  background:
+    radial-gradient(140% 120% at 100% 0%, rgba(47, 107, 31, .08), transparent 55%),
+    linear-gradient(180deg, #fafcf9 0%, #fff 100%);
+}
+
+@media (min-width: 992px) {
+  /* Stretch (not center) so the stat panel fills the same height as the copy
+     beside it instead of floating in the middle with empty space above/below. */
+  .about { grid-template-columns: minmax(0, 1fr) minmax(0, 280px); align-items: stretch; gap: 24px; }
+}
+
+.about__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--sa-green);
 }
 
 .about h2 {
-  margin: 0 0 12px;
-  font-size: clamp(20px, 3.2vw, 26px);
+  margin: 0 0 14px;
+  max-width: 46ch;
+  font-size: clamp(20px, 3.2vw, 28px);
   font-weight: 800;
+  line-height: 1.25;
   color: var(--sa-ink);
 }
 
 .about p {
   margin: 0;
+  max-width: 68ch;
   font-size: 15px;
-  line-height: 1.75;
+  line-height: 1.8;
   color: #4b5563;
+}
+
+.about__highlights {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 26px;
+  padding-top: 24px;
+  border-top: 1px solid var(--sa-line);
+}
+
+.about__highlight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.about__highlight-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--sa-green-soft);
+  color: var(--sa-green);
+  font-size: 20px;
+}
+
+.about__highlight span {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--sa-ink);
+}
+
+/* The trust-stat panel that fills the empty space beside the copy on wide screens.
+   Mobile: four tiles in a 2x2 grid. Desktop: one bordered card, icon-left rows
+   that stretch to the same height as the copy beside it (see .about above). */
+
+.about__stats {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.about__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 18px 10px;
+  border: 1px solid var(--sa-line);
+  border-radius: 14px;
+  text-align: center;
+  background: rgba(255, 255, 255, .7);
+  backdrop-filter: blur(2px);
+}
+
+.about__stat-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--sa-green-soft);
+  color: var(--sa-green);
+  font-size: 15px;
+}
+
+.about__stat-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.about__stat strong {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--sa-ink);
+}
+
+.about__stat strong small {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--sa-muted);
+}
+
+.about__stat span {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #4b5563;
+}
+
+@media (min-width: 992px) {
+  .about__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 6px;
+    border: 1px solid var(--sa-line);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 16px 36px -8px rgba(20, 32, 13, .16);
+  }
+
+  .about__stat {
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 12px;
+    background: none;
+    backdrop-filter: none;
+    text-align: left;
+    transition: background-color .18s ease;
+  }
+
+  .about__stat:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 0;
+    border-bottom: 1px solid var(--sa-line);
+  }
+
+  .about__stat { position: relative; }
+  .about__stat:hover { background: var(--sa-green-soft); }
+
+  .about__stat-icon { width: 40px; height: 40px; font-size: 16px; }
+  .about__stat-body { align-items: flex-start; gap: 1px; }
 }
 
 /* ---------------------------------------------------------------- contact */
@@ -578,42 +755,81 @@
 
 .contact__info,
 .contact__form {
-  padding: 22px;
+  padding: 26px;
   border: 1px solid var(--sa-line);
   border-radius: 18px;
   background: #fff;
+  transition: box-shadow .25s ease;
 }
 
-.contact__info h3,
+.contact__info:hover,
+.contact__form:hover {
+  box-shadow: 0 14px 30px rgba(20, 32, 13, .07);
+}
+
+.contact__info {
+  background: linear-gradient(180deg, #fafcf9 0%, #fff 60%);
+}
+
+.contact__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.contact__row:last-of-type { margin-bottom: 0; }
+
+.contact__row-icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--sa-green-soft);
+  color: var(--sa-green);
+  font-size: 16px;
+}
+
+.contact__info h3 {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  color: var(--sa-green);
+}
+
 .contact__form h3 {
-  margin: 0 0 6px;
-  font-size: 15px;
+  margin: 0 0 16px;
+  font-size: 17px;
   font-weight: 800;
   color: var(--sa-green);
 }
 
-.contact__info h3 + p {
-  margin: 0 0 16px;
-}
-
 .contact__info p {
-  margin: 0 0 6px;
+  margin: 0;
   font-size: 15px;
   line-height: 1.6;
   color: #374151;
 }
+
+.contact__info p + p { margin-top: 2px; }
 
 .contact__info a {
   color: #374151;
   text-decoration: none;
 }
 
+.contact__info a:hover { color: var(--sa-green); }
+
 .contact__badges {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-top: 18px;
-  padding-top: 18px;
+  margin-top: 22px;
+  padding-top: 20px;
   border-top: 1px solid var(--sa-line);
 }
 
@@ -621,17 +837,24 @@
   width: 42px;
   height: 42px;
   object-fit: contain;
+  transition: transform .2s ease;
 }
 
-.contact__form h3 {
-  margin-bottom: 16px;
-  font-size: 17px;
-}
+.contact__badges img:hover { transform: translateY(-2px); }
 
 .contact__submit {
   width: 100%;
   background: var(--sa-green);
   border-color: var(--sa-green);
+  height: 48px;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: background-color .2s ease;
+}
+
+.contact__submit:hover {
+  background: var(--sa-green-dark, #245417);
+  border-color: var(--sa-green-dark, #245417);
 }
 
 /* ------------------------------------------------- floating contact buttons */
@@ -693,6 +916,11 @@
 @media (min-width: 992px) {
   .review-card { flex: 0 0 calc(33.333% - 11px); }
   .reviews__arrow { display: grid; place-items: center; }
+
+  /* Room for the round arrow buttons so they sit outside the cards instead of over them. */
+  .reviews__shell { padding: 0 48px; }
+  .reviews__arrow--prev { left: 0; }
+  .reviews__arrow--next { right: 0; }
 }
 
 @media (min-width: 1200px) {
@@ -719,6 +947,7 @@
   .certification-card h3  { font-size: 11px; line-height: 1.2; }
 
   .contact__grid { grid-template-columns: 1fr; }
+  .about__highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 575.98px) {

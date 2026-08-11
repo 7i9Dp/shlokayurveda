@@ -123,14 +123,40 @@
           </div>
         </div>
 
+        <h2 class="cart-pay__title">Payment Method</h2>
+
+        <div class="cart-pay">
+          <!-- Online payment is temporarily off (environment.paymentEnabled). -->
+          <label class="cart-pay__option" *ngIf="paymentEnabled"
+                 [class.cart-pay__option--active]="paymentMethod === 'Razorpay'">
+            <input type="radio" formControlName="paymentMethod" value="Razorpay" class="cart-pay__radio">
+            <i class="fas fa-credit-card"></i>
+            <span class="cart-pay__name">Pay Online</span>
+            <span class="cart-pay__hint">UPI, cards, net banking &amp; wallets</span>
+          </label>
+
+          <label class="cart-pay__option" [class.cart-pay__option--active]="paymentMethod === 'COD'">
+            <input type="radio" formControlName="paymentMethod" value="COD" class="cart-pay__radio">
+            <i class="fas fa-truck"></i>
+            <span class="cart-pay__name">Cash on Delivery</span>
+            <span class="cart-pay__hint">Pay when your order arrives</span>
+          </label>
+        </div>
+
         <button type="submit" class="cart__place" *ngIf="!submitbtn">
-          Place Order · ₹{{ subtotal }}
+          {{ paymentMethod === 'COD' ? 'Place Order' : 'Pay' }} · ₹{{ subtotal }}
         </button>
         <button class="cart__place" *ngIf="submitbtn" [disabled]="submitbtn">
-          <i class="fa fa-spinner fa-spin"></i> Placing order…
+          <i class="fa fa-spinner fa-spin"></i>
+          {{ paymentMethod === 'COD' ? 'Placing order…' : 'Opening payment…' }}
         </button>
 
-        <p class="cart-form__note">Our team will call you to confirm before dispatch.</p>
+        <p class="cart-form__note" *ngIf="paymentMethod === 'COD'">
+          Our team will call you to confirm before dispatch.
+        </p>
+        <p class="cart-form__note" *ngIf="paymentMethod === 'Razorpay'">
+          <i class="fas fa-lock"></i> Payments are processed securely by Razorpay.
+        </p>
       </form>
     </aside>
   </div>

@@ -6,9 +6,22 @@
 
       <!-- Gallery -->
       <div class="pd__gallery">
-        <div class="pd__stage">
+        <div class="pd__stage" #stage
+             [class.is-zooming]="zoomActive"
+             (mouseenter)="onStageEnter($event, stage)"
+             (mouseleave)="onStageLeave()"
+             (mousemove)="onStageMouseMove($event, stage)">
           <img [src]="gallery[activeImage]" [alt]="product.productName">
           <span class="pd__counter" *ngIf="gallery.length > 1">{{ activeImage + 1 }} / {{ gallery.length }}</span>
+
+          <!-- An oversized copy of the same <img>, clipped by the circle and shifted
+               into place — object-fit: cover keeps its crop identical to the photo
+               above at any zoom level, which a CSS background-image can't guarantee. -->
+          <div class="pd__lens" *ngIf="zoomActive" [style.left.px]="lensX" [style.top.px]="lensY">
+            <img class="pd__lens-img" [src]="gallery[activeImage]" alt="" aria-hidden="true"
+                 [style.width.px]="lensImgWidth" [style.height.px]="lensImgHeight"
+                 [style.left.px]="lensImgLeft" [style.top.px]="lensImgTop">
+          </div>
         </div>
 
         <div class="pd__thumbs" *ngIf="gallery.length > 1">
@@ -91,7 +104,9 @@
         <div class="pd__block" *ngIf="conditions.length">
           <h2 class="pd__h2">Use For</h2>
           <div class="pd__chips">
-            <span class="pd__chip pd__chip--plain" *ngFor="let condition of conditions">{{ condition }}</span>
+            <span class="pd__tag" [class]="'pd__tag--' + conditionMeta(condition).tone" *ngFor="let condition of conditions">
+              <i class="fas" [ngClass]="conditionMeta(condition).icon"></i> {{ condition }}
+            </span>
           </div>
         </div>
       </div>
@@ -188,11 +203,35 @@
             </div>
           </div>
 
+          <div class="pd-field">
+            <label>Payment Method<span class="text-danger">*</span></label>
+            <div class="pd-pay">
+              <!-- Online payment is temporarily off (environment.paymentEnabled). -->
+              <label class="pd-pay__option" *ngIf="paymentEnabled"
+                     [class.pd-pay__option--active]="paymentMethod === 'Razorpay'">
+                <input type="radio" formControlName="paymentMethod" value="Razorpay" class="pd-pay__radio">
+                <i class="fas fa-credit-card"></i>
+                <span class="pd-pay__name">Pay Online</span>
+                <span class="pd-pay__hint">UPI, cards, net banking &amp; wallets</span>
+              </label>
+
+              <label class="pd-pay__option" [class.pd-pay__option--active]="paymentMethod === 'COD'">
+                <input type="radio" formControlName="paymentMethod" value="COD" class="pd-pay__radio">
+                <i class="fas fa-truck"></i>
+                <span class="pd-pay__name">Cash on Delivery</span>
+                <span class="pd-pay__hint">Pay when your order arrives</span>
+              </label>
+            </div>
+          </div>
+
           <div class="pd-order__actions">
             <p class="pd-order__grand">Total: <strong>₹{{ total }}</strong></p>
-            <button type="submit" class="pd-order__submit" *ngIf="!submitbtn">Submit Order</button>
+            <button type="submit" class="pd-order__submit" *ngIf="!submitbtn">
+              {{ paymentMethod === 'COD' ? 'Place Order' : 'Pay ₹' + total }}
+            </button>
             <button class="pd-order__submit" *ngIf="submitbtn" [disabled]="submitbtn">
-              <i class="fa fa-spinner fa-spin"></i> Loading
+              <i class="fa fa-spinner fa-spin"></i>
+              {{ paymentMethod === 'COD' ? 'Placing order…' : 'Opening payment…' }}
             </button>
           </div>
         </form>
@@ -244,12 +283,12 @@
 <!-- ==================================================== FLOATING CONTACTS -->
 <div class="bottomcorner">
   <a href="https://wa.me/8128180101" aria-label="Chat on WhatsApp">
-    <img src="assets/img/whatsappp.png" alt="WhatsApp">
+    <img src="assets/img/brand/icon-whatsapp.png" alt="WhatsApp">
   </a>
 </div>
 
 <div class="bottomleft">
   <a href="tel:+91-8128180101" aria-label="Call us">
-    <img src="assets/img/phone.png" alt="Call">
+    <img src="assets/img/brand/icon-phone.png" alt="Call">
   </a>
 </div>

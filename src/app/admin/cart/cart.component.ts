@@ -1,11 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription, forkJoin } from 'rxjs';
-import { ProductModel } from 'src/app/_interface/product';
+import { Subscription } from 'rxjs';
+import { CreateOrderRequest, OrderItemRequest, PaymentMethod } from 'src/app/_interface/payment';
+import { brandAlert, orderSuccessAlert } from 'src/app/_shared/alert';
 import { CartLine, CartService } from 'src/app/_services/cart.service';
-import { ProductBookingService } from 'src/app/_services/productbooking.service';
-import Swal from 'sweetalert2';
+import { CheckoutOutcome, CheckoutService } from 'src/app/_services/checkout.service';
+import { SiteDataService } from 'src/app/_services/site-data.service';
+import { environment } from 'src/environments/environment';
+
+/** While online payment is switched off, COD is the only method the form can hold. */
+const DEFAULT_PAYMENT_METHOD: PaymentMethod = environment.paymentEnabled ? 'Razorpay' : 'COD';
 
 @Component({
   selector: 'app-cart',
@@ -19,13 +24,17 @@ export class CartComponent implements OnInit, OnDestroy {
   submitted = false;
   submitbtn = false;
 
+  /** Online payment is off for now, so the template hides the picker and COD is the only option. */
+  paymentEnabled = environment.paymentEnabled;
+
   private subs = new Subscription();
 
   constructor(
     private fb: FormBuilder,
     private cart: CartService,
     private router: Router,
-    private ProductBookingService: ProductBookingService
+    private checkout: CheckoutService,
+    private siteData: SiteDataService
   ) {
     this.userForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -33,11 +42,33 @@ export class CartComponent implements OnInit, OnDestroy {
       name: ['', Validators.required],
       address: ['', Validators.required],
       pincode: ['', Validators.required],
+      paymentMethod: [DEFAULT_PAYMENT_METHOD, Validators.required],
     });
   }
 
   ngOnInit(): void {
     this.subs.add(this.cart.items.subscribe(lines => this.lines = lines));
+
+    // A cart can sit in localStorage for weeks, so re-price it against the live
+    // catalog before the customer commits — the API refuses stale prices rather
+    // than charging an amount the cart never showed.
+    this.subs.add(this.siteData.getCatalog().subscribe(catalog => {
+      const { repriced, removed } = this.cart.syncWithCatalog(catalog);
+
+      if (removed.length) {
+        brandAlert(
+          'Cart updated',
+          `${removed.join(', ')} ${removed.length > 1 ? 'are' : 'is'} no longer available, so we removed ${removed.length > 1 ? 'them' : 'it'} from your cart.`,
+          'info'
+        );
+      } else if (repriced) {
+        brandAlert(
+          'Cart updated',
+          'Some prices have changed since these items were added. Your cart now shows the current prices.',
+          'info'
+        );
+      }
+    }));
   }
 
   ngOnDestroy(): void {
@@ -54,6 +85,10 @@ export class CartComponent implements OnInit, OnDestroy {
     return this.lines.reduce(
       (sum, l) => sum + (l.oldPrice ? (l.oldPrice - l.price) * l.quantity : 0), 0
     );
+  }
+
+  get paymentMethod(): PaymentMethod {
+    return this.userForm.value.paymentMethod;
   }
 
   changeQuantity(line: CartLine, delta: number): void {
@@ -73,11 +108,10 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * The order API takes one product per call, so a multi-line cart becomes one
-   * call per line with the exact same payload shape the single-product form
-   * sends. Nothing about the endpoint or field names changes.
+   * One order for the whole cart. CheckoutService handles the difference between
+   * COD and paying online — from here it is the same call either way.
    */
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     this.submitted = true;
     if (this.userForm.invalid || !this.lines.length) {
       return;
@@ -86,52 +120,64 @@ export class CartComponent implements OnInit, OnDestroy {
     this.submitbtn = true;
     const buyer = this.userForm.value;
 
-    const requests = this.lines.map(line => {
-      const order: ProductModel = {
-        id: 0,
-        productid: line.id,
-        productname: line.productName,
-        pack: line.pack || '',
-        quantity: line.quantity,
-        email: buyer.email,
-        phone: buyer.phone,
-        name: buyer.name,
-        address: buyer.address,
-        pincode: buyer.pincode,
-        include: line.IsKit && line.Include?.length ? line.Include.join(', ') : '',
-        price: line.price,
-        oldPrice: 0,
-        usefor: line.IsKit && line.usefor ? line.usefor : '',
-        duration: line.IsKit && line.duration ? line.duration : '',
-        total: line.price * line.quantity,
-        IsKit: line.IsKit
-      };
-      return this.ProductBookingService.insertProduct(order);
-    });
+    const request: CreateOrderRequest = {
+      customerName: buyer.name,
+      customerEmail: buyer.email,
+      customerPhone: buyer.phone,
+      address: buyer.address,
+      pincode: buyer.pincode,
+      paymentMethod: buyer.paymentMethod,
+      items: this.lines.map(line => this.toOrderItem(line))
+    };
 
-    forkJoin(requests).subscribe(
-      results => {
-        const failed = results.filter(r => !r.isSuccess);
-        this.submitbtn = false;
+    const outcome = await this.checkout.checkout(request);
 
-        if (failed.length) {
-          Swal.fire('', failed[0].returnMessage, 'error');
-          return;
-        }
+    this.submitbtn = false;
+    this.handleOutcome(outcome);
+  }
 
-        Swal.fire(
-          'Order placed!',
-          'Our team will call you shortly to confirm your order.',
-          'success'
-        );
-        this.cart.clear();
-        this.submitted = false;
-        this.userForm.reset();
-      },
-      err => {
-        this.submitbtn = false;
-        Swal.fire('', err.error?.message || 'Something went wrong. Please try again.', 'error');
-      }
-    );
+  private toOrderItem(line: CartLine): OrderItemRequest {
+    return {
+      productId: line.id,
+      productName: line.productName,
+      pack: line.pack || '',
+      duration: line.IsKit && line.duration ? line.duration : '',
+      isKit: line.IsKit,
+      unitPrice: line.price,
+      quantity: line.quantity,
+      includeItems: line.IsKit && line.Include?.length ? line.Include.join(', ') : ''
+    };
+  }
+
+  private handleOutcome(outcome: CheckoutOutcome): void {
+    switch (outcome.status) {
+      case 'paid':
+      case 'placed':
+        // "Continue Shopping" should actually continue shopping — send them home.
+        orderSuccessAlert({ orderNumber: outcome.orderNumber, paymentMethod: this.paymentMethod })
+          .then(() => this.continueShopping());
+        this.resetAfterOrder();
+        break;
+
+      case 'unconfirmed':
+        // Money has left the customer's account — this must not read as a failure.
+        brandAlert('Payment received', outcome.message, 'info').then(() => this.continueShopping());
+        this.resetAfterOrder();
+        break;
+
+      case 'cancelled':
+        brandAlert('Payment cancelled', 'Your cart is still here whenever you are ready.', 'info');
+        break;
+
+      case 'failed':
+        brandAlert('', outcome.message, 'error');
+        break;
+    }
+  }
+
+  private resetAfterOrder(): void {
+    this.cart.clear();
+    this.submitted = false;
+    this.userForm.reset({ paymentMethod: DEFAULT_PAYMENT_METHOD });
   }
 }

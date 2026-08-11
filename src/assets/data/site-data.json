@@ -2,7 +2,7 @@
   "brand": {
     "name": "Shlok Ayurveda",
     "tagline": "For Your Healthy Life",
-    "logo": "assets/img/slok.png"
+    "logo": "assets/img/brand/logo.png"
   },
   "contact": {
     "phones": [
@@ -16,40 +16,40 @@
   "certifications": [
     {
       "title": "ISO Certified",
-      "image": "assets/img/certifications/isologo.png"
+      "image": "assets/img/certifications/iso-certified.png"
     },
     {
       "title": "GMP Certified",
-      "image": "assets/img/certifications/gmplogo.png"
+      "image": "assets/img/certifications/gmp-certified.png"
     },
     {
       "title": "FSSAI Approved",
-      "image": "assets/img/certifications/fssai-logo-df4c.png"
+      "image": "assets/img/certifications/fssai-approved.png"
     },
     {
       "title": "Natural Product",
-      "image": "assets/img/certifications/naturallogo.png"
+      "image": "assets/img/certifications/natural-product.png"
     },
     {
       "title": "No Side Effects",
-      "image": "assets/img/certifications/no_side_effect.png"
+      "image": "assets/img/certifications/no-side-effects.png"
     }
   ],
   "banners": [
     {
-      "image": "assets/img/bannners/L3.jpg",
+      "image": "assets/img/banners/banner-digestive-care.jpg",
       "alt": "Digestive Care"
     },
     {
-      "image": "assets/img/bannners/L1.jpg",
+      "image": "assets/img/banners/banner-health-care.jpg",
       "alt": "Health Care"
     },
     {
-      "image": "assets/img/bannners/L2.jpg",
+      "image": "assets/img/banners/banner-personal-care.jpg",
       "alt": "Personal Care"
     },
     {
-      "image": "assets/img/bannners/L4.jpg",
+      "image": "assets/img/banners/banner-piles-care.jpg",
       "alt": "Piles Care"
     }
   ],
@@ -57,7 +57,7 @@
     {
       "key": "digestive",
       "name": "Digestive Care",
-      "image": "assets/img/Home/Kits/Digetive Full kit.jpg",
+      "image": "assets/img/kits/digestive-full-kit.jpg",
       "kitIds": [
         1,
         2,
@@ -71,7 +71,7 @@
     {
       "key": "piles",
       "name": "Piles Care",
-      "image": "assets/img/Home/Kits/Piles Full Kit.jpg",
+      "image": "assets/img/kits/piles-full-kit.jpg",
       "kitIds": [
         4,
         5,
@@ -84,18 +84,18 @@
     {
       "key": "personal",
       "name": "Personal Care",
-      "image": "assets/img/Home/Kits/Seaxual Trial Kit.jpg",
+      "image": "assets/img/kits/personal-care-full-kit.jpg",
       "kitIds": [
         7,
         8,
         9
       ],
       "productIds": [
-        10,
-        11,
-        12,
+        17,
         16,
-        17
+        12,
+        11,
+        10
       ]
     }
   ],
@@ -105,8 +105,8 @@
       "productName": "Digestive Care Trial Kit",
       "shortName": "Trial Kit",
       "category": "digestive",
-      "imagePath": "assets/img/Home/Kits/Digetive Trial kit.jpg",
-      "imagePath2": "assets/img/Home/Kits/Digetive Trial kit.jpg",
+      "imagePath": "assets/img/kits/digestive-trial-kit.jpg",
+      "imagePath2": "assets/img/kits/digestive-trial-kit.jpg",
       "Include": [
         "1. Constibest Powder- 100Gm",
         "2. Gasoleft Capsule - 30 Capsule"
@@ -125,8 +125,8 @@
       "productName": "Digestive Care Full Kit",
       "shortName": "Full Kit",
       "category": "digestive",
-      "imagePath": "assets/img/Home/Kits/Digetive Full kit.jpg",
-      "imagePath2": "assets/img/Home/Kits/Digetive Full kit.jpg",
+      "imagePath": "assets/img/kits/digestive-full-kit.jpg",
+      "imagePath2": "assets/img/kits/digestive-full-kit.jpg",
       "Include": [
         "1. Constibest Powder- 100Gm",
         "2. Gasoleft Capsule - 60 Capsule"
@@ -145,8 +145,8 @@
       "productName": "Digestive Care Strong Kit",
       "shortName": "Strong Kit",
       "category": "digestive",
-      "imagePath": "assets/img/Home/Kits/Digetive Strong kit.jpg",
-      "imagePath2": "assets/img/Home/Kits/Digetive Strong kit.jpg",
+      "imagePath": "assets/img/kits/digestive-strong-kit.jpg",
+      "imagePath2": "assets/img/kits/digestive-strong-kit.jpg",
       "Include": [
         "1. Constibest Powder- 100Gm",
         "2. Gasoleft Capsule - 120 Capsule"
@@ -165,8 +165,8 @@
       "productName": "Piles Care Trial Kit",
       "shortName": "Trial Kit",
       "category": "piles",
-      "imagePath": "assets/img/Home/Kits/Piles trial Kit.jpg",
-      "imagePath2": "assets/img/Home/Kits/Piles trial Kit.jpg",
+      "imagePath": "assets/img/kits/piles-trial-kit.jpg",
+      "imagePath2": "assets/img/kits/piles-trial-kit.jpg",
       "Include": [
         "1. Constibest Powder- 100Gm",
         "2. Gasoleft Capsule - 30 Capsule",
@@ -186,8 +186,8 @@
       "productName": "Piles Care Full Kit",
       "shortName": "Full Kit",
       "category": "piles",
-      "imagePath": "assets/img/Home/Kits/Piles Full Kit.jpg",
-      "imagePath2": "assets/img/Home/Kits/Piles Full Kit.jpg",
+      "imagePath": "assets/img/kits/piles-full-kit.jpg",
+      "imagePath2": "assets/img/kits/piles-full-kit.jpg",
       "Include": [
         "1. Constibest Powder- 100Gm",
         "2. Gasoleft Capsule - 60 Capsule",
@@ -207,8 +207,8 @@
       "productName": "Piles Care Strong Kit",
       "shortName": "Strong Kit",
       "category": "piles",
-      "imagePath": "assets/img/Home/Kits/Piles Strong Kit.jpg",
-      "imagePath2": "assets/img/Home/Kits/Piles Strong Kit.jpg",
+      "imagePath": "assets/img/kits/piles-strong-kit.jpg",
+      "imagePath2": "assets/img/kits/piles-strong-kit.jpg",
       "Include": [
         "1. Constibest Powder- 100Gm",
         "2. Gasoleft Capsule - 60 Capsule",
@@ -228,8 +228,8 @@
       "productName": "Personal Care Trial Kit",
       "shortName": "Trial Kit",
       "category": "personal",
-      "imagePath": "assets/img/Home/Kits/Seaxual Trial Kit.jpg",
-      "imagePath2": "assets/img/Home/Kits/Seaxual Trial Kit.jpg",
+      "imagePath": "assets/img/kits/personal-care-trial-kit.jpg",
+      "imagePath2": "assets/img/kits/personal-care-trial-kit-2.jpg",
       "Include": [
         "1. Strongjosh Booster Capsule - 30 Capsule",
         "2. Wild-X Capsule - 30 Capsule"
@@ -248,8 +248,8 @@
       "productName": "Personal Care Full Kit",
       "shortName": "Full Kit",
       "category": "personal",
-      "imagePath": "assets/img/Home/Kits/Seaxual Trial Kit.jpg",
-      "imagePath2": "assets/img/Home/Kits/Seaxual Trial Kit.jpg",
+      "imagePath": "assets/img/kits/personal-care-full-kit.jpg",
+      "imagePath2": "assets/img/kits/personal-care-full-kit.jpg",
       "Include": [
         "1. Strongjosh Booster Capsule - 30 Capsule",
         "2. Wild-X Capsule - 30 Capsule",
@@ -269,8 +269,8 @@
       "productName": "Personal Care Strong Kit",
       "shortName": "Strong Kit",
       "category": "personal",
-      "imagePath": "assets/img/Home/Kits/Seaxual Trial Kit.jpg",
-      "imagePath2": "assets/img/Home/Kits/Seaxual Trial Kit.jpg",
+      "imagePath": "assets/img/kits/personal-care-strong-kit.jpg",
+      "imagePath2": "assets/img/kits/personal-care-strong-kit.jpg",
       "Include": [
         "1. Strongjosh Booster Capsule - 60 Capsule",
         "2. Wild-X Capsule - 60 Capsule",
@@ -288,32 +288,30 @@
   ],
   "products": [
     {
-      "id": 10,
+      "id": 17,
       "productName": "Strongjosh Booster Capsule",
-      "shortName": "Strongjosh Booster Capsule",
+      "shortName": "Strongjosh Booster Capsule (30)",
       "category": "personal",
-      "imagePath": "assets/img/Home/60 - STRONG JOSH CAPSULE.jpg",
-      "imagePath2": "assets/img/Home/STRONGJOSH 30-02.jpeg",
-      "pack": "60 CAPSULE PACK",
-      "price": "1099",
-      "oldPrice": "1399",
+      "imagePath": "assets/img/products/strongjosh-booster-capsule-30.jpg",
+      "pack": "30 CAPSULE PACK",
+      "price": "699",
+      "oldPrice": "799",
       "careFor": "Boosts Stamina, Improves Strength & Daily Energy",
-      "rating": 4.5,
+      "rating": 4.3,
       "users": "50k+ People Using",
       "IsKit": false
     },
     {
-      "id": 11,
+      "id": 16,
       "productName": "Wild-X Capsule",
-      "shortName": "Wild-X Capsule",
+      "shortName": "Wild-X Capsule (30)",
       "category": "personal",
-      "imagePath": "assets/img/Home/60 - WILD- X CAPSULE.jpg",
-      "imagePath2": "assets/img/Home/WILD X 30.jpg",
-      "pack": "60 CAPSULE PACK",
-      "price": "1499",
-      "oldPrice": "1799",
+      "imagePath": "assets/img/products/wild-x-capsule-30.jpg",
+      "pack": "30 CAPSULE PACK",
+      "price": "799",
+      "oldPrice": "999",
       "careFor": "Supports Men's Vitality, Improves Performance",
-      "rating": 4.5,
+      "rating": 4.4,
       "users": "50k+ People Using",
       "IsKit": false
     },
@@ -322,8 +320,8 @@
       "productName": "Double Hard Spray",
       "shortName": "Double Hard Spray",
       "category": "personal",
-      "imagePath": "assets/img/Home/HARD - X SPRAY.jpg",
-      "imagePath2": "assets/img/Home/HARD-X WHITE 2-02.jpeg",
+      "imagePath": "assets/img/products/double-hard-spray.jpg",
+      "imagePath2": "assets/img/products/double-hard-spray-2.jpg",
       "pack": "30 ml",
       "price": "799",
       "oldPrice": "999",
@@ -337,8 +335,8 @@
       "productName": "Constibest Powder",
       "shortName": "Constibest Powder",
       "category": "digestive",
-      "imagePath": "assets/img/Home/CONSTIBEST POWDER.jpg",
-      "imagePath2": "assets/img/Home/Constibest Mockup.jpg",
+      "imagePath": "assets/img/products/constibest-powder.jpg",
+      "imagePath2": "assets/img/products/constibest-powder-2.jpg",
       "pack": "100 gm",
       "price": "699",
       "oldPrice": "799",
@@ -348,12 +346,40 @@
       "IsKit": false
     },
     {
+      "id": 11,
+      "productName": "Wild-X Capsule",
+      "shortName": "Wild-X Capsule",
+      "category": "personal",
+      "imagePath": "assets/img/products/wild-x-capsule-60.jpg",
+      "pack": "60 CAPSULE PACK",
+      "price": "1499",
+      "oldPrice": "1799",
+      "careFor": "Supports Men's Vitality, Improves Performance",
+      "rating": 4.5,
+      "users": "50k+ People Using",
+      "IsKit": false
+    },
+    {
+      "id": 10,
+      "productName": "Strongjosh Booster Capsule",
+      "shortName": "Strongjosh Booster Capsule",
+      "category": "personal",
+      "imagePath": "assets/img/products/strongjosh-booster-capsule-60.jpg",
+      "pack": "60 CAPSULE PACK",
+      "price": "1099",
+      "oldPrice": "1399",
+      "careFor": "Boosts Stamina, Improves Strength & Daily Energy",
+      "rating": 4.5,
+      "users": "50k+ People Using",
+      "IsKit": false
+    },
+    {
       "id": 14,
       "productName": "Gasoleft Capsules",
       "shortName": "Gasoleft Capsule",
       "category": "digestive",
-      "imagePath": "assets/img/Home/GASOLEFT CAPSULE.jpg",
-      "imagePath2": "assets/img/Home/GASOLEFT CAPS WHITE-02.jpeg",
+      "imagePath": "assets/img/products/gasoleft-capsule.jpg",
+      "imagePath2": "assets/img/products/gasoleft-capsule-2.jpg",
       "pack": "30 CAPSULES",
       "price": "499",
       "oldPrice": null,
@@ -367,45 +393,17 @@
       "productName": "Pilolex Capsule",
       "shortName": "Pilolex Capsule",
       "category": "piles",
-      "imagePath": "assets/img/Home/PILOLEX CAPSULE.jpg",
-      "imagePath2": "assets/img/Home/Pilolex Mockup.jpg",
+      "imagePath": "assets/img/products/pilolex-capsule.jpg",
+      "imagePath2": "assets/img/products/pilolex-capsule-2.jpg",
+      "imagePath3": "assets/img/products/pilolex-capsule-3.jpg",
       "pack": "30 CAPSULE PACK",
       "price": "599",
       "oldPrice": null,
       "careFor": "Relieves Piles Pain, Burning & Bleeding",
       "rating": 4.3,
       "users": "50k+ People Using",
-      "IsKit": false
-    },
-    {
-      "id": 16,
-      "productName": "Wild-X Capsule",
-      "shortName": "Wild-X Capsule (30)",
-      "category": "personal",
-      "imagePath": "assets/img/Home/WILD X CAPSULE.jpg",
-      "imagePath2": "assets/img/Home/WILD X 30.jpg",
-      "pack": "30 CAPSULE PACK",
-      "price": "799",
-      "oldPrice": "999",
-      "careFor": "Supports Men's Vitality, Improves Performance",
-      "rating": 4.4,
-      "users": "50k+ People Using",
-      "IsKit": false
-    },
-    {
-      "id": 17,
-      "productName": "Strongjosh Booster Capsule",
-      "shortName": "Strongjosh Booster Capsule (30)",
-      "category": "personal",
-      "imagePath": "assets/img/Home/STRONG JOSH BOOSTER CAPSULE .jpg",
-      "imagePath2": "assets/img/Home/STRONGJOSH 30-02.jpeg",
-      "pack": "30 CAPSULE PACK",
-      "price": "699",
-      "oldPrice": "799",
-      "careFor": "Boosts Stamina, Improves Strength & Daily Energy",
-      "rating": 4.3,
-      "users": "50k+ People Using",
-      "IsKit": false
+      "IsKit": false,
+      "hideCertifications": ["FSSAI Approved"]
     }
   ],
   "menu": {

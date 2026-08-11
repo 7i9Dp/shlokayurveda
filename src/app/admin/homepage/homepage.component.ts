@@ -31,6 +31,13 @@ export class HomepageComponent implements OnInit, AfterViewInit, OnDestroy {
   advantages: { title: string; text: string } = { title: '', text: '' };
   contact = { phones: [] as string[], whatsapp: '', email: '', address: '' };
 
+  readonly aboutHighlights = [
+    { icon: 'fa-leaf', text: '100% Natural & Chemical-Free' },
+    { icon: 'fa-seedling', text: 'Root-Cause Healing' },
+    { icon: 'fa-award', text: 'ISO & GMP Certified' },
+    { icon: 'fa-heart', text: 'Mind-Body Balance' },
+  ];
+
   reviews: Review[] = [];
   expandedReviews = new Set<number>();
 
@@ -83,6 +90,19 @@ export class HomepageComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.subs.unsubscribe();
     this.stopReviewAutoScroll();
+  }
+
+  /** Whole-number average across every rated kit/product — real catalog data,
+   *  not a placeholder, so it stays honest as ratings or the catalog change. */
+  get averageRating(): string {
+    const ratings = [...this.data, ...this.kits].map(i => i.rating).filter((r): r is number => !!r);
+    return ratings.length
+      ? (ratings.reduce((sum, r) => sum + r, 0) / ratings.length).toFixed(1)
+      : '—';
+  }
+
+  get formulationCount(): number {
+    return this.data.length + this.kits.length;
   }
 
   /** Buy Now opens the full product page — the order form lives there now. */
@@ -182,6 +202,10 @@ export class HomepageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.contactus.concern = this.contactForm.value.concern;
       this.ProductBookingService.insertContactUSDetails(this.contactus).subscribe(
         res => {
+          // Cleared on every path. resetContact() only runs on success, so when this
+          // was left to it alone a failed submit stuck the button on its spinner with
+          // no way back short of reloading the page.
+          this.submitbtnc = false;
           if (res.isSuccess) {
             Swal.fire(
               'Thank you for reaching out!',
@@ -194,7 +218,8 @@ export class HomepageComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         },
         err => {
-          Swal.fire('Error', err.error.message, 'error');
+          this.submitbtnc = false;
+          Swal.fire('Error', err?.error?.message || 'Something went wrong. Please try again.', 'error');
         }
       );
     }

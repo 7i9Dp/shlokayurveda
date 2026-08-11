@@ -1,11 +1,15 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ProductModel } from 'src/app/_interface/product';
-import { ProductBookingService } from 'src/app/_services/productbooking.service';
+import { CreateOrderRequest, PaymentMethod } from 'src/app/_interface/payment';
+import { brandAlert, orderSuccessAlert } from 'src/app/_shared/alert';
+import { CheckoutOutcome, CheckoutService } from 'src/app/_services/checkout.service';
 import { CatalogItem, Review, SiteDataService } from 'src/app/_services/site-data.service';
-import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
+
+/** While online payment is switched off, COD is the only method the form can hold. */
+const DEFAULT_PAYMENT_METHOD: PaymentMethod = environment.paymentEnabled ? 'Razorpay' : 'COD';
 
 @Component({
   selector: 'app-product-details',
@@ -21,16 +25,30 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   gallery: string[] = [];
   activeImage = 0;
 
-  certifications: { title: string; image: string }[] = [];
+  // ---------------------------------------------------------- zoom lens
+  zoomActive = false;
+  lensX = 0;
+  lensY = 0;
+  /** The lens holds an oversized copy of the same <img>, shifted into place —
+   *  object-fit: cover on both copies keeps the crop identical at any zoom level. */
+  lensImgWidth = 0;
+  lensImgHeight = 0;
+  lensImgLeft = 0;
+  lensImgTop = 0;
+  private readonly lensSize = 160;
+  private readonly zoomFactor = 2.5;
+
+  private allCertifications: { title: string; image: string }[] = [];
   reviews: Review[] = [];
   expandedReviews = new Set<number>();
 
   userForm: FormGroup;
   submitted: boolean = false;
   submitbtn: boolean = false;
-  products: ProductModel;
-  ID: any;
   quantity: any = 1;
+
+  /** Online payment is off for now, so the template hides the picker and COD is the only option. */
+  paymentEnabled = environment.paymentEnabled;
 
   @ViewChild('orderForm') orderForm?: ElementRef<HTMLElement>;
 
@@ -38,8 +56,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder,
-    private ProductBookingService: ProductBookingService,
+    private checkout: CheckoutService,
     private siteData: SiteDataService
   ) {
 
@@ -50,27 +69,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       name: ['', Validators.required],
       address: ['', Validators.required],
       pincode: ['', Validators.required],
+      paymentMethod: [DEFAULT_PAYMENT_METHOD, Validators.required],
     });
-
-    this.products = {
-      id: 0,
-      productid: 0,
-      productname: '',
-      pack: '',
-      quantity: 0,
-      email: '',
-      phone: '',
-      name: '',
-      address: '',
-      pincode: '',
-      include: '',
-      price: 0,
-      oldPrice: 0,
-      usefor: '',
-      duration: '',
-      total: 0,
-      IsKit: false
-    };
   }
 
   ngOnInit(): void {
@@ -94,23 +94,66 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     }));
 
     this.subs.add(this.siteData.getData().subscribe(site => {
-      this.certifications = site.certifications;
+      this.allCertifications = site.certifications;
     }));
+  }
+
+  /** Some products (e.g. capsules without an FSSAI listing) opt out of specific badges via hideCertifications. */
+  get certifications(): { title: string; image: string }[] {
+    const hidden: string[] = this.product?.hideCertifications || [];
+    return this.allCertifications.filter(c => !hidden.includes(c.title));
   }
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
 
-  /** imagePath2 is often the same shot — only show it when it actually differs. */
+  /** The extra shots are often the same image — only show ones that actually differ. */
   private buildGallery(item?: CatalogItem): string[] {
     if (!item) { return []; }
-    const images = [item.imagePath, item.imagePath2].filter(Boolean) as string[];
+    const images = [item.imagePath, item.imagePath2, item.imagePath3].filter(Boolean) as string[];
     return images.filter((src, i) => images.indexOf(src) === i);
   }
 
   selectImage(index: number): void {
     this.activeImage = index;
+  }
+
+  // ---------------------------------------------------------- zoom lens
+
+  /** Classic lens-follows-cursor magnifier: the lens shows the same image, scaled up and offset. */
+  private updateLens(event: MouseEvent, stage: HTMLElement): void {
+    const rect = stage.getBoundingClientRect();
+    const half = this.lensSize / 2;
+
+    const x = Math.min(Math.max(event.clientX - rect.left, half), rect.width - half);
+    const y = Math.min(Math.max(event.clientY - rect.top, half), rect.height - half);
+
+    this.lensX = x - half;
+    this.lensY = y - half;
+    this.lensImgWidth = rect.width * this.zoomFactor;
+    this.lensImgHeight = rect.height * this.zoomFactor;
+    this.lensImgLeft = -(x * this.zoomFactor - half);
+    this.lensImgTop = -(y * this.zoomFactor - half);
+  }
+
+  onStageMouseMove(event: MouseEvent, stage: HTMLElement): void {
+    this.updateLens(event, stage);
+  }
+
+  /**
+   * Positioned immediately on entry (not just on the next mousemove) — a cursor
+   * that lands on the image without an in-between move event otherwise left the
+   * lens at its stale default position and size for its first frame, which read
+   * as a blank/plain-white circle.
+   */
+  onStageEnter(event: MouseEvent, stage: HTMLElement): void {
+    this.updateLens(event, stage);
+    this.zoomActive = true;
+  }
+
+  onStageLeave(): void {
+    this.zoomActive = false;
   }
 
   /** "Relieves Gas, Acidity & Constipation" -> chips, mirroring the reference layout. */
@@ -123,6 +166,21 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   get conditions(): string[] {
     const source = this.product?.usefor || '';
     return source.split(/\t|,/).map((s: string) => s.trim()).filter(Boolean);
+  }
+
+  private static readonly CONDITION_META: Record<string, { icon: string; tone: string }> = {
+    'GAS': { icon: 'fa-wind', tone: 'sky' },
+    'ACIDITY': { icon: 'fa-fire', tone: 'amber' },
+    'CONSTIPATION': { icon: 'fa-toilet', tone: 'teal' },
+    'PILES': { icon: 'fa-band-aid', tone: 'rose' },
+    'FISSURE': { icon: 'fa-notes-medical', tone: 'violet' },
+    'FISTULA': { icon: 'fa-stethoscope', tone: 'indigo' },
+    'ERECTILE DYSFUNCTION MEN PROBLEMS': { icon: 'fa-bolt', tone: 'gold' },
+  };
+
+  /** Distinct icon + colour per condition so the tags read at a glance instead of blurring together. */
+  conditionMeta(condition: string): { icon: string; tone: string } {
+    return ProductDetailsComponent.CONDITION_META[condition.toUpperCase()] || { icon: 'fa-leaf', tone: 'green' };
   }
 
   /** How many of the shown reviews are actually about this item. */
@@ -171,67 +229,87 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.orderForm?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  onSubmit(): void {
+  get paymentMethod(): PaymentMethod {
+    return this.userForm.value.paymentMethod;
+  }
+
+  /**
+   * Buying straight from the product page goes through the same CheckoutService
+   * the cart uses — one item instead of several, but the same order, the same
+   * payment window and the same server-side signature check.
+   */
+  async onSubmit(): Promise<void> {
     this.submitted = true;
-    if (this.userForm.invalid) {
+    if (this.userForm.invalid || !this.selectedProduct) {
       return;
     }
-    else {
-      this.submitbtn = true;
-      this.products.id = this.ID || 0;
-      this.products.productid = this.selectedProduct.id;
-      this.products.productname = this.selectedProduct.productName;
 
-      // pack + IsKit go on every order — the home page modal always sent them
-      // for plain products, and that path now runs through this form.
-      this.products.IsKit = this.selectedProduct.IsKit;
-      if (this.selectedProduct.pack) {
-        this.products.pack = this.selectedProduct.pack;
-      }
+    this.submitbtn = true;
+    const form = this.userForm.value;
+    const isKit = !!this.selectedProduct.IsKit;
 
-      if (this.selectedProduct.IsKit) {
-        if (this.selectedProduct.duration) {
-          this.products.duration = this.selectedProduct.duration;
-        }
-        if (this.selectedProduct.usefor) {
-          this.products.usefor = this.selectedProduct.usefor;
-        }
-        if (this.selectedProduct.Include && Array.isArray(this.selectedProduct.Include)) {
-          const include = this.selectedProduct.Include.join(', ');
-          this.products.include = include;
-        }
-      }
-      this.products.quantity = this.userForm.value.quantity;
-      this.products.email = this.userForm.value.email;
-      this.products.phone = this.userForm.value.phone;
-      this.products.name = this.userForm.value.name;
-      this.products.address = this.userForm.value.address;
-      this.products.pincode = this.userForm.value.pincode;
-      this.products.price = this.selectedProduct.price;
-      this.products.total = Number(this.userForm.value.quantity) * Number(this.selectedProduct.price);
+    const request: CreateOrderRequest = {
+      customerName: form.name,
+      customerEmail: form.email,
+      customerPhone: form.phone,
+      address: form.address,
+      pincode: form.pincode,
+      paymentMethod: form.paymentMethod,
+      items: [{
+        productId: Number(this.selectedProduct.id),
+        productName: this.selectedProduct.productName,
+        pack: this.selectedProduct.pack || '',
+        duration: isKit && this.selectedProduct.duration ? this.selectedProduct.duration : '',
+        isKit,
+        unitPrice: Number(this.selectedProduct.price),
+        quantity: Number(form.quantity),
+        includeItems: isKit && Array.isArray(this.selectedProduct.Include)
+          ? this.selectedProduct.Include.join(', ')
+          : ''
+      }]
+    };
 
-      this.ProductBookingService.insertProduct(this.products).subscribe(
-        res => {
-          if (res.isSuccess) {
-            Swal.fire('', res.returnMessage, 'success');
-          }
-          else {
-            Swal.fire('', res.returnMessage, 'error');
-          }
-          this.resetForm();
-        },
-        err => {
-          Swal.fire('', err.error.message, 'error');
-        }
-      );
+    const outcome = await this.checkout.checkout(request);
+
+    this.submitbtn = false;
+    this.handleOutcome(outcome);
+  }
+
+  private handleOutcome(outcome: CheckoutOutcome): void {
+    switch (outcome.status) {
+      case 'paid':
+      case 'placed':
+        // "Continue Shopping" should actually continue shopping — send them home.
+        orderSuccessAlert({ orderNumber: outcome.orderNumber, paymentMethod: this.paymentMethod })
+          .then(() => this.goHome());
+        this.resetForm();
+        break;
+
+      case 'unconfirmed':
+        // Money has left the customer's account — this must not read as a failure.
+        brandAlert('Payment received', outcome.message, 'info').then(() => this.goHome());
+        this.resetForm();
+        break;
+
+      case 'cancelled':
+        brandAlert('Payment cancelled', 'Your details are still here whenever you are ready.', 'info');
+        break;
+
+      case 'failed':
+        brandAlert('', outcome.message, 'error');
+        break;
     }
+  }
+
+  private goHome(): void {
+    this.router.navigate(['/admin']);
+    window.scrollTo({ top: 0, behavior: 'auto' });
   }
 
   resetForm(): void {
     this.submitted = false;
     this.submitbtn = false;
-    this.userForm.reset();
+    this.userForm.reset({ quantity: 1, paymentMethod: DEFAULT_PAYMENT_METHOD });
     this.quantity = 1;
-    this.userForm.get('quantity')?.setValue(1);
   }
 }
