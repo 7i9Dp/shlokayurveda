@@ -93,6 +93,11 @@
         <span class="sa-cart-badge" *ngIf="cartCount">{{ cartCount }}</span>
       </button>
 
+      <button type="button" class="sa-icon-btn" (click)="goToAdminLogin()"
+              aria-label="Admin login" title="Admin login">
+        <i class="fas fa-user"></i>
+      </button>
+
       <button type="button" class="sa-icon-btn sa-burger" (click)="toggleDrawer()"
               aria-label="Open menu" [attr.aria-expanded]="drawerOpen">
         <i class="fas fa-bars"></i>

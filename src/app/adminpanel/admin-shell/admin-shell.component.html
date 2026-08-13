@@ -1,0 +1,57 @@
+<div class="apx-shell">
+
+  <!-- Sidebar -->
+  <aside class="apx-sidebar" [class.open]="sidebarOpen">
+    <div class="apx-sidebar__brand">
+      <div>
+        <div class="apx-sidebar__brand-text">Shlok Ayurveda</div>
+        <div class="apx-sidebar__brand-sub">Admin Panel</div>
+      </div>
+    </div>
+
+    <nav class="apx-nav">
+      <a class="apx-nav__link" [class.active]="active === 'dashboard'"
+         routerLink="/admin/dashboard" (click)="closeSidebar()">
+        <span class="apx-nav__icon"><i class="fas fa-gauge-high"></i></span>
+        <span>Dashboard</span>
+      </a>
+      <a class="apx-nav__link" [class.active]="active === 'returns'"
+         routerLink="/admin/returns" (click)="closeSidebar()">
+        <span class="apx-nav__icon"><i class="fas fa-rotate-left"></i></span>
+        <span>Returns</span>
+      </a>
+      <a class="apx-nav__link" [class.active]="active === 'reports'"
+         routerLink="/admin/reports" (click)="closeSidebar()">
+        <span class="apx-nav__icon"><i class="fas fa-file-lines"></i></span>
+        <span>Reports</span>
+      </a>
+    </nav>
+
+    <div class="apx-sidebar__user">
+      <div class="apx-sidebar__user-name">{{ adminName }}</div>
+      <div class="apx-sidebar__user-email">{{ adminEmail }}</div>
+      <button class="apx-logout" (click)="logout()">
+        <i class="fas fa-right-from-bracket"></i>&nbsp; Logout
+      </button>
+    </div>
+  </aside>
+
+  <div class="apx-backdrop" [class.show]="sidebarOpen" (click)="closeSidebar()"></div>
+
+  <!-- Main -->
+  <div class="apx-main">
+    <header class="apx-topbar">
+      <button class="apx-burger" (click)="toggleSidebar()" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+      </button>
+      <h1 class="apx-topbar__title">{{ title }}</h1>
+      <img class="apx-topbar__logo" src="assets/img/brand/logo.png" alt="Shlok Ayurveda"
+           onerror="this.style.display='none'">
+    </header>
+
+    <main class="apx-content">
+      <ng-content></ng-content>
+    </main>
+  </div>
+
+</div>

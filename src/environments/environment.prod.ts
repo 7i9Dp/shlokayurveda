@@ -1,7 +1,7 @@
 // The file a production build compiles against.
 
 export const environment = {
-  production: true,
+  production: false,
   // The API is hosted on the .shop domain; .com serves the Angular storefront.
   apiURL: 'https://shlokaayurveda.shop/api/',
   recaptcha: {

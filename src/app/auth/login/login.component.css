@@ -1,16 +1,181 @@
-.has-error{
-    border-color: red;
-    color: red;
+/* Standalone admin login — self-contained, does not rely on the storefront theme. */
+
+:host {
+  --sa-green: #2f6b1f;
+  --sa-green-dark: #245417;
+  --sa-green-soft: #eaf6e6;
+  --sa-ink: #14200d;
+  --sa-muted: #6b7280;
+  --sa-line: #e2e8dc;
+  --sa-danger: #c0392b;
 }
 
-.authentication-wrapper.authentication-basic .authentication-inner .card .app-brand {
-    margin-bottom: 0.5rem
+.sa-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(1200px 600px at 100% -10%, rgba(47, 107, 31, 0.12), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba(47, 107, 31, 0.10), transparent 55%),
+    #f4f7f2;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
-    margin-top: 0;
-    margin-bottom: 0rem;
-    font-weight: 500;
-    line-height: 1.1;
-    color: #566a7f;
+.sa-login__card {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border: 1px solid var(--sa-line);
+  border-radius: 18px;
+  padding: 36px 32px 28px;
+  box-shadow: 0 24px 60px rgba(20, 32, 13, 0.12);
+}
+
+.sa-login__brand {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.sa-login__logo img {
+  height: 56px;
+  width: auto;
+  margin-bottom: 12px;
+}
+
+.sa-login__title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--sa-ink);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.sa-login__subtitle {
+  font-size: 13.5px;
+  color: var(--sa-muted);
+  margin: 6px 0 0;
+}
+
+.sa-login__field {
+  margin-bottom: 18px;
+}
+
+.sa-login__field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--sa-ink);
+  margin-bottom: 6px;
+}
+
+.sa-login__field input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  font-size: 14.5px;
+  color: var(--sa-ink);
+  background: #fbfdfa;
+  border: 1.5px solid var(--sa-line);
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.sa-login__field input:focus {
+  border-color: var(--sa-green);
+  box-shadow: 0 0 0 3px rgba(47, 107, 31, 0.14);
+  background: #fff;
+}
+
+.sa-login__field input.is-invalid {
+  border-color: var(--sa-danger);
+  background: #fdf3f2;
+}
+
+.sa-login__password {
+  position: relative;
+  display: flex;
+}
+
+.sa-login__password input {
+  padding-right: 64px;
+}
+
+.sa-login__toggle {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: var(--sa-green);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+.sa-login__toggle:hover {
+  background: var(--sa-green-soft);
+}
+
+.sa-login__error {
+  display: block;
+  color: var(--sa-danger);
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.sa-login__alert {
+  background: #fdf3f2;
+  border: 1px solid #f3c6c0;
+  color: var(--sa-danger);
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.sa-login__btn {
+  width: 100%;
+  padding: 13px 16px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--sa-green);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.05s;
+}
+
+.sa-login__btn:hover:not(:disabled) { background: var(--sa-green-dark); }
+.sa-login__btn:active:not(:disabled) { transform: translateY(1px); }
+.sa-login__btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.sa-login__loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sa-login__spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: sa-spin 0.7s linear infinite;
+}
+
+@keyframes sa-spin { to { transform: rotate(360deg); } }
+
+.sa-login__foot {
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--sa-muted);
+  margin: 20px 0 0;
 }
