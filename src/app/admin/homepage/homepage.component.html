@@ -47,6 +47,53 @@
 </section>
 
 <!-- ============================================================= PRODUCTS -->
+<!-- ================================================================== KITS -->
+<section class="section" id="kits" *ngIf="kits.length">
+  <div class="section__head">
+    <h2 class="section__title">Ayurvedic Care Kits</h2>
+    <p class="section__sub">Complete courses — everything needed for the full treatment, in one pack</p>
+  </div>
+
+  <div class="product-grid">
+    <article class="p-card" *ngFor="let kit of kits">
+      <div class="p-card__media">
+        <img [src]="kit.imagePath" [alt]="kit.productName" loading="lazy">
+        <span class="p-card__tag" *ngIf="kit.duration">{{ kit.duration }}</span>
+      </div>
+
+      <div class="p-card__body">
+        <h3 class="p-card__title">{{ kit.productName }}</h3>
+
+        <div class="p-card__rating">
+          <span class="p-card__score">{{ kit.rating }}</span>
+          <i class="fas fa-star"></i>
+          <span class="p-card__users">{{ kit.users }}</span>
+        </div>
+
+        <div class="p-card__price">
+          <span class="p-card__now">₹{{ kit.price }}</span>
+          <del class="p-card__was" *ngIf="kit.oldPrice">₹{{ kit.oldPrice }}</del>
+        </div>
+
+        <p class="p-card__care" *ngIf="kit.careFor">
+          <span>Care For :</span> {{ kit.careFor }}
+        </p>
+
+        <p class="p-card__includes" *ngIf="kit.Include?.length">
+          <i class="fas fa-box-open"></i> {{ kit.Include?.length }} items included
+        </p>
+      </div>
+
+      <div class="p-card__actions">
+        <button type="button" class="p-card__btn p-card__btn--cart" (click)="addToCart(kit)">
+          {{ isInCart(kit) ? 'In Cart' : 'Add to Cart' }}
+        </button>
+        <button type="button" class="p-card__btn" (click)="goToProduct(kit)">Buy Now</button>
+      </div>
+    </article>
+  </div>
+</section>
+
 <section class="section" id="products">
   <div class="section__head">
     <h2 class="section__title">All Products</h2>

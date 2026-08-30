@@ -59,6 +59,21 @@
       </div>
     </div>
 
+    <!-- Money that never arrived. Never counted as income — shown so abandoned
+         checkouts are visible instead of being a silent gap. -->
+    <div class="apx-cards apx-cards--secondary" *ngIf="summary.pendingOrders || summary.failedOrders">
+      <div class="apx-stat apx-stat--pending">
+        <div class="apx-stat__label">Not Collected (Pending)</div>
+        <div class="apx-stat__value">{{ fmtCur(summary.pendingAmount) }}</div>
+        <div class="apx-stat__meta">{{ summary.pendingOrders }} checkout(s) opened, never paid — excluded from revenue</div>
+      </div>
+      <div class="apx-stat apx-stat--failed">
+        <div class="apx-stat__label">Failed / Abandoned</div>
+        <div class="apx-stat__value">{{ summary.failedOrders }}</div>
+        <div class="apx-stat__meta">Payment failed or checkout retired</div>
+      </div>
+    </div>
+
     <!-- Charts -->
     <div class="apx-charts" *ngIf="hasChartData; else noChart">
       <!-- Pie: income split -->
@@ -132,6 +147,57 @@
         <span class="apx-legend__item"><span class="apx-legend__dot" style="background:#16a34a"></span> COD Income</span>
         <span class="apx-legend__item"><span class="apx-legend__dot" style="background:#2563eb"></span> Online Income</span>
         <span class="apx-legend__item"><span class="apx-legend__dot" style="background:#c0392b"></span> Returned / Cancelled</span>
+      </div>
+    </div>
+
+    <!-- What is actually selling -->
+    <div class="apx-panel" *ngIf="products.length">
+      <div class="apx-panel__head">
+        <div>
+          <h2 class="apx-panel__title">Product Performance</h2>
+          <p class="apx-panel__sub">{{ rangeLabel }} · best sellers first · net = sold − returned</p>
+        </div>
+      </div>
+
+      <div class="apx-tablewrap">
+        <table class="apx-table apx-table--tight">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Type</th>
+              <th class="apx-num">Orders</th>
+              <th class="apx-num">Units Sold</th>
+              <th class="apx-num">Gross</th>
+              <th class="apx-num">Returned</th>
+              <th class="apx-num">Net</th>
+              <th class="apx-num">Return %</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of products">
+              <td>{{ p.productName }}</td>
+              <td>
+                <span class="apx-badge" [ngClass]="p.isKit ? 'apx-badge--paid' : 'apx-badge--muted'">
+                  {{ p.isKit ? 'Kit' : 'Product' }}
+                </span>
+              </td>
+              <td class="apx-num">{{ p.ordersCount }}</td>
+              <td class="apx-num"><strong>{{ p.unitsSold }}</strong></td>
+              <td class="apx-num">{{ fmtCur(p.grossAmount) }}</td>
+              <td class="apx-num">
+                <span *ngIf="p.unitsReturned">{{ p.unitsReturned }} · {{ fmtCur(p.returnedAmount) }}</span>
+                <span *ngIf="!p.unitsReturned">—</span>
+              </td>
+              <td class="apx-num"><strong>{{ fmtCur(p.netAmount) }}</strong></td>
+              <td class="apx-num">
+                <span class="apx-badge"
+                      [ngClass]="p.returnRate >= 20 ? 'apx-badge--cancel' : (p.returnRate > 0 ? 'apx-badge--muted' : 'apx-badge--paid')">
+                  {{ p.returnRate }}%
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 

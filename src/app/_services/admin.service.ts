@@ -40,6 +40,11 @@ export class AdminService {
     return this.http.get(`${API}admin/dashboard/revenue?start=${start}&end=${end}&grouping=${grouping}`, this.authHeaders());
   }
 
+  /** Per-product sales + returns for the period. */
+  getProductPerformance(start: string, end: string): Observable<any> {
+    return this.http.get(`${API}admin/dashboard/products?start=${start}&end=${end}`, this.authHeaders());
+  }
+
   getReports(start: string, end: string, method: string, status: string): Observable<any> {
     let url = `${API}admin/reports?start=${start}&end=${end}`;
     if (method) { url += `&method=${encodeURIComponent(method)}`; }

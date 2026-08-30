@@ -267,6 +267,59 @@
   transform: translateY(-1px);
 }
 
+/* Add to Cart sits beside Buy Now — the two share the row Buy Now used to fill on
+   its own, so kits and products can be collected into one cart before checkout. */
+.pd__cta-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  max-width: 320px;
+}
+
+.pd__cta-row .pd__buy {
+  flex: 1 1 150px;
+  max-width: none;
+}
+
+.pd__cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  flex: 1 1 150px;
+  height: 52px;
+  border: 2px solid var(--sa-green);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--sa-green);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color .2s ease, transform .18s ease;
+}
+
+.pd__cart:hover {
+  background: var(--sa-green-soft, #eaf6e6);
+  transform: translateY(-1px);
+}
+
+.pd__cart-hint {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--sa-muted, #6b7280);
+}
+
+.pd__cart-hint i {
+  color: var(--sa-green);
+  margin-right: 4px;
+}
+
+.pd__cart-hint a {
+  color: var(--sa-green);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
 .pd__block {
   margin-top: 26px;
   padding-top: 22px;

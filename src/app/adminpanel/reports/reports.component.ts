@@ -21,7 +21,28 @@ export class ReportsComponent implements OnInit {
 
   rows: any[] = [];
 
+  /** Free-text filter over the loaded rows: order id, customer, product or amount. */
+  search = '';
+
   constructor(private admin: AdminService, private router: Router) { }
+
+  /**
+   * Rows after the search box. Applied client-side over what the date/status
+   * filters already fetched, so typing is instant. The Excel export uses this
+   * same list — what you see is what you get.
+   */
+  get filteredRows(): any[] {
+    const term = (this.search || '').trim().toLowerCase();
+    if (!term) { return this.rows; }
+    return this.rows.filter(r =>
+      [r.orderNumber, r.customerName, r.customerPhone, r.customerEmail, r.productName,
+       r.orderAmount != null ? ('' + r.orderAmount) : '',
+       r.lineTotal != null ? ('' + r.lineTotal) : '']
+        .join(' ').toLowerCase().includes(term)
+    );
+  }
+
+  clearSearch(): void { this.search = ''; }
 
   ngOnInit(): void {
     this.setThisMonth();
@@ -71,10 +92,12 @@ export class ReportsComponent implements OnInit {
   }
 
   exportExcel(): void {
-    if (!this.rows.length) { return; }
+    // Exports exactly what the table is showing — date/status filters AND the
+    // search box — so the sheet always matches the screen.
+    const source = this.filteredRows;
+    if (!source.length) { return; }
 
-    // Column order/labels for the sheet — only the currently loaded (filtered) rows.
-    const data = this.rows.map(r => ({
+    const data = source.map(r => ({
       'Order ID': r.orderNumber,
       'Order Date': this.fmtDate(r.orderDate),
       'Customer': r.customerName,

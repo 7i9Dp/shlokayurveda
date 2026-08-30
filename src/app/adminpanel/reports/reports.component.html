@@ -28,15 +28,30 @@
         <option value="">All</option>
         <option value="Paid">Paid</option>
         <option value="COD">COD</option>
+        <option value="PaymentPending">Pending (not paid)</option>
         <option value="Failed">Failed</option>
+        <option value="Abandoned">Abandoned</option>
         <option value="Cancelled">Cancelled</option>
         <option value="Refunded">Refunded</option>
+        <option value="PartiallyRefunded">Partially Refunded</option>
       </select>
     </div>
     <button class="apx-btn" (click)="load()" [disabled]="loading">Apply</button>
-    <button class="apx-btn apx-btn--ghost" (click)="exportExcel()" [disabled]="!rows.length">
+    <button class="apx-btn apx-btn--ghost" (click)="exportExcel()" [disabled]="!filteredRows.length">
       <i class="fas fa-file-excel"></i>&nbsp; Export to Excel
     </button>
+  </div>
+
+  <!-- Search across order id / customer / product / amount -->
+  <div class="apx-toolbar" *ngIf="rows.length">
+    <div class="apx-search">
+      <i class="fas fa-search"></i>
+      <input type="text" [(ngModel)]="search"
+             placeholder="Search order ID, customer, product or amount…">
+      <button type="button" class="apx-search__clear" *ngIf="search" (click)="clearSearch()"
+              aria-label="Clear search"><i class="fas fa-times"></i></button>
+    </div>
+    <span class="apx-toolbar__count">{{ filteredRows.length }} of {{ rows.length }} rows</span>
   </div>
 
   <div class="apx-alert" *ngIf="error">{{ error }}</div>
@@ -45,7 +60,7 @@
     <div class="apx-panel__head">
       <div>
         <h2 class="apx-panel__title">Order Report</h2>
-        <p class="apx-panel__sub">{{ rows.length }} row(s) · one line per product</p>
+        <p class="apx-panel__sub">{{ filteredRows.length }} row(s) · one line per product</p>
       </div>
     </div>
 
@@ -59,7 +74,13 @@
       No orders match the selected filters.
     </div>
 
-    <div class="apx-tablewrap" *ngIf="!loading && rows.length">
+    <div class="apx-state" *ngIf="!loading && rows.length && !filteredRows.length">
+      <div class="apx-state__icon"><i class="fas fa-magnifying-glass"></i></div>
+      No rows match "{{ search }}".
+      <div><button class="apx-btn apx-btn--ghost apx-btn--sm" style="margin-top:12px" (click)="clearSearch()">Clear search</button></div>
+    </div>
+
+    <div class="apx-tablewrap" *ngIf="!loading && filteredRows.length">
       <table class="apx-table">
         <thead>
           <tr>
@@ -78,7 +99,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let r of rows">
+          <tr *ngFor="let r of filteredRows">
             <td>{{ r.orderNumber }}</td>
             <td>{{ fmtDate(r.orderDate) }}</td>
             <td>{{ r.customerName }}</td>

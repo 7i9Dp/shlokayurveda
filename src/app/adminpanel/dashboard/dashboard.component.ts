@@ -29,6 +29,8 @@ export class DashboardComponent implements OnInit {
 
   summary: any = null;
   points: any[] = [];
+  /** Per-product sales/returns for the period, best sellers first. */
+  products: any[] = [];
 
   // Highcharts
   Highcharts: typeof Highcharts = Highcharts;
@@ -105,6 +107,11 @@ export class DashboardComponent implements OnInit {
         this.summary = (res && res.data && res.data.summary) || null;
         this.buildPie();
       },
+      error: (e) => this.handleError(e)
+    });
+
+    this.admin.getProductPerformance(this.startDate, this.endDate).subscribe({
+      next: (res) => { this.products = (res && res.data) || []; },
       error: (e) => this.handleError(e)
     });
 
