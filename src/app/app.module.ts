@@ -8,6 +8,7 @@ import { ForgotComponent } from './auth/forgot/forgot.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AdminPanelModule } from './adminpanel/adminpanel.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
+    AdminPanelModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

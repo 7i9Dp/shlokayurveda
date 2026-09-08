@@ -159,6 +159,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.router.navigate(['/admin/cart']);
   }
 
+  /** Profile icon near the cart — opens the standalone admin login at /login. */
+  goToAdminLogin(): void {
+    this.closeAll();
+    this.router.navigate(['/login']);
+  }
+
   /** Used by About Us / Contact Us — both live on the home page. */
   scrollToSection(sectionId: string): void {
     this.closeAll();

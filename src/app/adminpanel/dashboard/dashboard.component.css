@@ -1,0 +1,13 @@
+/* Page-specific styling for the dashboard; shared styles come from adminpanel.shared.css. */
+:host { display: block; }
+
+/* Pie sits beside the line chart on wide screens, stacks on narrow ones. */
+.apx-charts {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .apx-charts { grid-template-columns: 1fr; }
+}

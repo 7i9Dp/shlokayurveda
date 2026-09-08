@@ -1,0 +1,131 @@
+<app-admin-shell active="reports" title="Reports">
+
+  <!-- Filters -->
+  <div class="apx-filters">
+    <div class="apx-quick">
+      <button class="apx-chip" [class.active]="activeQuick === 'month'" (click)="setThisMonth(); load()">This Month</button>
+      <button class="apx-chip" [class.active]="activeQuick === 'year'" (click)="setThisYear(); load()">This Year</button>
+    </div>
+    <div class="apx-field">
+      <label>From</label>
+      <input type="date" [(ngModel)]="startDate" (change)="onCustomChange()">
+    </div>
+    <div class="apx-field">
+      <label>To</label>
+      <input type="date" [(ngModel)]="endDate" (change)="onCustomChange()">
+    </div>
+    <div class="apx-field">
+      <label>Payment</label>
+      <select [(ngModel)]="method">
+        <option value="">All</option>
+        <option value="COD">COD</option>
+        <option value="Razorpay">Online</option>
+      </select>
+    </div>
+    <div class="apx-field">
+      <label>Status</label>
+      <select [(ngModel)]="status">
+        <option value="">All</option>
+        <option value="Paid">Paid</option>
+        <option value="COD">COD</option>
+        <option value="PaymentPending">Pending (not paid)</option>
+        <option value="Failed">Failed</option>
+        <option value="Abandoned">Abandoned</option>
+        <option value="Cancelled">Cancelled</option>
+        <option value="Refunded">Refunded</option>
+        <option value="PartiallyRefunded">Partially Refunded</option>
+      </select>
+    </div>
+    <button class="apx-btn" (click)="load()" [disabled]="loading">Apply</button>
+    <button class="apx-btn apx-btn--ghost" (click)="exportExcel()" [disabled]="!filteredRows.length">
+      <i class="fas fa-file-excel"></i>&nbsp; Export to Excel
+    </button>
+  </div>
+
+  <!-- Search across order id / customer / product / amount -->
+  <div class="apx-toolbar" *ngIf="rows.length">
+    <div class="apx-search">
+      <i class="fas fa-search"></i>
+      <input type="text" [(ngModel)]="search"
+             placeholder="Search order ID, customer, product or amount…">
+      <button type="button" class="apx-search__clear" *ngIf="search" (click)="clearSearch()"
+              aria-label="Clear search"><i class="fas fa-times"></i></button>
+    </div>
+    <span class="apx-toolbar__count">{{ filteredRows.length }} of {{ rows.length }} rows</span>
+  </div>
+
+  <div class="apx-alert" *ngIf="error">{{ error }}</div>
+
+  <div class="apx-panel">
+    <div class="apx-panel__head">
+      <div>
+        <h2 class="apx-panel__title">Order Report</h2>
+        <p class="apx-panel__sub">{{ filteredRows.length }} row(s) · one line per product</p>
+      </div>
+    </div>
+
+    <div class="apx-state" *ngIf="loading">
+      <div class="apx-spinner"></div>
+      Loading report…
+    </div>
+
+    <div class="apx-state" *ngIf="!loading && !rows.length">
+      <div class="apx-state__icon"><i class="fas fa-file-lines"></i></div>
+      No orders match the selected filters.
+    </div>
+
+    <div class="apx-state" *ngIf="!loading && rows.length && !filteredRows.length">
+      <div class="apx-state__icon"><i class="fas fa-magnifying-glass"></i></div>
+      No rows match "{{ search }}".
+      <div><button class="apx-btn apx-btn--ghost apx-btn--sm" style="margin-top:12px" (click)="clearSearch()">Clear search</button></div>
+    </div>
+
+    <div class="apx-tablewrap" *ngIf="!loading && filteredRows.length">
+      <table class="apx-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Customer</th>
+            <th>Product</th>
+            <th class="apx-num">Qty</th>
+            <th class="apx-num">Line Total</th>
+            <th class="apx-num">Order Amt</th>
+            <th>Payment</th>
+            <th>Status</th>
+            <th class="apx-num">Returned Qty</th>
+            <th class="apx-num">Returned Amt</th>
+            <th>Refund</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of filteredRows">
+            <td>{{ r.orderNumber }}</td>
+            <td>{{ fmtDate(r.orderDate) }}</td>
+            <td>{{ r.customerName }}</td>
+            <td>{{ r.productName }}</td>
+            <td class="apx-num">{{ r.quantity }}</td>
+            <td class="apx-num">{{ fmtCur(r.lineTotal) }}</td>
+            <td class="apx-num">{{ fmtCur(r.orderAmount) }}</td>
+            <td>
+              <span class="apx-badge" [ngClass]="r.paymentMethod === 'COD' ? 'apx-badge--cod' : 'apx-badge--paid'">
+                {{ r.paymentMethod === 'Razorpay' ? 'Online' : r.paymentMethod }}
+              </span>
+            </td>
+            <td>{{ r.orderStatus }}</td>
+            <td class="apx-num">
+              <span *ngIf="r.returnedQuantity">{{ r.returnedQuantity }} / {{ r.quantity }}</span>
+              <span *ngIf="!r.returnedQuantity">—</span>
+            </td>
+            <td class="apx-num">{{ r.returnedAmount ? fmtCur(r.returnedAmount) : '—' }}</td>
+            <td>
+              <span class="apx-badge apx-badge--muted" *ngIf="r.refundStatus">{{ r.refundStatus }}</span>
+              <span *ngIf="!r.refundStatus" class="apx-badge apx-badge--muted">—</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</app-admin-shell>

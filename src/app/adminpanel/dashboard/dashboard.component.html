@@ -1,0 +1,214 @@
+<app-admin-shell active="dashboard" title="Dashboard">
+
+  <!-- Filters -->
+  <div class="apx-filters">
+    <div class="apx-quick">
+      <button class="apx-chip" [class.active]="activeQuick === 'month'" (click)="setThisMonth(); apply()">This Month</button>
+      <button class="apx-chip" [class.active]="activeQuick === 'year'" (click)="setThisYear(); apply()">This Year</button>
+    </div>
+    <div class="apx-field">
+      <label>From</label>
+      <input type="date" [(ngModel)]="startDate" (change)="onCustomChange()">
+    </div>
+    <div class="apx-field">
+      <label>To</label>
+      <input type="date" [(ngModel)]="endDate" (change)="onCustomChange()">
+    </div>
+    <div class="apx-field">
+      <label>Group by</label>
+      <div class="apx-quick">
+        <button class="apx-chip" [class.active]="grouping === 'day'" (click)="setGrouping('day')">Daily</button>
+        <button class="apx-chip" [class.active]="grouping === 'month'" (click)="setGrouping('month')">Monthly</button>
+      </div>
+    </div>
+    <button class="apx-btn" (click)="apply()" [disabled]="loading">Apply</button>
+  </div>
+
+  <div class="apx-alert" *ngIf="error">{{ error }}</div>
+
+  <!-- Loading -->
+  <div class="apx-panel" *ngIf="loading">
+    <div class="apx-state">
+      <div class="apx-spinner"></div>
+      Loading dashboard…
+    </div>
+  </div>
+
+  <ng-container *ngIf="!loading && summary">
+    <!-- Summary cards -->
+    <div class="apx-cards">
+      <div class="apx-stat apx-stat--cod">
+        <div class="apx-stat__label">Total COD Income</div>
+        <div class="apx-stat__value">{{ fmtCur(summary.codIncome) }}</div>
+        <div class="apx-stat__meta">{{ summary.codOrders }} COD orders</div>
+      </div>
+      <div class="apx-stat apx-stat--online">
+        <div class="apx-stat__label">Total Online Income</div>
+        <div class="apx-stat__value">{{ fmtCur(summary.onlineIncome) }}</div>
+        <div class="apx-stat__meta">{{ summary.onlineOrders }} paid orders</div>
+      </div>
+      <div class="apx-stat apx-stat--returned">
+        <div class="apx-stat__label">Returned / Cancelled</div>
+        <div class="apx-stat__value">{{ fmtCur(summary.returnedAmount) }}</div>
+        <div class="apx-stat__meta">{{ summary.returnedItems }} items</div>
+      </div>
+      <div class="apx-stat apx-stat--net">
+        <div class="apx-stat__label">Net Revenue</div>
+        <div class="apx-stat__value">{{ fmtCur(summary.netRevenue) }}</div>
+        <div class="apx-stat__meta">COD + Online − Returned</div>
+      </div>
+    </div>
+
+    <!-- Money that never arrived. Never counted as income — shown so abandoned
+         checkouts are visible instead of being a silent gap. -->
+    <div class="apx-cards apx-cards--secondary" *ngIf="summary.pendingOrders || summary.failedOrders">
+      <div class="apx-stat apx-stat--pending">
+        <div class="apx-stat__label">Not Collected (Pending)</div>
+        <div class="apx-stat__value">{{ fmtCur(summary.pendingAmount) }}</div>
+        <div class="apx-stat__meta">{{ summary.pendingOrders }} checkout(s) opened, never paid — excluded from revenue</div>
+      </div>
+      <div class="apx-stat apx-stat--failed">
+        <div class="apx-stat__label">Failed / Abandoned</div>
+        <div class="apx-stat__value">{{ summary.failedOrders }}</div>
+        <div class="apx-stat__meta">Payment failed or checkout retired</div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="apx-charts" *ngIf="hasChartData; else noChart">
+      <!-- Pie: income split -->
+      <div class="apx-panel apx-chart-pie">
+        <div class="apx-panel__head">
+          <div>
+            <h2 class="apx-panel__title">Income Split</h2>
+            <p class="apx-panel__sub">{{ rangeLabel }}</p>
+          </div>
+        </div>
+        <highcharts-chart
+          [Highcharts]="Highcharts"
+          [options]="pieOptions"
+          [(update)]="updatePie"
+          style="width: 100%; height: 320px; display: block;">
+        </highcharts-chart>
+      </div>
+
+      <!-- Line: revenue over time -->
+      <div class="apx-panel apx-chart-line">
+        <div class="apx-panel__head">
+          <div>
+            <h2 class="apx-panel__title">Revenue Over Time</h2>
+            <p class="apx-panel__sub">{{ rangeLabel }} · {{ summary.totalOrders }} total orders</p>
+          </div>
+        </div>
+        <highcharts-chart
+          [Highcharts]="Highcharts"
+          [options]="lineOptions"
+          [(update)]="updateLine"
+          style="width: 100%; height: 340px; display: block;">
+        </highcharts-chart>
+      </div>
+    </div>
+
+    <!-- Bar chart: revenue breakdown (Daily/Monthly) -->
+    <div class="apx-panel" *ngIf="hasChartData">
+      <div class="apx-panel__head">
+        <div>
+          <h2 class="apx-panel__title">Revenue Breakdown ({{ grouping === 'day' ? 'Daily' : 'Monthly' }})</h2>
+          <p class="apx-panel__sub">{{ rangeLabel }} · {{ summary.totalOrders }} total orders</p>
+        </div>
+      </div>
+
+      <div class="apx-chart">
+        <svg [attr.viewBox]="'0 0 ' + bar.width + ' ' + bar.height"
+             [attr.width]="bar.width" [attr.height]="bar.height"
+             preserveAspectRatio="xMinYMin meet">
+          <line [attr.x1]="bar.leftPad - 6" [attr.y1]="bar.baseY"
+                [attr.x2]="bar.width" [attr.y2]="bar.baseY"
+                stroke="#e6ebe1" stroke-width="1"></line>
+          <text [attr.x]="bar.leftPad - 8" [attr.y]="bar.baseY - bar.plotH + 4"
+                text-anchor="end" font-size="10" fill="#9ca3af">{{ fmtCur(bar.maxVal) }}</text>
+          <text [attr.x]="bar.leftPad - 8" [attr.y]="bar.baseY + 4"
+                text-anchor="end" font-size="10" fill="#9ca3af">0</text>
+
+          <g *ngFor="let b of bar.bars">
+            <rect [attr.x]="b.codX" [attr.y]="b.codY" [attr.width]="b.barW" [attr.height]="b.codH"
+                  fill="#16a34a" rx="2"></rect>
+            <rect [attr.x]="b.codX" [attr.y]="b.onlineY" [attr.width]="b.barW" [attr.height]="b.onlineH"
+                  fill="#2563eb" rx="2"></rect>
+            <rect [attr.x]="b.retX" [attr.y]="b.retY" [attr.width]="b.retW" [attr.height]="b.retH"
+                  fill="#c0392b" rx="2"></rect>
+            <text [attr.x]="b.labelX" [attr.y]="bar.baseY + 16" text-anchor="middle"
+                  font-size="10" fill="#6b7280">{{ b.label }}</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="apx-legend">
+        <span class="apx-legend__item"><span class="apx-legend__dot" style="background:#16a34a"></span> COD Income</span>
+        <span class="apx-legend__item"><span class="apx-legend__dot" style="background:#2563eb"></span> Online Income</span>
+        <span class="apx-legend__item"><span class="apx-legend__dot" style="background:#c0392b"></span> Returned / Cancelled</span>
+      </div>
+    </div>
+
+    <!-- What is actually selling -->
+    <div class="apx-panel" *ngIf="products.length">
+      <div class="apx-panel__head">
+        <div>
+          <h2 class="apx-panel__title">Product Performance</h2>
+          <p class="apx-panel__sub">{{ rangeLabel }} · best sellers first · net = sold − returned</p>
+        </div>
+      </div>
+
+      <div class="apx-tablewrap">
+        <table class="apx-table apx-table--tight">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Type</th>
+              <th class="apx-num">Orders</th>
+              <th class="apx-num">Units Sold</th>
+              <th class="apx-num">Gross</th>
+              <th class="apx-num">Returned</th>
+              <th class="apx-num">Net</th>
+              <th class="apx-num">Return %</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of products">
+              <td>{{ p.productName }}</td>
+              <td>
+                <span class="apx-badge" [ngClass]="p.isKit ? 'apx-badge--paid' : 'apx-badge--muted'">
+                  {{ p.isKit ? 'Kit' : 'Product' }}
+                </span>
+              </td>
+              <td class="apx-num">{{ p.ordersCount }}</td>
+              <td class="apx-num"><strong>{{ p.unitsSold }}</strong></td>
+              <td class="apx-num">{{ fmtCur(p.grossAmount) }}</td>
+              <td class="apx-num">
+                <span *ngIf="p.unitsReturned">{{ p.unitsReturned }} · {{ fmtCur(p.returnedAmount) }}</span>
+                <span *ngIf="!p.unitsReturned">—</span>
+              </td>
+              <td class="apx-num"><strong>{{ fmtCur(p.netAmount) }}</strong></td>
+              <td class="apx-num">
+                <span class="apx-badge"
+                      [ngClass]="p.returnRate >= 20 ? 'apx-badge--cancel' : (p.returnRate > 0 ? 'apx-badge--muted' : 'apx-badge--paid')">
+                  {{ p.returnRate }}%
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <ng-template #noChart>
+      <div class="apx-panel">
+        <div class="apx-state">
+          <div class="apx-state__icon"><i class="fas fa-chart-pie"></i></div>
+          No revenue recorded for this period.
+        </div>
+      </div>
+    </ng-template>
+  </ng-container>
+
+</app-admin-shell>

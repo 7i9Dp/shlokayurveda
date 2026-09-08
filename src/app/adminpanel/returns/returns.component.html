@@ -1,0 +1,250 @@
+<app-admin-shell active="returns" title="Returns & Refunds">
+
+  <!-- Filters -->
+  <div class="apx-filters">
+    <div class="apx-field">
+      <label>From</label>
+      <input type="date" [(ngModel)]="startDate">
+    </div>
+    <div class="apx-field">
+      <label>To</label>
+      <input type="date" [(ngModel)]="endDate">
+    </div>
+    <button class="apx-btn" (click)="loadAll()" [disabled]="loading">Apply</button>
+  </div>
+
+  <div class="apx-notice" *ngIf="notice">{{ notice }}</div>
+  <div class="apx-alert" *ngIf="error">{{ error }}</div>
+
+  <!-- Recorded returns (grouped by order) -->
+  <div class="apx-panel">
+    <div class="apx-panel__head">
+      <div>
+        <h2 class="apx-panel__title">Recorded Returns</h2>
+        <p class="apx-panel__sub">{{ groupedReturns.length }} order(s) · {{ returns.length }} returned product line(s) in this period</p>
+      </div>
+    </div>
+
+    <div class="apx-state" *ngIf="!returns.length">
+      <div class="apx-state__icon"><i class="fas fa-rotate-left"></i></div>
+      No returns recorded for this period.
+    </div>
+
+    <div class="apx-return-group" *ngFor="let g of groupedReturns">
+      <div class="apx-return-group__head">
+        <div>
+          <span class="apx-return-group__order">{{ g.orderNumber }}</span>
+          <span class="apx-return-group__meta">{{ fmtDate(g.returnedOn) }} · {{ g.items.length }} product(s)</span>
+        </div>
+        <div class="apx-return-group__total">
+          Returned {{ fmtCur(g.totalAmount) }}
+          <span class="apx-badge apx-badge--muted">{{ g.refundLabel }}</span>
+        </div>
+      </div>
+
+      <div class="apx-tablewrap">
+        <table class="apx-table apx-table--tight">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th class="apx-num">Returned Qty</th>
+              <th class="apx-num">Amount</th>
+              <th>Return</th>
+              <th>Refund</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let it of g.items">
+              <td>{{ it.productName }}</td>
+              <td class="apx-num">{{ it.returnedQuantity }} / {{ it.quantity }}</td>
+              <td class="apx-num">{{ fmtCur(it.returnedAmount) }}</td>
+              <td><span class="apx-badge apx-badge--cancel">{{ it.returnStatus }}</span></td>
+              <td><span class="apx-badge apx-badge--muted">{{ it.refundStatus || '—' }}</span></td>
+              <td>{{ it.returnReason || '—' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders (pick one to record returns) -->
+  <div class="apx-panel">
+    <div class="apx-panel__head">
+      <div>
+        <h2 class="apx-panel__title">Orders</h2>
+        <p class="apx-panel__sub">Open an order to mark which products came back and how much was refunded</p>
+      </div>
+    </div>
+
+    <!-- Search / filter toolbar -->
+    <div class="apx-toolbar" *ngIf="!loading && orders.length">
+      <div class="apx-search">
+        <i class="fas fa-search"></i>
+        <input type="text" [(ngModel)]="orderSearch"
+               placeholder="Search order ID, customer or amount…">
+        <button type="button" class="apx-search__clear" *ngIf="orderSearch" (click)="orderSearch = ''"
+                aria-label="Clear search"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="apx-quick">
+        <button class="apx-chip" [class.active]="orderMethod === ''" (click)="orderMethod = ''">All</button>
+        <button class="apx-chip" [class.active]="orderMethod === 'COD'" (click)="orderMethod = 'COD'">COD</button>
+        <button class="apx-chip" [class.active]="orderMethod === 'Razorpay'" (click)="orderMethod = 'Razorpay'">Online</button>
+      </div>
+      <span class="apx-toolbar__count">{{ filteredOrders.length }} of {{ orders.length }}</span>
+    </div>
+
+    <div class="apx-state" *ngIf="loading">
+      <div class="apx-spinner"></div>
+      Loading orders…
+    </div>
+
+    <div class="apx-state" *ngIf="!loading && !orders.length">
+      <div class="apx-state__icon"><i class="fas fa-box"></i></div>
+      No orders in this period.
+    </div>
+
+    <div class="apx-state" *ngIf="!loading && orders.length && !filteredOrders.length">
+      <div class="apx-state__icon"><i class="fas fa-magnifying-glass"></i></div>
+      No orders match your search.
+      <div><button class="apx-btn apx-btn--ghost apx-btn--sm" style="margin-top:12px" (click)="clearOrderFilters()">Clear filters</button></div>
+    </div>
+
+    <div class="apx-tablewrap" *ngIf="!loading && filteredOrders.length">
+      <table class="apx-table">
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Date</th>
+            <th>Customer</th>
+            <th>Payment</th>
+            <th class="apx-num">Items</th>
+            <th class="apx-num">Amount</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let o of filteredOrders">
+            <td>
+              {{ o.orderNumber }}
+              <span class="apx-badge apx-badge--cancel" *ngIf="o.returnedItems">{{ o.returnedItems }} returned</span>
+            </td>
+            <td>{{ fmtDate(o.orderDate) }}</td>
+            <td>{{ o.customerName }}</td>
+            <td>
+              <span class="apx-badge" [ngClass]="o.paymentMethod === 'COD' ? 'apx-badge--cod' : 'apx-badge--paid'">
+                {{ o.paymentMethod === 'Razorpay' ? 'Online' : o.paymentMethod }}
+              </span>
+            </td>
+            <td class="apx-num" [title]="(o.productCount || 0) + ' product line(s)'">
+              {{ o.totalQty || 0 }}<span *ngIf="o.productCount > 1" class="apx-dim"> ({{ o.productCount }})</span>
+            </td>
+            <td class="apx-num">{{ fmtCur(o.amount) }}</td>
+            <td class="apx-num">
+              <button class="apx-btn apx-btn--ghost" (click)="openReturn(o)">Review</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Return modal (product-wise) -->
+  <div class="apx-modal-backdrop" *ngIf="modalOpen" (click)="closeModal()">
+    <div class="apx-modal apx-modal--wide" (click)="$event.stopPropagation()">
+
+      <div *ngIf="loadingOrder" class="apx-state">
+        <div class="apx-spinner"></div>
+        Loading order…
+      </div>
+
+      <ng-container *ngIf="!loadingOrder && selectedOrder">
+        <h3 class="apx-modal__title">Returns — {{ selectedOrder.orderNumber }}</h3>
+        <p class="apx-modal__sub">
+          {{ selectedOrder.customerName }} · {{ selectedOrder.paymentMethod === 'Razorpay' ? 'Online' : selectedOrder.paymentMethod }}
+          · Order total {{ fmtCur(selectedOrder.amount) }}
+        </p>
+
+        <div class="apx-alert" *ngIf="saveError">{{ saveError }}</div>
+
+        <div class="apx-modal__bar">
+          <span>Set the returned quantity per product. Amount auto-fills from unit price (editable).</span>
+          <span class="apx-modal__bar-actions">
+            <button class="apx-btn apx-btn--ghost apx-btn--sm" (click)="returnAll()">Return all</button>
+            <button class="apx-btn apx-btn--ghost apx-btn--sm" (click)="clearAll()">Clear</button>
+          </span>
+        </div>
+
+        <div class="apx-tablewrap">
+          <table class="apx-table apx-table--tight">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th class="apx-num">Unit ₹</th>
+                <th class="apx-num">Ordered</th>
+                <th class="apx-num">Return Qty</th>
+                <th class="apx-num">Return Amount ₹</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of rows" [class.apx-row-active]="r.returnQty > 0">
+                <td>{{ r.productName }}</td>
+                <td class="apx-num">{{ fmtCur(r.unitPrice) }}</td>
+                <td class="apx-num">{{ r.quantity }}</td>
+                <td class="apx-num">
+                  <div class="apx-stepper">
+                    <button type="button" (click)="stepQty(r, -1)" [disabled]="r.returnQty <= 0" aria-label="Decrease">&minus;</button>
+                    <input class="apx-inp apx-inp--num" type="number" min="0" [max]="r.quantity"
+                           [(ngModel)]="r.returnQty" (ngModelChange)="onQtyChange(r)">
+                    <button type="button" (click)="stepQty(r, 1)" [disabled]="r.returnQty >= r.quantity" aria-label="Increase">+</button>
+                  </div>
+                </td>
+                <td class="apx-num">
+                  <input class="apx-inp apx-inp--num" type="number" min="0"
+                         [(ngModel)]="r.returnAmount" [disabled]="r.returnQty === 0">
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" class="apx-num"><strong>Total return</strong></td>
+                <td class="apx-num"><strong>{{ fmtCur(totalReturnAmount) }}</strong></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="apx-formrow">
+          <div>
+            <label>Refund status</label>
+            <select [(ngModel)]="refundStatus">
+              <option value="Refunded">Refunded</option>
+              <option value="Pending">Refund pending</option>
+              <option value="NotRefunded">Not refunded</option>
+            </select>
+          </div>
+          <div>
+            <label>Reason (optional)</label>
+            <input type="text" [(ngModel)]="reason" placeholder="e.g. Damaged, customer changed mind…">
+          </div>
+        </div>
+
+        <div class="apx-notice" *ngIf="confirming">
+          Mark <strong>{{ selectedCount }} product(s)</strong> as returned, total
+          <strong>{{ fmtCur(totalReturnAmount) }}</strong>? This updates the order items and reduces net revenue.
+        </div>
+
+        <div class="apx-modal__actions">
+          <button class="apx-btn apx-btn--ghost" (click)="closeModal()" [disabled]="saving">Close</button>
+          <button *ngIf="!confirming" class="apx-btn" (click)="askConfirm()">Save Return</button>
+          <button *ngIf="confirming" class="apx-btn apx-btn--ghost" (click)="cancelConfirm()" [disabled]="saving">Back</button>
+          <button *ngIf="confirming" class="apx-btn" (click)="submit()" [disabled]="saving">
+            {{ saving ? 'Saving…' : 'Confirm' }}
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+</app-admin-shell>

@@ -315,6 +315,38 @@
   color: #9ca3af;
 }
 
+/* --- Kit cards (the #kits section reuses .p-card) ------------------------- */
+
+/* Course length badge over the kit image — kits are sold by duration, which is
+   the thing a buyer compares first (15 Days vs 30 Days). */
+.p-card__media {
+  position: relative;
+}
+
+.p-card__tag {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--sa-green);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .01em;
+}
+
+.p-card__includes {
+  margin: 0;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--sa-green);
+}
+
+.p-card__includes i {
+  margin-right: 4px;
+}
+
 .p-card__actions {
   display: grid;
   grid-template-columns: 1fr 1fr;

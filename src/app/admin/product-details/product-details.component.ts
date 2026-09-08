@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { CreateOrderRequest, PaymentMethod } from 'src/app/_interface/payment';
 import { brandAlert, orderSuccessAlert } from 'src/app/_shared/alert';
 import { CheckoutOutcome, CheckoutService } from 'src/app/_services/checkout.service';
+import { CartService } from 'src/app/_services/cart.service';
 import { CatalogItem, Review, SiteDataService } from 'src/app/_services/site-data.service';
 import { environment } from 'src/environments/environment';
 
@@ -59,7 +60,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     private router: Router,
     private fb: FormBuilder,
     private checkout: CheckoutService,
-    private siteData: SiteDataService
+    private siteData: SiteDataService,
+    private cart: CartService
   ) {
 
     this.userForm = this.fb.group({
@@ -227,6 +229,25 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   /** Buy Now no longer opens a modal — it reveals the order form on this page. */
   scrollToOrder(): void {
     this.orderForm?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /**
+   * Adds the item currently on screen to the cart at the chosen quantity. This page
+   * renders kits and products alike, so it is what lets a kit sit in the same cart as
+   * a product and be checked out together.
+   */
+  addToCart(): void {
+    if (!this.product) { return; }
+    const qty = Number(this.userForm.value.quantity) || 1;
+    this.cart.add(this.product, qty);
+  }
+
+  get isInCart(): boolean {
+    return !!this.product && this.cart.has(this.product.id);
+  }
+
+  goToCart(): void {
+    this.router.navigate(['/admin/cart']);
   }
 
   get paymentMethod(): PaymentMethod {

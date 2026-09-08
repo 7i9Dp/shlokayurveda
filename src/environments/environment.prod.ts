@@ -7,7 +7,7 @@ export const environment = {
   recaptcha: {
     siteKey: '6LdfMCQhAAAAAB8W9xcG3yI-LgiXnDVWITsGJ2aa'
   },
-  // Online payment (Razorpay) is temporarily switched off — checkout shows COD only.
-  // Flip this back to true to bring the "Pay Online" option back.
-  paymentEnabled: false,
+  // Online payment (Razorpay) is LIVE. Set to false to fall back to COD-only
+  // checkout without a code change — the fastest rollback if the gateway misbehaves.
+  paymentEnabled: true,
 };

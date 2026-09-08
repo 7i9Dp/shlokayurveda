@@ -72,9 +72,21 @@
           </div>
         </div>
 
-        <button type="button" class="pd__buy" (click)="scrollToOrder()">
-          <i class="fas fa-bolt"></i> Buy Now
-        </button>
+        <div class="pd__cta-row">
+          <button type="button" class="pd__cart" (click)="addToCart()">
+            <i class="fas fa-cart-plus"></i> {{ isInCart ? 'Add More' : 'Add to Cart' }}
+          </button>
+          <button type="button" class="pd__buy" (click)="scrollToOrder()">
+            <i class="fas fa-bolt"></i> Buy Now
+          </button>
+        </div>
+
+        <p class="pd__cart-hint" *ngIf="isInCart">
+          <i class="fas fa-circle-check"></i>
+          In your cart —
+          <a href="javascript:void(0)" (click)="goToCart()">view cart &amp; checkout</a>
+          to buy kits and products together.
+        </p>
 
         <!-- Key benefits -->
         <div class="pd__block" *ngIf="benefits.length">

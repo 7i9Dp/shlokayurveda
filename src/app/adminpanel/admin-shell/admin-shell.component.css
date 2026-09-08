@@ -1,0 +1,2 @@
+/* Shell-specific tweaks live here; the bulk of the styling is in adminpanel.shared.css. */
+:host { display: block; }
