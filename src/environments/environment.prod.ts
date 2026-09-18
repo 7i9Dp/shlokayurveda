@@ -9,5 +9,5 @@ export const environment = {
   },
   // Online payment (Razorpay) is LIVE. Set to false to fall back to COD-only
   // checkout without a code change — the fastest rollback if the gateway misbehaves.
-  paymentEnabled: true,
+  paymentEnabled: false,
 };
