@@ -2,8 +2,8 @@
 
 export const environment = {
   production: true,
-  // The API is hosted at api.shlokayurveda.com; www serves the Angular storefront.
-  apiURL: 'https://api.shlokayurveda.com/api/',
+  // The API is hosted on the .shop domain; .com serves the Angular storefront.
+  apiURL: 'https://shlokaayurveda.shop/api/',
   recaptcha: {
     siteKey: '6LdfMCQhAAAAAB8W9xcG3yI-LgiXnDVWITsGJ2aa'
   },
