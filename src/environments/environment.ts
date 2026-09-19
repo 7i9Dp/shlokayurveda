@@ -4,7 +4,7 @@
 export const environment = {
   production: true,
   // The API is hosted on the .shop domain; .com serves the Angular storefront.
-  apiURL: 'https://shlokaayurveda.shop/api/',
+  apiURL: 'https://api.shlokayurveda.com/api/',
   // Local API (swap the comment markers to test against a locally running API):
   // apiURL: 'http://localhost:7892/api/',
   recaptcha: {
@@ -12,5 +12,5 @@ export const environment = {
   },
   // Online payment (Razorpay) is LIVE. Set to false to fall back to COD-only
   // checkout without a code change — the fastest rollback if the gateway misbehaves.
-  paymentEnabled: false,
+  paymentEnabled: true,
 };
